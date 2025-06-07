@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SECURE COMMS SYSTEM</title>
+    <style>
+        :root {
+            --primary: #00ff9d;
+            --danger: #ff0033;
+            --warning: #ffcc00;
+            --bg-dark: #0a0a12;
+            --bg-darker: #050508;
+            --text-main: #e0e0e0;
+            --text-dim: #888888;
+            --whatsapp-green: #25D366;
+            --whatsapp-dark: #075E54;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+        
+        body {
+            background-color: var(--bg-darker);
+            color: var(--text-main);
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(0, 255, 157, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 157, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        /* Login Screen */
+        .login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            flex-direction: column;
+        }
+        
+        .login-container {
+            background-color: var(--bg-dark);
+            border: 2px solid var(--primary);
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 0 30px var(--primary);
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            transform: scale(0.9);
+            opacity: 0;
+            animation: loginFadeIn 0.8s forwards 0.3s;
+        }
+        
+        @keyframes loginFadeIn {
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .login-title {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px var(--primary);
+            letter-spacing: 2px;
+        }
+        
+        .password-input {
+            background-color: var(--bg-darker);
+            border: 1px solid var(--primary);
+            color: var(--text-main);
+            padding: 15px;
+            margin: 15px 0;
+            width: 100%;
+            font-size: 1.2rem;
+            text-align: center;
+            letter-spacing: 3px;
+            transition: all 0.3s;
+        }
+        
+        .password-input:focus {
+            box-shadow: 0 0 15px var(--primary);
+            border-color: var(--warning);
+        }
+        
+        .login-btn {
+            background-color: var(--primary);
+            color: var(--bg-dark);
+            border: none;
+            padding: 12px 25px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        
+        .login-btn:hover {
+            background-color: #33ffbb;
+            box-shadow: 0 0 15px var(--primary);
+        }
+        
+        .login-progress {
+            width: 100%;
+            height: 5px;
+            background-color: var(--bg-darker);
+            margin-top: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--primary);
+            transition: width 0.5s;
+        }
+        
+        /* Error message style */
+        .error-message {
+            color: var(--danger);
+            margin-top: 10px;
+            font-size: 0.9rem;
+            min-height: 20px;
+        }
+        
+        /* Main Interface */
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr 1fr;
+            gap: 15px;
+            height: 100vh;
+            padding: 20px;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s;
+        }
+        
+        .container.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .header {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--primary);
+        }
+        
+        .header h1 {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+            letter-spacing: 2px;
+        }
+        
+        .status {
+            color: var(--danger);
+            font-weight: bold;
+            animation: blink 1s infinite;
+        }
+        
+        .panel {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--primary);
+            padding: 15px;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .panel::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            box-shadow: inset 0 0 15px rgba(0, 255, 157, 0.1);
+        }
+        
+        .panel-title {
+            color: var(--primary);
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--primary);
+            padding-bottom: 5px;
+        }
+        
+        .alert-panel {
+            grid-row: span 2;
+            border-color: var(--danger);
+        }
+        
+        .alert-panel .panel-title {
+            color: var(--danger);
+            border-bottom-color: var(--danger);
+        }
+        
+        .info-item {
+            margin-bottom: 10px;
+            padding-left: 15px;
+            border-left: 2px solid var(--primary);
+        }
+        
+        .alert-item {
+            border-left-color: var(--danger);
+            margin-bottom: 15px;
+        }
+        
+        .alert-item .time {
+            color: var(--text-dim);
+            font-size: 0.8em;
+            margin-bottom: 5px;
+        }
+        
+        .alert-item .message {
+            color: var(--danger);
+        }
+        
+        .contact-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .contact-item:hover {
+            background: rgba(0, 255, 157, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .contact-label {
+            color: var(--warning);
+            margin-bottom: 3px;
+        }
+        
+        .contact-value {
+            color: var(--primary);
+        }
+        
+        .contact-meta {
+            font-size: 0.7em;
+            color: var(--text-dim);
+            margin-top: 5px;
+        }
+        
+        .emergency-btn {
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+        
+        .emergency-btn:hover {
+            background-color: #ff3355;
+            box-shadow: 0 0 15px var(--danger);
+        }
+        
+        .add-contact-btn {
+            background-color: var(--primary);
+            color: var(--bg-dark);
+            border: none;
+            padding: 8px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .add-contact-btn:hover {
+            background-color: #33ffbb;
+            transform: scale(1.05);
+        }
+        
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(0, 255, 157, 0.05) 50%,
+                transparent 100%
+            );
+            animation: scan 8s linear infinite;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        @keyframes scan {
+            0% { top: -100%; }
+            100% { top: 100%; }
+        }
+        
+        /* WhatsApp Button */
+        .whatsapp-btn {
+            background: var(--whatsapp-green);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin-top: 8px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            box-shadow: 0 0 10px var(--whatsapp-green);
+        }
+        
+        .whatsapp-btn::before {
+            content: "";
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 5px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-6.29-3.43c.545 1.422.665 1.388.921 1.316.256-.072 1.507-.616 1.681-.824.174-.208.174-.072.298-.049.124.025.797.375 1.235.569.439.193.439.096.656-.025.218-.122.99-.723 1.113-.825.124-.102.207-.072.355.025.149.099.931.693.99.792.061.1.061.57-.124 1.122-.185.551-.825 1.056-1.235 1.122-.41.067-.71.122-1.046-.05-.335-.173-1.422-.533-2.405-1.702-.793-.945-1.328-2.117-1.482-2.475-.154-.357-.017-.55.105-.732.112-.169.243-.422.352-.614.11-.192.055-.357-.028-.5-.083-.142-.606-1.462-.832-1.998-.223-.537-.446-.465-.606-.475-.16-.01-.343-.012-.525-.012-.183 0-.481.054-.735.27-.254.215-.964.942-.964 2.3 0 1.356 1.067 2.67 1.216 2.853z"/></svg>');
+            background-size: contain;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: var(--bg-dark);
+            border: 2px solid var(--primary);
+            padding: 20px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 0 20px var(--primary);
+            transform: scale(0.9);
+            opacity: 0;
+            animation: modalFadeIn 0.3s forwards;
+        }
+        
+        @keyframes modalFadeIn {
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .modal-title {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            background-color: var(--bg-darker);
+            border: 1px solid var(--primary);
+            color: var(--text-main);
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--warning);
+            box-shadow: 0 0 10px var(--primary);
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--bg-dark);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: #33ffbb;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--text-dim);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        /* Password protection */
+        .password-prompt {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .password-box {
+            background-color: var(--bg-dark);
+            border: 2px solid var(--danger);
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 0 20px var(--danger);
+            transform: translateY(-20px);
+            opacity: 0;
+            animation: passwordFadeIn 0.5s forwards;
+        }
+        
+        @keyframes passwordFadeIn {
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .password-box input {
+            background-color: var(--bg-darker);
+            border: 1px solid var(--danger);
+            color: var(--text-main);
+            padding: 10px;
+            margin: 15px 0;
+            width: 100%;
+            font-size: 1.2rem;
+            text-align: center;
+            letter-spacing: 3px;
+        }
+        
+        /* Particle animation */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            background-color: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+            
+            .panel {
+                grid-column: 1 / -1;
+            }
+            
+            .login-container {
+                padding: 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Scanline Effect -->
+    <div class="scanline"></div>
+    
+    <!-- Login Screen -->
+    <div class="login-screen" id="login-screen">
+        <div class="login-container" id="login-container">
+            <h1 class="login-title">SECURE SYSTEM</h1>
+            <div id="login-step1">
+                <p>Enter Level 1 Access Code</p>
+                <input type="password" class="password-input" id="password1" placeholder="••••••••">
+                <div class="error-message" id="error1"></div>
+                <button class="login-btn" id="login-btn1">AUTHENTICATE</button>
+            </div>
+            <div id="login-step2" style="display: none;">
+                <p>Enter Level 2 Security Key</p>
+                <input type="password" class="password-input" id="password2" placeholder="••••••••">
+                <div class="error-message" id="error2"></div>
+                <button class="login-btn" id="login-btn2">VERIFY</button>
+            </div>
+            <div id="login-step3" style="display: none;">
+                <p>Final Biometric Confirmation</p>
+                <input type="password" class="password-input" id="password3" placeholder="••••••••">
+                <div class="error-message" id="error3"></div>
+                <button class="login-btn" id="login-btn3">AUTHORIZE</button>
+            </div>
+            <div class="login-progress">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Interface (hidden until login) -->
+    <div class="container" id="main-container">
+        <header class="header">
+            <h1>Thuli_SECURITY MONITORING<br> SYSTEM</h1>
+            <div class="status">STATUS: <span class="blink">ACTIVE THREAT</span></div>
+        </header>
+        
+        <div class="panel alert-panel">
+            <h2 class="panel-title">DANGEROUS PERSON DETECTED</h2>
+            <div class="info-item">
+                <strong>Brick aperture similarities</strong>
+            </div>
+            
+            <div class="alert-item">
+                <div class="time">11:01 AM</div>
+                <div class="message">Voidziel perseguent ne temporales requerentes</div>
+            </div>
+            
+            <div class="alert-item">
+                <div class="warning">WARNING</div>
+                <div class="message">Choro major city voidziel per resource na hsa</div>
+            </div>
+            
+            <div class="info-item">
+                Nist tritani pri no, his ad noster facete accusam
+            </div>
+            
+            <div class="info-item">
+                <strong>John Doe motivates use</strong>
+                <div>Nokiares voidziel execution nec ex</div>
+            </div>
+            
+            <div class="info-item">
+                <div class="blink">DO NOT CLOSE THIS PANEL</div>
+                <div>Please wait. Voidziel perseguent ne hos.</div>
+            </div>
+        </div>
+        
+        <div class="panel">
+            <h2 class="panel-title">OBJECT INFO</h2>
+            <div class="info-item">
+                <strong>John Doe</strong>
+                <div>Dimensiones de la capacidade para elas</div>
+                <div>Situaciones de capacidades de capacidade</div>
+                <div>Situaciones de capacidade</div>
+                <div>Planeta visceral</div>
+            </div>
+            
+            <div class="info-item">
+                <strong>What do you want to do at?</strong>
+                <div>Contact thulideshan@gmail.com</div>
+            </div>
+        </div>
+        
+        <div class="panel">
+            <h2 class="panel-title">CONTACT LIST</h2>
+            <div id="contacts-container">
+                <!-- Contacts will be added here dynamically -->
+            </div>
+            <button id="add-contact-btn" class="add-contact-btn">+ ADD CONTACT</button>
+            
+            <h2 class="panel-title" style="margin-top: 20px;">EMERGENCY PROTOCOLS</h2>
+            <button class="emergency-btn">INITIATE LOCKDOWN</button>
+        </div>
+    </div>
+    
+    <!-- Add Contact Modal -->
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">ADD NEW CONTACT</h2>
+            <div class="form-group">
+                <label for="contact-name">Name:</label>
+                <input type="text" id="contact-name" placeholder="Enter contact name">
+            </div>
+            <div class="form-group">
+                <label for="contact-number">WhatsApp Number:</label>
+                <input type="text" id="contact-number" placeholder="Enter WhatsApp number with country code">
+            </div>
+            <div class="form-group">
+                <label for="contact-notes">Notes:</label>
+                <textarea id="contact-notes" rows="3" placeholder="Additional information"></textarea>
+            </div>
+            <div class="form-actions">
+                <button id="cancel-contact" class="btn btn-secondary">CANCEL</button>
+                <button id="save-contact" class="btn btn-primary">SAVE</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- WhatsApp Password Protection -->
+    <div id="whatsapp-password" class="password-prompt">
+        <div class="password-box">
+            <h2>WHATSAPP ACCESS</h2>
+            <p>Enter security password to send message</p>
+            <input type="password" id="whatsapp-password-input" placeholder="Enter password">
+            <div>
+                <button id="cancel-password" class="btn btn-secondary">CANCEL</button>
+                <button id="submit-password" class="btn btn-primary">SUBMIT</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Configuration - CHANGE THESE VALUES
+        const PASSWORDS = {
+            level1: "2.0M19S96",  // First level password
+            level2: "S03h18z", // Second level password
+            level3: "hack_now%",  // Third level password
+            whatsapp: "M$V#0d=/" // WhatsApp access password
+        };
+
+        // DOM Elements
+        const loginScreen = document.getElementById('login-screen');
+        const loginContainer = document.getElementById('login-container');
+        const password1 = document.getElementById('password1');
+        const password2 = document.getElementById('password2');
+        const password3 = document.getElementById('password3');
+        const loginBtn1 = document.getElementById('login-btn1');
+        const loginBtn2 = document.getElementById('login-btn2');
+        const loginBtn3 = document.getElementById('login-btn3');
+        const loginStep1 = document.getElementById('login-step1');
+        const loginStep2 = document.getElementById('login-step2');
+        const loginStep3 = document.getElementById('login-step3');
+        const progressBar = document.getElementById('progress-bar');
+        const mainContainer = document.getElementById('main-container');
+        const particlesContainer = document.getElementById('particles');
+        const error1 = document.getElementById('error1');
+        const error2 = document.getElementById('error2');
+        const error3 = document.getElementById('error3');
+
+        const contactsContainer = document.getElementById('contacts-container');
+        const addContactBtn = document.getElementById('add-contact-btn');
+        const contactModal = document.getElementById('contact-modal');
+        const cancelContactBtn = document.getElementById('cancel-contact');
+        const saveContactBtn = document.getElementById('save-contact');
+        const whatsappPassword = document.getElementById('whatsapp-password');
+        const cancelPasswordBtn = document.getElementById('cancel-password');
+        const submitPasswordBtn = document.getElementById('submit-password');
+        const passwordInput = document.getElementById('whatsapp-password-input');
+        
+        // State
+        let contacts = [];
+        let currentContact = null;
+        let messages = {};
+        let tapCount = 0;
+        let lastTapTime = 0;
+        
+        // Create particles
+        function createParticles() {
+            const particleCount = 50;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 1px and 5px
+                const size = Math.random() * 4 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.bottom = `-10px`;
+                
+                // Random animation duration and delay
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 10;
+                particle.style.animation = `float ${duration}s linear ${delay}s infinite`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Login Functions
+        function showLoginStep(step) {
+            // Clear all error messages
+            error1.textContent = '';
+            error2.textContent = '';
+            error3.textContent = '';
+            
+            loginStep1.style.display = 'none';
+            loginStep2.style.display = 'none';
+            loginStep3.style.display = 'none';
+            
+            if (step === 1) {
+                loginStep1.style.display = 'block';
+                password1.focus();
+            }
+            if (step === 2) {
+                loginStep2.style.display = 'block';
+                password2.focus();
+            }
+            if (step === 3) {
+                loginStep3.style.display = 'block';
+                password3.focus();
+            }
+            
+            // Update progress bar
+            progressBar.style.width = `${(step-1) * 33.33}%`;
+        }
+        
+        function loginSuccess() {
+            progressBar.style.width = '100%';
+            progressBar.style.backgroundColor = 'var(--primary)';
+            
+            // Add success animation
+            loginContainer.style.animation = 'none';
+            void loginContainer.offsetWidth; // Trigger reflow
+            loginContainer.style.animation = 'loginFadeIn 0.5s forwards';
+            loginContainer.style.boxShadow = '0 0 50px var(--primary)';
+            loginContainer.style.borderColor = 'var(--primary)';
+            
+            // Hide login screen after delay
+            setTimeout(() => {
+                loginScreen.style.opacity = '0';
+                loginScreen.style.pointerEvents = 'none';
+                mainContainer.classList.add('active');
+                
+                // Initialize main interface
+                initMainInterface();
+            }, 1000);
+        }
+        
+        function loginFailure(step) {
+            // Show error message for current step
+            if (step === 1) error1.textContent = 'Incorrect Level 1 Access Code';
+            if (step === 2) error2.textContent = 'Incorrect Level 2 Security Key';
+            if (step === 3) error3.textContent = 'Incorrect Biometric Confirmation';
+            
+            // Shake animation for wrong password
+            loginContainer.style.animation = 'none';
+            void loginContainer.offsetWidth; // Trigger reflow
+            loginContainer.style.animation = 'shake 0.5s';
+            
+            // Red border and shadow
+            loginContainer.style.borderColor = 'var(--danger)';
+            loginContainer.style.boxShadow = '0 0 30px var(--danger)';
+            
+            // Reset after animation
+            setTimeout(() => {
+                loginContainer.style.animation = '';
+                loginContainer.style.borderColor = 'var(--primary)';
+                loginContainer.style.boxShadow = '0 0 30px var(--primary)';
+            }, 500);
+        }
+
+        // Login Event Listeners with proper authentication
+        loginBtn1.addEventListener('click', () => {
+            if (password1.value === PASSWORDS.level1) {
+                showLoginStep(2);
+            } else {
+                loginFailure(1);
+                password1.value = '';
+            }
+        });
+
+        loginBtn2.addEventListener('click', () => {
+            if (password2.value === PASSWORDS.level2) {
+                showLoginStep(3);
+            } else {
+                loginFailure(2);
+                // Reset to step 1 on failure
+                showLoginStep(1);
+                password1.value = '';
+            }
+        });
+
+        loginBtn3.addEventListener('click', () => {
+            if (password3.value === PASSWORDS.level3) {
+                loginSuccess();
+            } else {
+                loginFailure(3);
+                // Reset to step 1 on failure
+                showLoginStep(1);
+                password1.value = '';
+            }
+        });
+
+        // Also add Enter key support
+        password1.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') loginBtn1.click();
+        });
+
+        password2.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') loginBtn2.click();
+        });
+
+        password3.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') loginBtn3.click();
+        });
+        
+        // Main Interface Functions
+        function initMainInterface() {
+            // Load contacts
+            const savedContacts = localStorage.getItem('whatsapp-contacts');
+            contacts = savedContacts ? JSON.parse(savedContacts) : [
+                {
+                    id: 1,
+                    name: "Coco",
+                    number: "manne.co.uk",
+                    notes: "Primary contact for emergencies",
+                    meta: {
+                        added: new Date().toISOString(),
+                        location: "Unknown",
+                        ip: "192.168.1.1",
+                        device: "Desktop"
+                    }
+                },
+                {
+                    id: 2,
+                    name: "Security Team",
+                    number: "888X-9X8-484X",
+                    notes: "24/7 emergency line",
+                    meta: {
+                        added: new Date().toISOString(),
+                        location: "HQ",
+                        ip: "10.0.0.1",
+                        device: "Mobile"
+                    }
+                }
+            ];
+            
+            renderContacts();
+            
+            // Add event listeners
+            addContactBtn.addEventListener('click', () => {
+                document.getElementById('contact-name').value = '';
+                document.getElementById('contact-number').value = '';
+                document.getElementById('contact-notes').value = '';
+                contactModal.style.display = 'flex';
+            });
+            
+            cancelContactBtn.addEventListener('click', () => {
+                contactModal.style.display = 'none';
+            });
+            
+            saveContactBtn.addEventListener('click', saveContact);
+            
+            cancelPasswordBtn.addEventListener('click', () => {
+                whatsappPassword.style.display = 'none';
+                passwordInput.value = '';
+                tapCount = 0;
+            });
+            
+            submitPasswordBtn.addEventListener('click', () => {
+                if (passwordInput.value === PASSWORDS.whatsapp) {
+                    const activeBtn = document.querySelector('.whatsapp-btn.active');
+                    if (activeBtn) {
+                        sendWhatsAppMessage(activeBtn.dataset.number);
+                    }
+                    whatsappPassword.style.display = 'none';
+                    passwordInput.value = '';
+                } else {
+                    alert('Incorrect password!');
+                    passwordInput.value = '';
+                }
+                tapCount = 0;
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === contactModal) {
+                    contactModal.style.display = 'none';
+                }
+                if (e.target === whatsappPassword) {
+                    whatsappPassword.style.display = 'none';
+                    passwordInput.value = '';
+                    tapCount = 0;
+                }
+            });
+            
+            // Create particles
+            createParticles();
+        }
+        
+        function renderContacts() {
+            contactsContainer.innerHTML = '';
+            contacts.forEach(contact => {
+                const contactEl = document.createElement('div');
+                contactEl.className = 'contact-item';
+                contactEl.innerHTML = `
+                    <div class="contact-label">${contact.name}</div>
+                    <div class="contact-value">${contact.number}</div>
+                    <div class="contact-meta">
+                        Added: ${new Date(contact.meta.added).toLocaleString()} | 
+                        Location: ${contact.meta.location} | 
+                        IP: ${contact.meta.ip} | 
+                        Device: ${contact.meta.device}
+                    </div>
+                    ${contact.notes ? `<div>${contact.notes}</div>` : ''}
+                    <button class="whatsapp-btn" data-number="${contact.number}">
+                        <i class="fab fa-whatsapp"></i> Send WhatsApp
+                    </button>
+                `;
+                contactsContainer.appendChild(contactEl);
+            });
+            
+            // Add event listeners to WhatsApp buttons
+            document.querySelectorAll('.whatsapp-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Highlight active button
+                    document.querySelectorAll('.whatsapp-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    tapCount++;
+                    const now = Date.now();
+                    
+                    if (tapCount === 1) {
+                        lastTapTime = now;
+                        setTimeout(() => {
+                            if (tapCount === 1) {
+                                // Single tap - show password prompt
+                                whatsappPassword.style.display = 'flex';
+                                passwordInput.focus();
+                                tapCount = 0;
+                            }
+                        }, 300);
+                    } else if (tapCount >= 5 && (now - lastTapTime) < 1000) {
+                        // 5 taps within 1 second - bypass password
+                        sendWhatsAppMessage(this.dataset.number);
+                        tapCount = 0;
+                    } else if (now - lastTapTime > 1000) {
+                        tapCount = 1;
+                        lastTapTime = now;
+                    }
+                });
+            });
+        }
+        
+        function sendWhatsAppMessage(number) {
+            // Encode the message
+            const message = encodeURIComponent(`Alert from Security Monitoring System - ${new Date().toLocaleString()}`);
+            
+            // Open WhatsApp link
+            window.open(`https://wa.me/${number}?text=${message}`, '_blank');
+            
+            // Log the action
+            addSystemLog(`WhatsApp message sent to ${number}`);
+        }
+        
+        function addSystemLog(message) {
+            const logItem = document.createElement('div');
+            logItem.className = 'info-item';
+            logItem.innerHTML = `
+                <div class="time">${new Date().toLocaleTimeString()}</div>
+                <div>${message}</div>
+            `;
+            document.querySelector('.alert-panel').appendChild(logItem);
+        }
+        
+        function saveContact() {
+            const name = document.getElementById('contact-name').value;
+            const number = document.getElementById('contact-number').value;
+            const notes = document.getElementById('contact-notes').value;
+            
+            if (name && number) {
+                const userInfo = getUserInfo();
+                
+                contacts.push({
+                    id: Date.now(),
+                    name,
+                    number,
+                    notes,
+                    meta: {
+                        added: new Date().toISOString(),
+                        location: userInfo.location,
+                        ip: userInfo.ip,
+                        device: userInfo.device
+                    }
+                });
+                
+                saveContactsToStorage();
+                renderContacts();
+                contactModal.style.display = 'none';
+                
+                addSystemLog(`New contact added: ${name}`);
+            } else {
+                alert('Please fill in at least name and number');
+            }
+        }
+        
+        function saveContactsToStorage() {
+            localStorage.setItem('whatsapp-contacts', JSON.stringify(contacts));
+        }
+        
+        function getUserInfo() {
+            return {
+                location: "Approx: " + (navigator.geolocation ? "Location tracking enabled" : "Unknown"),
+                ip: "Detecting...", // This would require a backend service to get real IP
+                device: navigator.userAgent.split(') ')[0].split(' (')[1] || "Unknown device"
+            };
+        }
+        
+        // Initialize login screen
+        showLoginStep(1);
+        password1.focus();
+        
+        // Add shake animation to CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+                20%, 40%, 60%, 80% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

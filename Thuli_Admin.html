@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THULI_DESHAN // SECURE PORTFOLIO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-blue: #0ff0fc;
+            --neon-pink: #ff2a6d;
+            --neon-purple: #d300c5;
+            --dark-bg: #0c0c1a;
+            --darker-bg: #050510;
+            --cyber-green: #00ff41;
+            --cyber-yellow: #ffe900;
+        }
+
+        /* Previous styles remain unchanged*/
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-bg);
+            color: var(--neon-blue);
+            font-family: 'Share Tech Mono', monospace;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Login Screen */
+        #login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--darker-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .terminal {
+            width: 600px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 20px var(--neon-blue);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background-color: #111;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--neon-blue);
+        }
+
+        .terminal-header span {
+            margin-right: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .red-dot { background-color: #ff5f56; }
+        .yellow-dot { background-color: #ffbd2e; }
+        .green-dot { background-color: #27c93f; }
+
+        .title {
+            margin-left: 10px;
+            color: var(--neon-blue);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            height: 300px;
+            overflow-y: auto;
+        }
+
+        .typing {
+            margin: 5px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid var(--neon-blue);
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--neon-blue); }
+        }
+
+        #password-input {
+            background: transparent;
+            border: 1px solid var(--neon-blue);
+            color: var(--cyber-green);
+            padding: 10px;
+            width: 100%;
+            margin: 15px 0;
+            font-family: 'Share Tech Mono', monospace;
+            outline: none;
+        }
+
+        #login-btn {
+            background: var(--darker-bg);
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        #login-btn:hover {
+            background: var(--neon-blue);
+            color: var(--darker-bg);
+            box-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        #error-msg {
+            color: var(--neon-pink);
+            margin-top: 20px;
+            min-height: 30px;
+            font-size: 1.5rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--neon-pink);
+            animation: pulse 1s infinite alternate;
+            padding: 10px;
+            border: 1px solid var(--neon-pink);
+            border-radius: 5px;
+            background-color: rgba(255, 42, 109, 0.1);
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @keyframes pulse {
+            from {
+                opacity: 0.7;
+                box-shadow: 0 0 5px var(--neon-pink);
+            }
+            to {
+                opacity: 1;
+                box-shadow: 0 0 20px var(--neon-pink);
+            }
+        }
+
+        /* Katana Animation */
+        .katana-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2000;
+            display: none;
+        }
+
+        .katana {
+            position: absolute;
+            width: 300px;
+            height: 50px;
+            background: linear-gradient(90deg, rgba(0,0,0,0), var(--neon-blue), rgba(0,0,0,0));
+            transform-origin: left center;
+            animation: katana-slash 0.5s forwards;
+            filter: blur(1px);
+            opacity: 0;
+        }
+
+        @keyframes katana-slash {
+            0% {
+                transform: rotate(-30deg) scaleX(0);
+                opacity: 0;
+                top: 20%;
+                left: 20%;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(45deg) scaleX(1);
+                opacity: 0;
+                top: 60%;
+                left: 60%;
+            }
+        }
+
+        /* Nitro Boost Animation */
+        .nitro-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2000;
+            display: none;
+        }
+
+        .nitro-particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--neon-blue);
+            border-radius: 50%;
+            filter: blur(2px);
+            animation: nitro-blast 1s forwards;
+        }
+
+        @keyframes nitro-blast {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Security System Styles */
+        .blocked-message {
+            color: var(--neon-pink);
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            text-shadow: 0 0 5px var(--neon-pink);
+        }
+
+        .security-alert {
+            color: var(--cyber-yellow);
+            background-color: rgba(255, 233, 0, 0.1);
+            border: 1px solid var(--cyber-yellow);
+            padding: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        /* Main Content */
+        .hidden {
+            display: none !important;
+        }
+
+        #main-content {
+            position: relative;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Cyber Effects */
+        .cyber-glitch {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.1"/></svg>');
+            pointer-events: none;
+            z-index: -1;
+            animation: glitch 5s linear infinite;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 255, 65, 0.03) 0%,
+                rgba(0, 255, 65, 0.03) 50%,
+                transparent 50%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        /* Header */
+        .cyber-header {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .cyber-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin: 0;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+            position: relative;
+            letter-spacing: 3px;
+        }
+
+        .cyber-header h1::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--neon-pink);
+            width: 100%;
+            overflow: hidden;
+            animation: glitch-effect 3s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-effect {
+            0% { clip-path: inset(0 0 95% 0); }
+            10% { clip-path: inset(0 0 60% 0); }
+            20% { clip-path: inset(0 0 30% 0); }
+            30% { clip-path: inset(0 0 55% 0); }
+            40% { clip-path: inset(0 0 85% 0); }
+            50% { clip-path: inset(0 0 15% 0); }
+            60% { clip-path: inset(0 0 75% 0); }
+            70% { clip-path: inset(0 0 45% 0); }
+            80% { clip-path: inset(0 0 25% 0); }
+            90% { clip-path: inset(0 0 65% 0); }
+            100% { clip-path: inset(0 0 5% 0); }
+        }
+
+        .cyber-header p {
+            color: var(--cyber-green);
+            margin-top: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Navigation */
+        .cyber-nav {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .cyber-nav ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 2rem;
+        }
+
+        .cyber-nav a {
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .cyber-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--neon-blue);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s;
+        }
+
+        .cyber-nav a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Main Content Grid */
+        .cyber-main {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        /* Cyber Cards */
+        .cyber-card {
+            background: rgba(5, 5, 16, 0.7);
+            border: 1px solid var(--neon-blue);
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+            transition: all 0.3s;
+        }
+
+        .cyber-card:hover {
+            box-shadow: 0 0 25px rgba(0, 255, 65, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .cyber-card h2 {
+            color: var(--neon-pink);
+            margin-top: 0;
+            border-bottom: 1px solid var(--neon-blue);
+            padding-bottom: 10px;
+        }
+
+        /* Avatar */
+        .avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .avatar::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(10px);
+        }
+
+        /* Skills Section */
+        .skill {
+            margin-bottom: 15px;
+        }
+
+        .skill-bar {
+            height: 10px;
+            background: var(--darker-bg);
+            margin-top: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+            width: 0;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            color: var(--neon-pink);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(15, 15, 30, 0.7);
+            border: 1px solid var(--neon-blue);
+            border-radius: 5px;
+            overflow: hidden;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 65, 0.3);
+            border-color: var(--neon-pink);
+        }
+
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            color: var(--cyber-green);
+            margin: 0 0 1rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .project-desc {
+            color: var(--neon-blue);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--cyber-green);
+            color: var(--cyber-green);
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
+            border-radius: 20px;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-link {
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .project-link:hover {
+            color: var(--neon-pink);
+        }
+        .read-more-btn {
+    background: transparent;
+    color: var(--neon-blue);
+    border: 1px solid var(--neon-blue);
+    padding: 8px 15px;
+    margin: 10px 0;
+    cursor: pointer;
+    font-family: 'Share Tech Mono', monospace;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.read-more-btn:hover {
+    background: var(--neon-blue);
+    color: var(--darker-bg);
+    box-shadow: 0 0 10px var(--neon-blue);
+}
+
+.read-more-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(0, 255, 65, 0.4),
+        transparent);
+    transition: left 0.7s;
+}
+
+.read-more-btn:hover::after {
+    left: 100%;
+}
+
+.project-details {
+    color: var(--neon-blue);
+    margin: 15px 0;
+    line-height: 1.6;
+    border-top: 1px dashed var(--neon-blue);
+    padding-top: 10px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+        /* Contact Section */
+        .contact-section {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 3rem auto;
+            background: rgba(5, 5, 16, 0.7);
+            border: 1px solid var(--neon-purple);
+            border-radius: 5px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--neon-pink);
+        }
+
+        .contact-text h3 {
+            color: var(--cyber-green);
+            margin: 0 0 0.3rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .contact-text p, .contact-text a {
+            color: var(--neon-blue);
+            margin: 0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-text a:hover {
+            color: var(--neon-pink);
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--neon-pink);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--neon-blue);
+            color: var(--cyber-green);
+            font-family: 'Share Tech Mono', monospace;
+            border-radius: 3px;
+        }
+
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 10px var(--neon-pink);
+        }
+
+        .submit-btn {
+            background: var(--darker-bg);
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+            padding: 0.8rem 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            background: var(--neon-blue);
+            color: var(--darker-bg);
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(0, 255, 65, 0.4), 
+                transparent);
+            transition: left 0.7s;
+        }
+
+        .submit-btn:hover::after {
+            left: 100%;
+        }
+
+        /* Footer */
+        .cyber-footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid var(--neon-blue);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .footer-link {
+            color: var(--neon-blue);
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .footer-link:hover {
+            color: var(--neon-pink);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            color: var(--neon-blue);
+            font-size: 0.9rem;
+        }
+
+        .neon-green {
+            color: var(--cyber-green);
+            text-shadow: 0 0 5px var(--cyber-green);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .terminal {
+                width: 90%;
+            }
+            
+            .cyber-header h1 {
+                font-size: 2rem;
+            }
+            
+            .cyber-nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Adding new styles for 3-step login */
+
+        /* Step Indicator */
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 15px;
+        }
+        
+        .step-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(0, 255, 65, 0.3);
+            border: 1px solid var(--cyber-green);
+            transition: all 0.3s;
+        }
+        
+        .step-dot.active {
+            background-color: var(--cyber-green);
+            box-shadow: 0 0 10px var(--cyber-green);
+        }
+        
+        .step-dot.completed {
+            background-color: var(--neon-blue);
+            border-color: var(--neon-blue);
+        }
+
+        /* Login Steps */
+        .login-step {
+            display: none;
+            animation: fadeIn 0.5s forwards;
+        }
+        
+        .login-step.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .step-title {
+            color: var(--neon-blue);
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        /* Step Navigation */
+        .step-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .step-btn {
+            background: var(--darker-bg);
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+            padding: 8px 15px;
+            cursor: pointer;
+            font-family: 'Share Tech Mono', monospace;
+            transition: all 0.3s;
+        }
+        
+        .step-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .step-btn:hover:not(:disabled) {
+            background: var(--neon-blue);
+            color: var(--darker-bg);
+        }
+        
+        .step-btn.hidden {
+            visibility: hidden;
+        }
+
+        /* Security Question Styles */
+        .security-question {
+            margin: 15px 0;
+        }
+        
+        .security-question label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--cyber-green);
+        }
+        
+        .security-question select,
+        .security-question input {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--neon-blue);
+            color: var(--cyber-green);
+            font-family: 'Share Tech Mono', monospace;
+        }
+        
+        /* Biometric Verification */
+        .biometric-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .biometric-icon {
+            font-size: 3rem;
+            color: var(--neon-blue);
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .biometric-icon:hover {
+            color: var(--neon-pink);
+            transform: scale(1.1);
+        }
+        
+        .biometric-instructions {
+            color: var(--cyber-green);
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        /* WhatsApp Alert */
+        .whatsapp-alert {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.5);
+            display: none;
+            z-index: 10000;
+            animation: pulse-green 2s infinite;
+        }
+        
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 5px rgba(37, 211, 102, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(37, 211, 102, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(37, 211, 102, 0.5); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Katana Animation Container -->
+    <div class="katana-container" id="katana-container"></div>
+    
+    <!-- Nitro Animation Container -->
+    <div class="nitro-container" id="nitro-container"></div>
+    
+    <!-- WhatsApp Alert Notification -->
+    <div class="whatsapp-alert" id="whatsapp-alert">
+        <i class="fab fa-whatsapp"></i> Security alert sent to admin
+    </div>
+    
+    <!-- Login Screen -->
+    <div id="login-screen">
+        <div class="terminal">
+            <div class="terminal-header">
+                <span class="red-dot"></span>
+                <span class="yellow-dot"></span>
+                <span class="green-dot"></span>
+                <span class="title">Thuli_SECURE ACCESS</span>
+            </div>
+            <div class="terminal-body">
+                <div id="login-animation">
+                    <p class="typing">> INITIALIZING CYBER//SECURITY v4.2.1</p>
+                    <p class="typing">> ACTIVATING MULTI-STEP VERIFICATION</p>
+                    <p class="typing">> ESTABLISHING QUANTUM ENCRYPTION...</p>
+                    <p class="typing">> SCANNING FOR INTRUSIONS...</p>
+                    <p class="typing">> SYSTEM SECURE</p>
+                </div>
+                
+                <!-- Step Indicator -->
+                <div class="step-indicator">
+                    <div class="step-dot" id="step1-dot"></div>
+                    <div class="step-dot" id="step2-dot"></div>
+                    <div class="step-dot" id="step3-dot"></div>
+                </div>
+                
+                <!-- Step 1: Password -->
+                <div class="login-step active" id="step1">
+                    <h3 class="step-title">STEP 1: ENTER MASTER PASSWORD</h3>
+                    <input type="password" id="password-input" class="step-input" autocomplete="off" placeholder="Enter access code">
+                    <div class="step-navigation">
+                        <button class="step-btn hidden"></button>
+                        <button class="step-btn" id="step1-next">[ NEXT ]</button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Security Question -->
+                <div class="login-step" id="step2">
+                    <h3 class="step-title">STEP 2: VERIFY IDENTITY</h3>
+                    <div class="security-question">
+                        <label for="security-question">SECURITY QUESTION:</label>
+                        <select id="security-question" class="step-input">
+                            <option value="">Select a question</option>
+                            <option value="1">What was the name of your first cyber operation?</option>
+                            <option value="2">Where did you perform your first penetration test?</option>
+                            <option value="3">What is your favorite encryption algorithm?</option>
+                        </select>
+                    </div>
+                    <div class="security-question">
+                        <label for="security-answer">ANSWER:</label>
+                        <input type="text" id="security-answer" class="step-input" placeholder="Enter your answer">
+                    </div>
+                    <div class="step-navigation">
+                        <button class="step-btn" id="step2-back">[ BACK ]</button>
+                        <button class="step-btn" id="step2-next">[ NEXT ]</button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Biometric Verification -->
+                <div class="login-step" id="step3">
+                    <h3 class="step-title">STEP 3: BIOMETRIC VERIFICATION</h3>
+                    <div class="biometric-container">
+                        <div class="biometric-icon" id="biometric-scan">
+                            <i class="fas fa-fingerprint"></i>
+                        </div>
+                        <p class="biometric-instructions">Click fingerprint icon to scan biometric data</p>
+                    </div>
+                    <div class="step-navigation">
+                        <button class="step-btn" id="step3-back">[ BACK ]</button>
+                        <button class="step-btn" id="step3-submit">[ COMPLETE AUTHENTICATION ]</button>
+                    </div>
+                </div>
+                
+                <p id="error-msg"></p>
+                <div id="security-alert" class="security-alert hidden"></div>
+                <div id="blocked-message" class="blocked-message hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content remains the same -->
+    <div id="main-content" class="hidden">
+        <!-- ... existing content ... -->
+ <div class="cyber-glitch"></div>
+ <div class="scanlines"></div>
+ 
+ <header class="cyber-header">
+   <h1 data-text="THULI_DESHAN">THULI_DESHAN</h1>
+   <p>CYBER SECURITY SPECIALIST // FULL-STACK DEVELOPER // AI RESEARCHER</p>
+ </header>
+ 
+ <nav class="cyber-nav">
+   <ul>
+     <li><a href="#about">[ABOUT]</a></li>
+     <li><a href="#skills">[SKILLS]</a></li>
+     <li><a href="#projects">[PROJECTS]</a></li>
+     <li><a href="#contact">[CONTACT]</a></li>
+   </ul>
+ </nav>
+ 
+ <main>
+   <section id="about" class="cyber-card">
+     <h2>> ABOUT_ME</h2>
+     <div class="content">
+       <div class="avatar"></div>
+       <p>CYBER SECURITY SPECIALIST // ETHICAL HACKER // AI RESEARCHER</p>
+       <p>LOCATION: [REDACTED]</p>
+       <p>STATUS: [ACTIVE]</p>
+       <p>> CURRENT MISSION: DEVELOPING NEXT-GEN SECURITY PROTOCOLS</p>
+     </div>
+   </section>
+   
+   <section id="skills" class="cyber-card">
+     <h2>> SKILLS_MATRIX</h2>
+     <div class="skill">
+       <span>PENETRATION TESTING</span>
+       <div class="skill-bar" data-level="95"></div>
+     </div>
+     <div class="skill">
+       <span>CRYPTOGRAPHY</span>
+       <div class="skill-bar" data-level="90"></div>
+     </div>
+     <div class="skill">
+       <span>MALWARE ANALYSIS</span>
+       <div class="skill-bar" data-level="85"></div>
+     </div>
+     <div class="skill">
+       <span>NEURAL NETWORKS</span>
+       <div class="skill-bar" data-level="80"></div>
+     </div>
+   </section>
+   
+   <section id="projects" class="projects-section">
+     <h2 class="section-title"> PROJECTS</h2>
+     
+     <div class="project-grid">
+                       <!-- Project 1 -->
+                       <div class="project-card">
+                        <div class="project-image">
+                            <img src="image/cyberpunk-city-street-night-with-neon-lights-futuristic-aesthetic.jpg" alt="Quantum Encryption">
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">QUANTUM ENCRYPTION MODULE</h3>
+                            <p class="project-desc">Developed a quantum-resistant encryption protocol using entangled photon pairs to secure data transmission across neural networks.</p>
+                            <div class="project-details" style="display: none;">
+                                <p>> DEVELOPMENT PERIOD: 2042.09.15 - 2043.02.28</p>
+                                <p>> TECHNOLOGIES USED: Quantum Key Distribution, Photonic Circuits</p>
+                                <p>> ACHIEVEMENTS: Reduced decryption attempts by 98.7%</p>
+                              </div>
+                              
+                              <button class="read-more-btn">[ READ MORE ]</button>
+                            <div class="project-tech">
+                                <span class="tech-tag">Q#</span>
+                                <span class="tech-tag">Post-Quantum Crypto</span>
+                                <span class="tech-tag">Photonics</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> READ MORE</a>
+                                <a href="#" class="project-link"><i class="fab fa-github"></i> SOURCE CODE</a>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Project 2 -->
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="image/fantasy-scene-anime-style.jpg" alt="AI Security">
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">NEURAL INTRUSION DETECTION</h3>
+                            <p class="project-desc">AI-powered network monitoring system that detects and neutralizes threats in real-time using deep learning algorithms.</p>
+                            <div class="project-details" style="display: none;">
+                                <p>> DEVELOPMENT PERIOD: 2042.09.15 - 2043.02.28</p>
+                                <p>> TECHNOLOGIES USED: Quantum Key Distribution, Photonic Circuits</p>
+                                <p>> ACHIEVEMENTS: Reduced decryption attempts by 98.7%</p>
+                              </div>
+                              
+                              <button class="read-more-btn">[ READ MORE ]</button>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">TensorFlow</span>
+                                <span class="tech-tag">Cyber Analytics</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> READ MORE</a>
+                                <a href="#" class="project-link"><i class="fab fa-github"></i> SOURCE CODE</a>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Project 3 -->
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="image/cyberpunk-city-street-night-with-neon-lights-futuristic-aesthetic_23-2151488745.jpg" alt="Blockchain">
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">DECENTRALIZED IDENTITY PROTOCOL</h3>
+                            <p class="project-desc">Blockchain-based identity verification system that eliminates centralized authority while maintaining privacy.</p>
+                            <div class="project-details" style="display: none;">
+                                <p>> DEVELOPMENT PERIOD: 2042.09.15 - 2043.02.28</p>
+                                <p>> TECHNOLOGIES USED: Quantum Key Distribution, Photonic Circuits</p>
+                                <p>> ACHIEVEMENTS: Reduced decryption attempts by 98.7%</p>
+                              </div>
+                              
+                              <button class="read-more-btn">[ READ MORE ]</button>
+                            <div class="project-tech">
+                                <span class="tech-tag">Solidity</span>
+                                <span class="tech-tag">Ethereum</span>
+                                <span class="tech-tag">ZK-SNARKs</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> READ MORE</a>
+                                <a href="#" class="project-link"><i class="fab fa-github"></i> SOURCE CODE</a>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Project 4 -->
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="image/wallpaperflare.com_wallpaper (1).jpg" alt="Cloud Security">
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">CLOUD SECURITY FRAMEWORK</h3>
+                            <p class="project-desc">Comprehensive security architecture for hybrid cloud environments with zero-trust principles.</p>
+                            <div class="project-details" style="display: none;">
+                                <p>> DEVELOPMENT PERIOD: 2042.09.15 - 2043.02.28</p>
+                                <p>> TECHNOLOGIES USED: Quantum Key Distribution, Photonic Circuits</p>
+                                <p>> ACHIEVEMENTS: Reduced decryption attempts by 98.7%</p>
+                              </div>
+                              
+                              <button class="read-more-btn">[ READ MORE ]</button>
+                            <div class="project-tech">
+                                <span class="tech-tag">AWS</span>
+                                <span class="tech-tag">Kubernetes</span>
+                                <span class="tech-tag">Zero Trust</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> READ MORE</a>
+                                <a href="#" class="project-link"><i class="fab fa-github"></i> SOURCE CODE</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project 5 -->
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="image/wallpaperflare.com_wallpaper.jpg" alt="Cloud Security">
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">CLOUD SECURITY FRAMEWORK</h3>
+                            <p class="project-desc">Comprehensive security architecture for hybrid cloud environments with zero-trust principles.</p>
+                            <div class="project-details" style="display: none;">
+                                <p>> DEVELOPMENT PERIOD: 2042.09.15 - 2043.02.28</p>
+                                <p>> TECHNOLOGIES USED: Quantum Key Distribution, Photonic Circuits</p>
+                                <p>> ACHIEVEMENTS: Reduced decryption attempts by 98.7%</p>
+                              </div>
+                              
+                              <button class="read-more-btn">[ READ MORE ]</button>
+                            <div class="project-tech">
+                                <span class="tech-tag">AWS</span>
+                                <span class="tech-tag">Kubernetes</span>
+                                <span class="tech-tag">Zero Trust</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> READ MORE</a>
+                                <a href="#" class="project-link"><i class="fab fa-github"></i> SOURCE CODE</a>
+                            </div>
+                        </div>
+                    </div><!-- Project 6 -->
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="image/wallpaperflare.com_wallpaper (2).jpg" alt="Cloud Security">
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">CLOUD SECURITY FRAMEWORK</h3>
+                            <p class="project-desc">Comprehensive security architecture for hybrid cloud environments with zero-trust principles.</p>
+                            <div class="project-details" style="display: none;">
+                                <p>> DEVELOPMENT PERIOD: 2042.09.15 - 2043.02.28</p>
+                                <p>> TECHNOLOGIES USED: Quantum Key Distribution, Photonic Circuits</p>
+                                <p>> ACHIEVEMENTS: Reduced decryption attempts by 98.7%</p>
+                              </div>
+                              
+                              <button class="read-more-btn">[ READ MORE ]</button>
+                            <div class="project-tech">
+                                <span class="tech-tag">AWS</span>
+                                <span class="tech-tag">Kubernetes</span>
+                                <span class="tech-tag">Zero Trust</span>
+                            </div>
+                            <div class="project-links">
+                        
+                                <a href="#" class="project-link"><i class="fab fa-github"></i> SOURCE CODE</a>
+                            </div>
+                        </div>
+       </div>
+     </div>
+   </section>
+   
+   <section id="contact" class="contact-section">
+     <h2 class="section-title"> CONTACT</h2>
+     
+     <div class="contact-grid">
+       <div class="contact-info">
+         <div class="contact-method">
+           <div class="contact-icon">
+             <i class="fas fa-envelope"></i>
+           </div>
+           <div class="contact-text">
+             <h3>EMAIL</h3>
+             <a href="mailto:thulideshan@gmail.com">exampal@mail.com</a>
+           </div>
+         </div>
+         
+         <div class="contact-method">
+           <div class="contact-icon">
+             <i class="fas fa-phone-alt"></i>
+           </div>
+           <div class="contact-text">
+             <h3>SECURE LINE</h3>
+             <p>+94 754551129</p>
+           </div>
+         </div>
+         
+         <div class="contact-method">
+           <div class="contact-icon">
+             <i class="fas fa-map-marker-alt"></i>
+           </div>
+           <div class="contact-text">
+             <h3>LOCATION</h3>
+             <p>Sri Lanka, Badulla</p>
+           </div>
+         </div>
+       </div>
+       
+       <div class="contact-form">
+         <form id="cyber-contact-form">
+           <div class="form-group">
+             <label for="name">IDENTIFICATION:</label>
+             <input type="text" id="name" required>
+           </div>
+           <div class="form-group">
+             <label for="email">SECURE CHANNEL:</label>
+             <input type="email" id="email" required>
+           </div>
+           <div class="form-group">
+             <label for="message">MESSAGE:</label>
+             <textarea id="message" required></textarea>
+           </div>
+           <button type="submit" class="submit-btn">[ INITIATE TRANSMISSION ]</button>
+         </form>
+       </div>
+     </div>
+   </section>
+   </main>
+
+<footer class="cyber-footer">
+  <p>SYSTEM TIME: <span id="cyber-time">00:00:00</span></p>
+  <p>CONNECTION STATUS: <span class="neon-green">SECURE</span></p>
+  <p class="copyright">> SYSTEM MESSAGE: ALL RIGHTS RESERVED // THULI_DESHAN © 2023</p>
+  <div class="footer-links">
+    <a href="#" class="footer-link"><i class="fab fa-github"></i></a>
+    <a href="#" class="footer-link"><i class="fab fa-linkedin"></i></a>
+    <a href="#" class="footer-link"><i class="fab fa-twitter"></i></a>
+    <a href="#" class="footer-link"><i class="fab fa-discord"></i></a>
+    <a href="Thuli_security.html" class="footer-link"><i class="fas fa-external-link-alt"></i></a>
+  </div>
+</footer>
+    </div>
+
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configuration
+            const ADMIN_WHATSAPP_NUMBER = "94754551129"; // Replace with your WhatsApp number
+            
+            // Authentication data
+            const authData = {
+                // Step 1: Master Password
+                masterPassword: "003@Thuli_$Deshan:C2",
+                
+                // Step 2: Security Questions (id: {question, answer})
+                securityQuestions: {
+                    1: {
+                        question: "What was the name of your Favorite person ?",
+                        answer: "School_Teacher"
+                    },
+                    2: {
+                        question: "Where did you perform your first penetration test?",
+                        answer: "School_Lab"
+                    },
+                    3: {
+                        question: "What is your favorite encryption Subject?",
+                        answer: "Maths_Cyber"
+                    }
+                },
+                
+                // Step 3: Biometric token (simulated)
+                biometricToken: "b10m3tr1c_$c4n_2023"
+            };
+            
+            // DOM elements
+            const loginScreen = document.getElementById('login-screen');
+            const mainContent = document.getElementById('main-content');
+            const errorMsg = document.getElementById('error-msg');
+            const securityAlert = document.getElementById('security-alert');
+            const blockedMessage = document.getElementById('blocked-message');
+            const whatsappAlert = document.getElementById('whatsapp-alert');
+            
+            // Step elements
+            const steps = {
+                1: document.getElementById('step1'),
+                2: document.getElementById('step2'),
+                3: document.getElementById('step3')
+            };
+            
+            const stepDots = {
+                1: document.getElementById('step1-dot'),
+                2: document.getElementById('step2-dot'),
+                3: document.getElementById('step3-dot')
+            };
+            
+            // Navigation buttons
+            const step1Next = document.getElementById('step1-next');
+            const step2Back = document.getElementById('step2-back');
+            const step2Next = document.getElementById('step2-next');
+            const step3Back = document.getElementById('step3-back');
+            const step3Submit = document.getElementById('step3-submit');
+            
+            // Input fields
+            const passwordInput = document.getElementById('password-input');
+            const securityQuestion = document.getElementById('security-question');
+            const securityAnswer = document.getElementById('security-answer');
+            const biometricScan = document.getElementById('biometric-scan');
+            
+            // Security system variables
+            let failedAttempts = 0;
+            let isBlocked = false;
+            let blockedUntil = null;
+            const maxAttempts = 3;
+            const blockDuration = 10 * 60 * 1000; // 10 minutes in milliseconds
+            
+            // Current step tracking
+            let currentStep = 1;
+            let step1Completed = false;
+            let step2Completed = false;
+            
+            // Animation containers
+            const katanaContainer = document.getElementById('katana-container');
+            const nitroContainer = document.getElementById('nitro-container');
+            
+            // Initialize steps
+            function initSteps() {
+                // Show only the first step initially
+                Object.values(steps).forEach(step => step.classList.remove('active'));
+                steps[1].classList.add('active');
+                
+                // Reset step indicators
+                Object.values(stepDots).forEach(dot => {
+                    dot.classList.remove('active', 'completed');
+                });
+                stepDots[1].classList.add('active');
+                
+                // Focus on first input
+                passwordInput.focus();
+            }
+            
+            // Move to step
+            function goToStep(stepNumber) {
+                // Validate step number
+                if (stepNumber < 1 || stepNumber > 3) return;
+                
+                // Hide all steps
+                Object.values(steps).forEach(step => step.classList.remove('active'));
+                
+                // Show the selected step
+                steps[stepNumber].classList.add('active');
+                
+                // Update step indicators
+                Object.values(stepDots).forEach(dot => {
+                    dot.classList.remove('active', 'completed');
+                });
+                
+                // Mark previous steps as completed
+                for (let i = 1; i < stepNumber; i++) {
+                    stepDots[i].classList.add('completed');
+                }
+                
+                // Mark current step as active
+                stepDots[stepNumber].classList.add('active');
+                
+                // Update current step
+                currentStep = stepNumber;
+                
+                // Focus on first input in the step
+                if (stepNumber === 1) passwordInput.focus();
+                if (stepNumber === 2) securityQuestion.focus();
+                if (stepNumber === 3) biometricScan.focus();
+            }
+            
+            // Check if IP is blocked in localStorage
+            function checkBlockedStatus() {
+                const blockedData = localStorage.getItem('blockedIPs');
+                if (blockedData) {
+                    const blockedIPs = JSON.parse(blockedData);
+                    const clientIP = getIP();
+                    
+                    if (blockedIPs[clientIP] && new Date(blockedIPs[clientIP]) > new Date()) {
+                        isBlocked = true;
+                        blockedUntil = new Date(blockedIPs[clientIP]);
+                        updateBlockedMessage();
+                        return true;
+                    }
+                }
+                return false;
+            }
+            
+            // Get user details for security alerts
+            function getUserDetails() {
+                return {
+                    time: new Date().toLocaleString(),
+                    ip: getIP(),
+                    device: navigator.userAgent,
+                    location: getLocationInfo()
+                };
+            }
+            
+            // Simplified IP detection
+            function getIP() {
+                return 'demo-ip-' + Math.floor(Math.random() * 1000); // Simulated IP for demo
+            }
+            
+            // Simplified location detection
+            function getLocationInfo() {
+                return "Approximate location: " + (navigator.geolocation ? "Available" : "Unknown");
+            }
+            
+            // Send WhatsApp alert
+            function sendWhatsAppAlert(message) {
+                const encodedMessage = encodeURIComponent(message);
+                window.open(`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+                
+                // Show notification
+                whatsappAlert.style.display = 'block';
+                setTimeout(() => {
+                    whatsappAlert.style.display = 'none';
+                }, 3000);
+            }
+            
+            // Block the IP
+            function blockIP() {
+                const clientIP = getIP();
+                const blockedIPs = JSON.parse(localStorage.getItem('blockedIPs') || '{}');
+                
+                const unblockTime = new Date(Date.now() + blockDuration);
+                blockedIPs[clientIP] = unblockTime.toISOString();
+                localStorage.setItem('blockedIPs', JSON.stringify(blockedIPs));
+                
+                isBlocked = true;
+                blockedUntil = unblockTime;
+                updateBlockedMessage();
+                
+                // Send WhatsApp alert
+                const userDetails = getUserDetails();
+                const alertMessage = 
+                    `🚨 SECURITY ALERT! 🚨\n\n` +
+                    `Multiple failed login attempts detected:\n\n` +
+                    `⏰ Time: ${userDetails.time}\n` +
+                    `📡 IP: ${userDetails.ip}\n` +
+                    `💻 Device: ${userDetails.device}\n` +
+                    `📍 Location: ${userDetails.location}\n\n` +
+                    `This IP has been temporarily blocked.`;
+                
+                sendWhatsAppAlert(alertMessage);
+            }
+            
+            // Update blocked message
+            function updateBlockedMessage() {
+                if (isBlocked && blockedUntil) {
+                    const minsLeft = Math.ceil((blockedUntil - new Date()) / (1000 * 60));
+                    blockedMessage.textContent = `> ACCESS BLOCKED. Try again in ${minsLeft} minute(s).`;
+                    blockedMessage.classList.remove('hidden');
+                    
+                    // Disable all inputs and buttons
+                    document.querySelectorAll('.step-input, .step-btn').forEach(el => {
+                        el.disabled = true;
+                    });
+                    
+                    // Check every minute if block has expired
+                    const checkInterval = setInterval(() => {
+                        if (new Date() >= blockedUntil) {
+                            clearInterval(checkInterval);
+                            isBlocked = false;
+                            blockedUntil = null;
+                            blockedMessage.textContent = '';
+                            blockedMessage.classList.add('hidden');
+                            document.querySelectorAll('.step-input, .step-btn').forEach(el => {
+                                el.disabled = false;
+                            });
+                            failedAttempts = 0;
+                        } else {
+                            const minsLeft = Math.ceil((blockedUntil - new Date()) / (1000 * 60));
+                            blockedMessage.textContent = `> ACCESS BLOCKED. Try again in ${minsLeft} minute(s).`;
+                        }
+                    }, 60000);
+                }
+            }
+            
+            // Create katana slash animation
+            function createKatanaAnimation() {
+                katanaContainer.style.display = 'block';
+                
+                for (let i = 0; i < 3; i++) {
+                    const katana = document.createElement('div');
+                    katana.className = 'katana';
+                    katana.style.animationDelay = `${i * 0.2}s`;
+                    katanaContainer.appendChild(katana);
+                }
+                
+                setTimeout(() => {
+                    katanaContainer.innerHTML = '';
+                    katanaContainer.style.display = 'none';
+                }, 1000);
+            }
+            
+            // Create nitro boost animation
+            function createNitroAnimation() {
+                nitroContainer.style.display = 'block';
+                
+                for (let i = 0; i < 50; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'nitro-particle';
+                    
+                    // Random direction and distance
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 50 + Math.random() * 100;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+                    
+                    particle.style.setProperty('--tx', `${tx}px`);
+                    particle.style.setProperty('--ty', `${ty}px`);
+                    particle.style.left = '50%';
+                    particle.style.top = '50%';
+                    particle.style.animationDelay = `${Math.random() * 0.5}s`;
+                    
+                    nitroContainer.appendChild(particle);
+                }
+                
+                setTimeout(() => {
+                    nitroContainer.innerHTML = '';
+                    nitroContainer.style.display = 'none';
+                }, 1500);
+            }
+            
+            // Simulate typing animation
+            const typingElements = document.querySelectorAll('.typing');
+            typingElements.forEach((el, index) => {
+                const text = el.textContent.replace('> ', '');
+                el.textContent = '> ';
+                
+                setTimeout(() => {
+                    typeWriter(el, text, 0, 50);
+                }, index * 1500);
+            });
+            
+            function typeWriter(element, text, i, speed) {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(() => typeWriter(element, text, i, speed), speed);
+                } else {
+                    element.style.borderRight = 'none';
+                }
+            }
+            
+            // Step 1: Password Verification
+            step1Next.addEventListener('click', function() {
+                if (isBlocked) return;
+                
+                const enteredPassword = passwordInput.value.trim();
+                
+                if (enteredPassword === authData.masterPassword) {
+                    // Correct password - proceed to step 2
+                    errorMsg.textContent = '';
+                    step1Completed = true;
+                    goToStep(2);
+                } else {
+                    // Incorrect password
+                    failedAttempts++;
+                    errorMsg.textContent = "⚠️ ERROR: Access Denied";
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                    
+                    // Add glitch effect
+                    loginScreen.classList.add('glitch-error');
+                    setTimeout(() => {
+                        loginScreen.classList.remove('glitch-error');
+                    }, 500);
+                    
+                    // After max failed attempts
+                    if (failedAttempts >= maxAttempts) {
+                        const userDetails = getUserDetails();
+                        const alertMessage = 
+                            `SECURITY ALERT!\n\n` +
+                            `Multiple failed login attempts detected:\n\n` +
+                            `Time: ${userDetails.time}\n` +
+                            `IP: ${userDetails.ip}\n` +
+                            `Device: ${userDetails.device}\n` +
+                            `Location: ${userDetails.location}\n\n` +
+                            `This IP has been temporarily blocked.`;
+                        
+                        // Show security alert
+                        securityAlert.textContent = alertMessage;
+                        securityAlert.classList.remove('hidden');
+                        
+                        // Block the IP and send WhatsApp alert
+                        blockIP();
+                    }
+                }
+            });
+            
+            // Step 2: Security Question Verification
+            step2Next.addEventListener('click', function() {
+                if (isBlocked) return;
+                
+                const questionId = securityQuestion.value;
+                const enteredAnswer = securityAnswer.value.trim();
+                
+                if (!questionId) {
+                    errorMsg.textContent = "⚠️ ERROR: PLEASE SELECT A SECURITY QUESTION";
+                    return;
+                }
+                
+                if (!enteredAnswer) {
+                    errorMsg.textContent = "⚠️ ERROR: PLEASE ENTER YOUR ANSWER";
+                    securityAnswer.focus();
+                    return;
+                }
+                
+                const correctAnswer = authData.securityQuestions[questionId].answer;
+                
+                if (enteredAnswer === correctAnswer) {
+                    // Correct answer - proceed to step 3
+                    errorMsg.textContent = '';
+                    step2Completed = true;
+                    goToStep(3);
+                } else {
+                    // Incorrect answer
+                    errorMsg.textContent = "> ERROR: INCORRECT SECURITY ANSWER";
+                    securityAnswer.value = '';
+                    securityAnswer.focus();
+                }
+            });
+            
+            // Step 3: Biometric Verification
+            step3Submit.addEventListener('click', function() {
+                if (isBlocked) return;
+                simulateBiometricScan();
+            });
+            
+            // Biometric scan simulation
+            biometricScan.addEventListener('click', function() {
+                if (isBlocked) return;
+                simulateBiometricScan();
+            });
+            
+            function simulateBiometricScan() {
+                // Show scanning animation
+                const icon = biometricScan.querySelector('i');
+                icon.classList.remove('fa-fingerprint');
+                icon.classList.add('fa-spinner', 'fa-spin');
+                
+                // Simulate scan delay
+                setTimeout(() => {
+                    // Successful scan
+                    icon.classList.remove('fa-spinner', 'fa-spin');
+                    icon.classList.add('fa-check');
+                    
+                    // Change button text
+                    step3Submit.textContent = "[ ACCESS GRANTED ]";
+                    step3Submit.style.backgroundColor = "var(--cyber-green)";
+                    step3Submit.style.color = "var(--darker-bg)";
+                    
+                    // Complete authentication
+                    setTimeout(completeAuthentication, 1000);
+                }, 2000);
+            }
+            
+            // Complete authentication process
+            function completeAuthentication() {
+                errorMsg.textContent = '';
+                
+                // Show appropriate animation
+                createKatanaAnimation();
+                setTimeout(createNitroAnimation, 500);
+                
+                // Grant access
+                setTimeout(() => {
+                    loginScreen.style.animation = 'fadeOut 1s forwards';
+                    
+                    setTimeout(() => {
+                        loginScreen.classList.add('hidden');
+                        mainContent.classList.remove('hidden');
+                        
+                        // Start cyber effects
+                        startCyberEffects();
+                    }, 1000);
+                }, 1500);
+                
+                failedAttempts = 0;
+            }
+            
+            // Navigation between steps
+            step2Back.addEventListener('click', function() {
+                goToStep(1);
+            });
+            
+            step3Back.addEventListener('click', function() {
+                goToStep(2);
+            });
+            
+            // Allow Enter key to submit current step
+            document.querySelectorAll('.step-input').forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        if (currentStep === 1) step1Next.click();
+                        if (currentStep === 2) step2Next.click();
+                        if (currentStep === 3) step3Submit.click();
+                    }
+                });
+            });
+            
+            // Cyber effects after login
+            function startCyberEffects() {
+                // Animate skill bars
+                document.querySelectorAll('.skill-bar').forEach(bar => {
+                    const level = bar.getAttribute('data-level');
+                    bar.style.width = level + '%';
+                });
+                
+                // Update cyber time
+                function updateCyberTime() {
+                    const now = new Date();
+                    const timeString = now.toLocaleTimeString('en-US', {hour12: false});
+                    document.getElementById('cyber-time').textContent = timeString;
+                    
+                    // Random glitch effect
+                    if (Math.random() > 0.9) {
+                        document.body.classList.add('glitch');
+                        setTimeout(() => {
+                            document.body.classList.remove('glitch');
+                        }, 200);
+                    }
+                }
+                
+                setInterval(updateCyberTime, 1000);
+                updateCyberTime();
+                
+                // Form submission
+                const contactForm = document.getElementById('cyber-contact-form');
+                
+                if (contactForm) {
+                    contactForm.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        
+                        // Get form values
+                        const name = document.getElementById('name').value;
+                        const email = document.getElementById('email').value;
+                        const message = document.getElementById('message').value;
+                        
+                        // Here you would normally send the data to a server
+                        console.log(`Message from ${name} (${email}): ${message}`);
+                        
+                        // Show confirmation
+                        alert("[ TRANSMISSION SUCCESSFUL ]\n\nYour message has been encrypted and transmitted.");
+                        contactForm.reset();
+                    });
+                }
+                
+                // Add floating animation to random elements
+                const elements = document.querySelectorAll('.project-card, .section-title');
+                elements.forEach(el => {
+                    if (Math.random() > 0.7) {
+                        el.classList.add('floating');
+                        // Randomize animation duration
+                        el.style.animationDuration = `${3 + Math.random() * 2}s`;
+                    }
+                });
+            }
+            
+            // Initialize the login process
+            initSteps();
+            
+            // Check blocked status on page load
+            window.addEventListener('load', () => {
+                if (checkBlockedStatus()) {
+                    document.querySelectorAll('.step-input, .step-btn').forEach(el => {
+                        el.disabled = true;
+                    });
+                }
+            });
+            
+            // Add CSS for glitch error
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeOut {
+                    to { opacity: 0; visibility: hidden; }
+                }
+                
+                .glitch-error {
+                    animation: glitch-error 0.5s linear;
+                }
+                
+                @keyframes glitch-error {
+                    0% { transform: translate(0); }
+                    20% { transform: translate(-5px, 5px); }
+                    40% { transform: translate(-5px, -5px); }
+                    60% { transform: translate(5px, 5px); }
+                    80% { transform: translate(5px, -5px); }
+                    100% { transform: translate(0); }
+                }
+                
+                .glitch {
+                    animation: glitch 0.2s linear infinite;
+                }
+                
+                @keyframes glitch {
+                    0% { transform: translate(0); }
+                    20% { transform: translate(-1px, 1px); }
+                    40% { transform: translate(-1px, -1px); }
+                    60% { transform: translate(1px, 1px); }
+                    80% { transform: translate(1px, -1px); }
+                    100% { transform: translate(0); }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+        // Replace the previous JavaScript with this
+document.querySelectorAll('.read-more-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const details = this.previousElementSibling;
+        const isHidden = details.style.display === 'none';
+        
+        if (isHidden) {
+            // Show with animation
+            details.style.display = 'block';
+            details.style.height = '0';
+            details.style.overflow = 'hidden';
+            
+            // Calculate full height
+            const fullHeight = details.scrollHeight + 'px';
+            
+            // Animate
+            details.animate(
+                [{ height: '0' }, { height: fullHeight }],
+                { duration: 300, easing: 'ease-in-out' }
+            ).onfinish = () => {
+                details.style.height = 'auto';
+            };
+            
+            this.textContent = '[ SHOW LESS ]';
+        } else {
+            // Hide with animation
+            const fullHeight = details.scrollHeight + 'px';
+            
+            details.animate(
+                [{ height: fullHeight }, { height: '0' }],
+                { duration: 300, easing: 'ease-in-out' }
+            ).onfinish = () => {
+                details.style.display = 'none';
+            };
+            
+            this.textContent = '[ READ MORE ]';
+        }
+        
+        // Cyberpunk terminal sound effect (optional)
+        const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-positive-interface-beep-257.mp3');
+        audio.volume = 0.3;
+        audio.play().catch(e => console.log('Audio play failed:', e));
+    });
+});
+    </script>
+</body>
+</html>
