@@ -1,0 +1,2105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thuli - Thank You Teachers</title>
+    <link rel="stylesheet" href="school.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+    :root {
+    --back-color: #0a0e17;
+    --content-color: #0a192f;
+    --neno-blue: #00bfff;
+    --light-blue: rgba(0, 191, 255, 0.3);
+    --text-color: #ffffff;
+    --accent-color: #ff6b6b;
+    --success-color: #4caf50;
+    --font-primary: 'Poppins', sans-serif;
+    --transition-speed: 0.3s;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--back-color);
+    color: var(--text-color);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Token Specific Effects */
+body.token-THULI001 {
+    --neno-blue: #ff00f2;
+}
+
+body.token-THULI002 {
+    --neno-blue: #48cae4;
+}
+
+body.token-THULI003 {
+    --neno-blue: #0096c7;
+}
+
+body.token-THULI004 {
+    --neno-blue: #0077b6;
+}
+
+body.token-THULI005 {
+    --neno-blue: #023e8a;
+}
+
+body.token-THULI006 {
+    --neno-blue: #03045e;
+}
+
+body.token-THULI007 {
+    --neno-blue: #00b4d8;
+}
+
+body.token-THULI008 {
+    --neno-blue: #48cae4;
+}
+
+body.token-THULI009 {
+    --neno-blue: #0096c7;
+}
+
+body.token-THULI010 {
+    --neno-blue: #0077b6;
+}
+
+body.admin-mode {
+    --neno-blue: #ff0000;
+}
+
+body.admin-mode .panel {
+    border-color: #fd0404;
+}
+/* Loading Animation */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--back-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeOut 1s ease-in-out 3s forwards;
+}
+
+.loader-content {
+    text-align: center;
+    transform: translateY(-20px);
+}
+
+.loader h1 {
+    color: var(--neno-blue);
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    margin-bottom: 10px;
+    animation: pulse 2s infinite;
+}
+
+.loader p {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.loader-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--light-blue);
+    border-top: 5px solid var(--neno-blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.7; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 0.7; transform: scale(0.95); }
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
+}
+
+/* Header Styles */
+header {
+    background-color: var(--content-color);
+    padding: 15px 0;
+    position: relative;
+    box-shadow: 0 2px 15px rgba(0, 191, 255, 0.3);
+    z-index: 100;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    z-index: 2;
+}
+
+.logo img {
+    height: 40px;
+    margin-right: 10px;
+    transition: transform var(--transition-speed);
+}
+
+.logo:hover img {
+    transform: rotate(15deg);
+}
+
+.profile {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid var(--neno-blue);
+    overflow: hidden;
+    box-shadow: 0 0 15px var(--neno-blue);
+    transition: all var(--transition-speed);
+    z-index: 2;
+}
+
+.profile:hover {
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: 0 0 25px var(--neno-blue);
+}
+
+.profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.site-name {
+    font-size: clamp(2rem, 4vw, 1.8rem);
+    color: var(--neno-blue);
+    font-weight: 600;
+    text-shadow: 0 0 10px var(--neno-blue);
+    transition: all var(--transition-speed);
+}
+
+.site-name:hover {
+    text-shadow: 0 0 15px var(--neno-blue);
+}
+
+.mobile-menu-btn {
+    display: none;
+    font-size: 1.5rem;
+    color: var(--neno-blue);
+    cursor: pointer;
+    z-index: 2;
+}
+
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(10, 25, 47, 0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-100%);
+    transition: transform 0.5s ease;
+    z-index: 1;
+}
+
+.mobile-nav.active {
+    transform: translateY(0);
+}
+
+.mobile-nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    margin: 15px 0;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: all var(--transition-speed);
+}
+
+.mobile-nav-link:hover {
+    background-color: var(--neno-blue);
+    color: var(--content-color);
+}
+
+/* Main Content Styles */
+.main-content {
+    background-color: var(--content-color);
+    min-height: calc(100vh - 120px);
+    padding: 30px 20px;
+    position: relative;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Thank You Section */
+.thank-you-section {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--neno-blue);
+    box-shadow: 0 0 15px var(--light-blue);
+    animation: glow 3s infinite alternate;
+}
+
+.thank-you-section h2 {
+    color: var(--neno-blue);
+    margin-bottom: 10px;
+    font-size: clamp(1.5rem, 5vw, 2rem);
+}
+
+.thank-you-message {
+    font-size: clamp(1rem, 3vw, 1.1rem);
+    line-height: 1.8;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px var(--light-blue); }
+    to { box-shadow: 0 0 20px var(--neno-blue); }
+}
+
+/* Token Form */
+/* Token Form Hide Effects */
+.token-form {
+    transition: all 0.5s ease;
+}
+
+.token-form.hidden {
+    opacity: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    transform: scale(0.9);
+    pointer-events: none;
+}
+
+.token-input-container {
+    position: relative;
+}
+
+.clear-token-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--neno-blue);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.3s;
+}
+
+.clear-token-btn:hover {
+    opacity: 1;
+    color: var(--accent-color);
+}
+
+/* Content Container Animation */
+.content-container {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+.content-container.visible {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+.token-form {
+    background: rgba(10, 25, 47, 0.7);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: 0 auto 40px;
+    border: 1px solid var(--neno-blue);
+    box-shadow: 0 0 20px var(--light-blue);
+}
+
+.token-form h3 {
+    text-align: center;
+    color: var(--neno-blue);
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--neno-blue);
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--neno-blue);
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    font-family: var(--font-primary);
+    transition: all var(--transition-speed);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--neno-blue);
+    box-shadow: 0 0 10px var(--light-blue);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.submit-btn {
+    background-color: var(--neno-blue);
+    color: var(--content-color);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all var(--transition-speed);
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    font-family: var(--font-primary);
+    margin-top: 10px;
+}
+
+.submit-btn i {
+    margin-right: 8px;
+}
+
+.submit-btn:hover {
+    background-color: #0099cc;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 191, 255, 0.4);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* Content Container */
+.content-container {
+    display: none;
+    position: relative;
+    margin-top: 30px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Panel Buttons */
+.panel-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+    gap: 15px;
+}
+
+.panel-btn {
+    flex: 1;
+    max-width: 100px;
+    height: 90px;
+    border-radius: 15px;
+    background: rgba(10, 25, 47, 0.8);
+    border: 2px solid var(--neno-blue);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 10px var(--light-blue);
+    padding: 10px;
+}
+
+.panel-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.1), transparent);
+    z-index: -1;
+}
+
+.panel-btn i {
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: var(--neno-blue);
+    transition: all var(--transition-speed);
+}
+
+.panel-btn span {
+    font-size: 12px;
+    text-align: center;
+    font-weight: 500;
+    transition: all var(--transition-speed);
+}
+
+.panel-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--neno-blue);
+}
+
+.panel-btn:hover i {
+    transform: scale(1.2);
+}
+
+.panel-btn:active {
+    transform: scale(0.95) translateY(-5px);
+}
+
+.panel-btn.active {
+    background: var(--neno-blue);
+    color: var(--content-color);
+    box-shadow: 0 0 20px var(--neno-blue);
+}
+
+.panel-btn.active i {
+    color: var(--content-color);
+    transform: scale(1.1);
+}
+
+.panel-btn.active span {
+    color: var(--content-color);
+    font-weight: 600;
+}
+
+/* Panels Wrapper */
+.panels-wrapper {
+    position: relative;
+    min-height: 400px;
+    perspective: 1000px;
+}
+
+.panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 25, 47, 0.9);
+    border: 2px solid var(--neno-blue);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 30px var(--light-blue);
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+    overflow: hidden;
+}
+
+.panel.active {
+    transform: rotateY(0deg);
+    opacity: 1;
+    z-index: 1;
+}
+
+.panel h2 {
+    color: var(--neno-blue);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 191, 255, 0.3);
+    padding-bottom: 10px;
+}
+
+/* Message Panel */
+.message-panel textarea {
+    width: 100%;
+    height: 75%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--neno-blue);
+    border-radius: 8px;
+    padding: 15px;
+    color: white;
+    font-size: 16px;
+    font-family: var(--font-primary);
+    resize: none;
+    transition: all var(--transition-speed);
+    margin-bottom: 15px;
+}
+
+.message-panel textarea:focus {
+    outline: none;
+    border-color: var(--neno-blue);
+    box-shadow: 0 0 15px var(--light-blue);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.save-btn {
+    background-color: var(--success-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all var(--transition-speed);
+    display: block;
+    width: 100%;
+    font-size: 16px;
+}
+
+.save-btn i {
+    margin-right: 8px;
+}
+
+.save-btn:hover {
+    background-color: #3e8e41;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+}
+
+/* Gallery Panel */
+.gallery-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery-controls {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.gallery-nav-btn {
+    background: rgba(0, 191, 255, 0.2);
+    border: 1px solid var(--neno-blue);
+    color: var(--neno-blue);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    flex-shrink: 0;
+}
+
+.gallery-nav-btn:hover {
+    background: var(--neno-blue);
+    color: var(--content-color);
+}
+
+.gallery-nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.gallery-container {
+    flex: 1;
+    display: flex;
+    height: 300px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 10px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.gallery-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.gallery-slide img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.gallery-slide img:hover {
+    transform: scale(1.02);
+}
+
+.gallery-indicator {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    gap: 8px;
+}
+
+.gallery-indicator span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(0, 191, 255, 0.3);
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.gallery-indicator span.active {
+    background: var(--neno-blue);
+    transform: scale(1.2);
+}
+
+/* Results Panel */
+.results-summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.summary-card {
+    flex: 1;
+    background: rgba(0, 191, 255, 0.1);
+    border: 1px solid var(--neno-blue);
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 0 10px var(--light-blue);
+}
+
+.summary-card h3 {
+    color: var(--neno-blue);
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.summary-card p {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.results-table th, .results-table td {
+    border: 1px solid var(--neno-blue);
+    padding: 12px;
+    text-align: left;
+}
+
+.results-table th {
+    background-color: rgba(0, 191, 255, 0.2);
+    color: var(--neno-blue);
+    font-weight: 600;
+}
+
+.results-table tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.results-table tr:hover {
+    background-color: rgba(0, 191, 255, 0.1);
+}
+
+/* WhatsApp Button */
+.whatsapp-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: #25D366;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    transition: all var(--transition-speed);
+    text-decoration: none;
+    animation: pulse 2s infinite;
+}
+
+.whatsapp-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    background-color: var(--neno-blue);
+    color: var(--content-color);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    transition: all var(--transition-speed);
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 191, 255, 0.4);
+}
+
+/* Footer Section */
+.footer-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: -5px;
+    opacity: 0.8;
+}
+
+footer {
+    background-color: var(--content-color);
+    padding: 30px 20px;
+    text-align: center;
+}
+
+
+.teacher-quotes {
+    max-width: 800px;
+    margin: 0 auto 25px;
+}
+
+.quote {
+    font-style: italic;
+    margin-bottom: 15px;
+    color: rgba(255, 255, 255, 0.8);
+    position: relative;
+    padding: 0 20px;
+}
+
+.quote::before, .quote::after {
+    content: '"';
+    color: var(--neno-blue);
+    font-size: 1.5rem;
+}
+
+.credits {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 20px;
+}
+
+.credits p {
+    margin-bottom: 8px;
+}
+
+.credits span {
+    color: var(--neno-blue);
+    font-weight: 500;
+}
+
+.copyright {
+    margin-top: 15px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Admin Section */
+.admin-section {
+    display: none;
+    margin-top: 50px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    border: 1px solid var(--neno-blue);
+    box-shadow: 0 0 20px var(--light-blue);
+}
+
+.admin-section h2 {
+    color: var(--neno-blue);
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.admin-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.admin-btn {
+    background: rgba(0, 191, 255, 0.2);
+    border: 1px solid var(--neno-blue);
+    color: var(--neno-blue);
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-primary);
+    font-weight: 500;
+}
+
+.admin-btn:hover {
+    background: var(--neno-blue);
+    color: var(--content-color);
+}
+
+.admin-btn i {
+    font-size: 14px;
+}
+
+.user-count {
+    text-align: center;
+    margin-bottom: 15px;
+    color: var(--neno-blue);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.user-count i {
+    font-size: 18px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.user-table th, .user-table td {
+    border: 1px solid var(--neno-blue);
+    padding: 12px;
+    text-align: left;
+}
+
+.user-table th {
+    background-color: rgba(0, 191, 255, 0.2);
+    color: var(--neno-blue);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.user-table tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.user-table tr:hover {
+    background-color: rgba(0, 191, 255, 0.1);
+}
+
+.user-table td:last-child {
+    white-space: nowrap;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0 15px;
+    }
+    
+    .logo img {
+        height: 35px;
+    }
+    
+    .profile {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    .panel-buttons {
+        gap: 10px;
+    }
+    
+    .panel-btn {
+        height: 80px;
+        max-width: 80px;
+    }
+    
+    .panel-btn i {
+        font-size: 20px;
+    }
+    
+    .panel-btn span {
+        font-size: 11px;
+    }
+    
+    .thank-you-section {
+        padding: 15px;
+    }
+    
+    .token-form {
+        padding: 20px;
+    }
+    
+    .results-summary {
+        flex-direction: column;
+    }
+    
+    .gallery-container {
+        height: 250px;
+    }
+    
+    .gallery-nav-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+    
+    .whatsapp-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 25px;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .back-to-top {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+        bottom: 20px;
+        left: 20px;
+    }
+    
+    .footer-image {
+        height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-container {
+        padding: 0 10px;
+    }
+    
+    .logo img {
+        height: 30px;
+    }
+    
+    .profile {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .site-name {
+        font-size: 2rem;
+    }
+    
+    .panel-btn {
+        height: 70px;
+        max-width: 70px;
+        border-radius: 10px;
+    }
+    
+    .panel-btn i {
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+    
+    .panel-btn span {
+        font-size: 10px;
+    }
+    
+    .token-form {
+        padding: 15px;
+    }
+    
+    .form-group input {
+        padding: 10px 12px;
+    }
+    
+    .submit-btn {
+        padding: 10px;
+    }
+    
+    .gallery-container {
+        height: 200px;
+    }
+    
+    .results-table th, .results-table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+    
+    .user-table th, .user-table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+    
+    .social-links {
+        gap: 15px;
+    }
+    
+    .social-link {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+}
+.social-link {
+  margin: 10px;
+  padding: 10px ;
+  border: none;
+
+  color: #FFF;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 12px;
+}
+.social-links::after {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  background-color: #333;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+/* glow */
+.social-link::before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #FF0000, #FF7300, #FFFB00, #48FF00,
+    #00FFD5, #002BFF, #FF00C8, #FF0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 600%;
+  z-index: -1;
+  width: calc(100% + 4px);
+  height:  calc(100% + 4px);
+  filter: blur(8px);
+  animation: glowing 20s linear infinite;
+  transition: opacity .3s ease-in-out;
+  border-radius: 10px;
+  opacity: 0;
+}
+
+@keyframes glowing {
+  0% {background-position: 0 0;}
+  50% {background-position: 400% 0;}
+  100% {background-position: 0 0;}
+}
+
+/* hover */
+.social-link:hover::before {
+  opacity: 1;
+}
+
+.social-link:active:after {
+  background: transparent;
+}
+
+.social-link:active {
+  color: #000;
+  font-weight: bold;
+}
+
+
+    </style>
+    <link rel="stylesheet" href="school1.css">
+    <link rel="stylesheet" href="i.css">
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loader">
+        <div class="loader-content">
+            <h1>Thuli</h1>
+            <p>Loading gratitude...</p>
+            <div class="loader-spinner"></div>
+        </div>
+    </div>
+    
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            
+            <div class="site-name">Thuli</div>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        <nav class="mobile-nav">
+            <a href="main.html" class="mobile-nav-link">Home</a>
+            <a href="#" class="mobile-nav-link">Project</a>
+            <a href="" class="mobile-nav-link">Contact</a>
+        </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Thank You Message -->
+            <section class="thank-you-section">
+                <h2>සාදරයෙන් පිළිගනිමු!</h2>
+                <p class="thank-you-message">
+                    මාගේ ජිවිතයේ ඉදිරි පියවරක් තැබීමට උපකාර කළ ඔබ වෙනුවෙන් මෙලෙස මම උපහාර දක්වමි.
+                    <br>(⚠️Please use your Token for login⚠️)
+                </p>
+            </section>
+            
+            <!-- Token Form -->
+       <!-- Replace the existing token form section with this: -->
+<form id="tokenForm" class="token-form">
+    <h3>Access Personalized Content</h3>
+    <div class="form-group">
+        <label for="username">Your Name</label>
+        <input type="text" id="username" name="username" required>
+    </div>
+    <div class="form-group">
+        <label for="token">Access Token</label>
+        <div class="token-input-container">
+            <input type="text" id="token" name="token" placeholder="Enter your token">
+            <button type="button" id="clearToken" class="clear-token-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <button type="submit" class="submit-btn">
+        <i class="fas fa-unlock-alt"></i> Access Content
+    </button>
+</form>
+            
+            <!-- Content Container (hidden initially) -->
+            <div id="contentContainer" class="content-container">
+                <!-- Panel Buttons -->
+                <div class="panel-buttons">
+                    <div class="panel-btn" data-panel="message">
+                        <i class="fas fa-comment-alt"></i>
+                        <span>Message</span>
+                    </div>
+                    <div class="panel-btn" data-panel="gallery">
+                        <i class="fas fa-images"></i>
+                        <span>Memories</span>
+                    </div>
+                    <div class="panel-btn" data-panel="results">
+                        <i class="fas fa-award"></i>
+                        <span>results</span>
+                    </div>
+                </div>
+                
+                <!-- Panels Wrapper -->
+                <div class="panels-wrapper">
+                    <!-- Message Panel -->
+                    <div id="messagePanel" class="panel message-panel">
+                        <h2>Personal Message</h2>
+                        <textarea placeholder="Type your personal message here..."></textarea>
+                        <button class="save-btn">
+                            <i class="fas fa-save"></i> Save Message
+                        </button>
+                    </div>
+                    
+                    <!-- Gallery Panel -->
+                    <div id="galleryPanel" class="panel gallery-panel">
+                        <h2>Special Memories</h2>
+                        <div class="gallery-controls">
+                            <button class="gallery-nav-btn prev-btn">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <div class="gallery-container"></div>
+                            <button class="gallery-nav-btn next-btn">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        <div class="gallery-indicator"></div>
+                    </div>
+                    
+                    <!-- Results Panel -->
+                    <div id="resultsPanel" class="panel results-panel">
+                        <h2>Results</h2>
+                        
+                        <table class="results-table">
+                            <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Grade</th>
+                                    <th>Teacher</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Admin Section -->
+            <div id="adminSection" class="admin-section">
+                <h2><i class="fas fa-lock"></i> Admin Panel</h2>
+                <div class="admin-controls">
+                    <button id="refreshUsers" class="admin-btn">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <button id="exportData" class="admin-btn">
+                        <i class="fas fa-file-export"></i> Export
+                    </button>
+                </div>
+                <div class="user-count">
+                    <i class="fas fa-users"></i> Total Users: <span id="totalUsers">0</span>
+                </div>
+                <div class="table-container">
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Token</th>
+                                <th>Last Access</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <section>
+            <div class="banner">
+                <div class="slider" style="--quantity: 10">
+                    <div class="item" style="--position: 1"><img src="thuli.png" alt=""></div>
+                    <div class="item" style="--position: 2"><img src="images/dragon_2.jpg" alt=""></div>
+                    <div class="item" style="--position: 3"><img src="images/dragon_3.jpg" alt=""></div>
+                    <div class="item" style="--position: 4"><img src="images/dragon_4.jpg" alt=""></div>
+                    <div class="item" style="--position: 5"><img src="images/dragon_5.jpg" alt=""></div>
+                    <div class="item" style="--position: 6"><img src="images/dragon_6.jpg" alt=""></div>
+                    <div class="item" style="--position: 7"><img src="images/dragon_7.jpg" alt=""></div>
+                    <div class="item" style="--position: 8"><img src="images/dragon_8.jpg" alt=""></div>
+                    <div class="item" style="--position: 9"><img src="images/dragon_9.jpg" alt=""></div>
+                    <div class="item" style="--position: 10"><img src="images/dragon_10.jpg" alt=""></div>
+                </div>
+                
+            </div>
+        
+        </section>
+    </main>
+    
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/94754551129" class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    
+    <!-- Back to Top Button -->
+    <button class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- Footer Section -->
+    <img src="images/footer-bg.jpg" alt="Classroom Image" class="footer-image">
+    <footer>
+        <div class="social-links">
+            <a href="https://www.facebook.com/profile.php?id=61558585898578&mibextid=ZbWKwL" class="social-link" title="Facebook">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://www.instagram.com/thuli_deshan?igsh=MWY4cHA0M3U1b3NyMg==" class="social-link" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-link" title="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-link" title="YouTube">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+        
+        <div class="teacher-quotes">
+            <div class="quote">
+                "The influence of a good teacher can never be erased."
+            </div>
+            <div class="quote">
+                "Teaching is the profession that creates all other professions."
+            </div>
+        </div>
+        
+        <div class="credits">
+            <p>Created with gratitude by Thuli</p>
+            <p>Powered by <span>DeepSeek</span> and <span>GitHub</span></p>
+            <p class="copyright">&copy; 2023 Thank You Teachers Project</p>
+        </div>
+    </footer>
+
+    <script>
+        // Token Database with 10 unique tokens
+const tokenDatabase = {
+    // Default content (when no token is provided)
+    "default": {
+        message: "Welcome to my gratitude website for teachers. Please enter a valid token to access personalized content.",
+        images: ["default1.jpg", "default2.jpg"],
+        results: [
+            { subject: "Mathematics", grade: "Not Available", teacher: "N/A" },
+            { subject: "Science", grade: "Not Available", teacher: "N/A" },
+            { subject: "English", grade: "Not Available", teacher: "N/A" }
+        ]
+    },
+    
+    // Token 1
+    "THULI001": {
+        message: "Dear Sir/Madam,\n\nYour guidance in Mathematics has been invaluable. Thank you for your patience and dedication in helping me understand complex concepts.\n\nWith gratitude,\nThuli",
+        images: ["math-class.jpg", "science-lab.jpg", "school-event1.jpg"],
+        results: [
+            { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
+            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
+            { subject: "History", grade: "A", teacher: "Mr. washantha" },
+            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
+            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
+            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
+            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
+            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
+            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+        ]
+    },
+    
+    // Token 2
+    "THULI002": {
+        message: "Respected Teacher,\n\nYour English lessons were always engaging and helped me improve my language skills significantly. Thank you for your encouragement!\n\nSincerely,\nThuli",
+        images: ["english-class.jpg", "library.jpg"],
+        results: [
+        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
+            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
+            { subject: "History", grade: "A", teacher: "Mr. washantha" },
+            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
+            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
+            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
+            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
+            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
+            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+        ]
+    },
+    
+    // Token 3
+    "THULI003": {
+        message: "To my ICT Teacher,\n\nYour innovative teaching methods made learning technology exciting. Thank you for preparing me for the digital world!\n\nBest regards,\nThuli",
+        images: ["computer-lab.jpg"],
+        results: [
+        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
+            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
+            { subject: "History", grade: "A", teacher: "Mr. washantha" },
+            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
+            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
+            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
+            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
+            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
+            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+        ]
+    },
+    
+    // Token 4
+    "THULI004": {
+        message: "Dear Commerce Teacher,\n\nYour real-world examples made complex business concepts easy to understand. Thank you for your practical approach!\n\nGratefully,\nThuli",
+        images: ["commerce-class.jpg", "business-fair.jpg", "field-trip1.jpg", "award-ceremony.jpg"],
+        results: [
+        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
+            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
+            { subject: "History", grade: "A", teacher: "Mr. washantha" },
+            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
+            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
+            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
+            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
+            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
+            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+        ]
+    },
+    
+    // Token 5
+    "THULI005": {
+        message: "To my Geography Teacher,\n\nYour passion for the subject was contagious. Thank you for making our planet's wonders come alive in the classroom!\n\nWarm regards,\nThuli",
+        images: ["geography-field.jpg"],
+        results: [
+        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
+            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
+            { subject: "History", grade: "A", teacher: "Mr. washantha" },
+            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
+            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
+            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
+            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
+            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
+            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+        ]
+    },
+    
+    // Token 6
+    "THULI006": {
+        message: "Dear Dancing Instructor,\n\nThank you for helping me express myself through movement and for your patience during rehearsals. You've helped build my confidence!\n\nWith appreciation,\nThuli",
+        images: ["dance-performance.jpg", "cultural-event.jpg"],
+        results: [
+        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
+            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
+            { subject: "History", grade: "A", teacher: "Mr. washantha" },
+            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
+            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
+            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
+            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
+            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
+            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+    ]
+    },
+    
+    // Token 7
+    "THULI007": {
+        message: "To my Science Teachers,\n\nYour experiments and demonstrations made learning fun and memorable. Thank you for sparking my curiosity about the natural world!\n\nRespectfully,\nThuli",
+        images: ["science-experiment.jpg", "lab-work.jpg", "science-fair.jpg"],
+        results: [
+        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
+            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
+            { subject: "History", grade: "A", teacher: "Mr. washantha" },
+            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
+            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
+            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
+            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
+            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
+            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+    
+    ]    },
+    
+    // Token 8
+    "THULI008": {
+        message: "Dear Literature Teacher,\n\nThank you for opening my eyes to the beauty of words and stories. Your interpretations added depth to every text we studied.\n\nYours sincerely,\nThuli",
+        images: ["literature-class.jpg"],
+        results: [
+        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
+            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
+            { subject: "History", grade: "A", teacher: "Mr. washantha" },
+            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
+            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
+            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
+            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
+            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
+            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+        ]
+    },
+    
+    // Token 9
+    "THULI009": {
+        message: "To my Health Education Teacher,\n\nThank you for teaching me the importance of wellness and for your caring approach to student well-being.\n\nWith thanks,\nThuli",
+        images: ["sports-day.jpg", "health-class.jpg"],
+        results: [
+        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
+            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
+            { subject: "History", grade: "A", teacher: "Mr. washantha" },
+            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
+            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
+            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
+            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
+            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
+            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+        ]
+    },
+    
+    // Token 10
+    "THULI010": {
+        message: "Dear Media Studies Teacher,\n\nYour insights into communication and media literacy have been invaluable. Thank you for preparing me for the modern world!\n\nBest wishes,\nThuli",
+        images: ["media-class.jpg", "presentation-day.jpg", "project-work.jpg"],
+        results: [
+        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
+            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
+            { subject: "History", grade: "A", teacher: "Mr. washantha" },
+            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
+            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
+            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
+            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
+            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
+            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+        ]
+    },
+    
+    // Admin token (hidden from regular users)
+    "THULIADMIN": {
+        message: "ADMIN ACCESS - User management panel activated",
+        images: [],
+        results: [],
+        isAdmin: true
+    }
+};
+
+// Mock user data for admin panel
+const userData = [
+    { username: "Mr. Perera", token: "THULI001", lastAccess: new Date().toLocaleString() },
+    { username: "Mrs. Johnson", token: "THULI002", lastAccess: new Date(Date.now() - 86400000).toLocaleString() },
+    { username: "Mr. Rajapakse", token: "THULI003", lastAccess: new Date(Date.now() - 172800000).toLocaleString() },
+    { username: "Mrs. Rathnayake", token: "THULI004", lastAccess: new Date(Date.now() - 259200000).toLocaleString() },
+    { username: "Ms. Herath", token: "THULI005", lastAccess: new Date(Date.now() - 345600000).toLocaleString() },
+    { username: "Mrs. Premaratne", token: "THULI006", lastAccess: new Date(Date.now() - 432000000).toLocaleString() },
+    { username: "Mrs. Silva", token: "THULI007", lastAccess: new Date(Date.now() - 518400000).toLocaleString() },
+    { username: "Ms. Gamage", token: "THULI008", lastAccess: new Date(Date.now() - 604800000).toLocaleString() },
+    { username: "Mr. Weerasinghe", token: "THULI009", lastAccess: new Date(Date.now() - 691200000).toLocaleString() },
+    { username: "Ms. Fonseka", token: "THULI010", lastAccess: new Date(Date.now() - 777600000).toLocaleString() },
+    { username: "Guest User", token: "", lastAccess: new Date(Date.now() - 86400000).toLocaleString() }
+];
+
+// DOM Elements
+const tokenForm = document.getElementById('tokenForm');
+const tokenInput = document.getElementById('token');
+const clearTokenBtn = document.getElementById('clearToken');
+const contentContainer = document.getElementById('contentContainer');
+const adminSection = document.getElementById('adminSection');
+const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+const mobileNav = document.querySelector('.mobile-nav');
+const backToTopBtn = document.querySelector('.back-to-top');
+const backToFormBtn = document.getElementById('backToForm');
+
+// Gallery variables
+let currentSlide = 0;
+let slideInterval;
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', function() {
+    // Loading animation will disappear after 3 seconds
+    setTimeout(function() {
+        document.querySelector('.loader').style.display = 'none';
+    }, 3000);
+    
+    // Mobile menu toggle
+    mobileMenuBtn.addEventListener('click', function() {
+        mobileNav.classList.toggle('active');
+        this.querySelector('i').classList.toggle('fa-times');
+        this.querySelector('i').classList.toggle('fa-bars');
+    });
+    
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+            mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+            mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+        });
+    });
+    
+    // Back to top button
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
+    });
+    
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    // Clear token button
+    clearTokenBtn.addEventListener('click', () => {
+        tokenInput.value = '';
+        tokenInput.focus();
+    });
+    
+    // Token form submission
+    tokenForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const username = document.getElementById('username').value.trim();
+        const token = tokenInput.value.trim().toUpperCase();
+        
+        // Validate username
+        if (!username) {
+            alert('Please enter your name');
+            return;
+        }
+        
+        // Hide form with animation
+        tokenForm.classList.add('hidden');
+        
+        // Show content after form hides
+        setTimeout(() => {
+            contentContainer.classList.add('visible');
+            loadContent(token);
+            
+            // Track access
+            trackUserAccess(username, token);
+            
+            // Admin check
+            if (token === 'THULIADMIN') {
+                adminSection.style.display = 'block';
+                loadUserData();
+            } else {
+                adminSection.style.display = 'none';
+            }
+            
+            // Smooth scroll to content
+            contentContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 300);
+    });
+    
+    // Back to form button
+    if (backToFormBtn) {
+        backToFormBtn.addEventListener('click', function() {
+            contentContainer.classList.remove('visible');
+            
+            setTimeout(() => {
+                tokenForm.classList.remove('hidden');
+                tokenForm.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        });
+    }
+    
+    // Panel switching
+    const panelButtons = document.querySelectorAll('.panel-btn');
+    const panels = document.querySelectorAll('.panel');
+    
+    panelButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const panelId = this.getAttribute('data-panel');
+            
+            // Remove active class from all buttons and panels
+            panelButtons.forEach(btn => btn.classList.remove('active'));
+            panels.forEach(panel => panel.classList.remove('active'));
+            
+            // Add active class to clicked button and corresponding panel
+            this.classList.add('active');
+            document.getElementById(panelId + 'Panel').classList.add('active');
+        });
+    });
+    
+    // Activate first panel by default
+    if (panelButtons.length > 0) {
+        panelButtons[0].click();
+    }
+    
+    // Gallery navigation
+    setupGallery();
+    
+    // Admin panel buttons
+    document.getElementById('refreshUsers')?.addEventListener('click', loadUserData);
+    document.getElementById('exportData')?.addEventListener('click', exportUserData);
+    
+    // Save message button functionality
+    document.querySelector('.save-btn')?.addEventListener('click', function() {
+        const message = document.querySelector('.message-panel textarea').value;
+        if (message.trim()) {
+            alert('Message saved! In a real implementation, this would be stored on the server.');
+        } else {
+            alert('Please enter a message to save.');
+        }
+    });
+});
+
+// Function to load content based on token
+function loadContent(token) {
+    // Get content for the token or default if not found
+    const content = tokenDatabase[token] || tokenDatabase['default'];
+    
+    // Update message panel
+    document.querySelector('.message-panel textarea').value = content.message;
+    
+    // Update gallery panel
+    updateGallery(content.images);
+    
+    // Update results panel
+    updateResults(content.results);
+    
+    // Calculate and display summary
+    updateResultsSummary(content.results);
+    
+    // Apply token-specific effects
+    applyTokenEffects(token);
+}
+
+// Function to apply token-specific effects
+function applyTokenEffects(token) {
+    // Remove all token-specific classes first
+    document.body.classList.remove(
+        'token-THULI001', 'token-THULI002', 'token-THULI003', 
+        'token-THULI004', 'token-THULI005', 'token-THULI006',
+        'token-THULI007', 'token-THULI008', 'token-THULI009',
+        'token-THULI010', 'token-THULIADMIN', 'admin-mode'
+    );
+    
+    // Add class for current token
+    if (token && token !== 'DEFAULT') {
+        document.body.classList.add(`token-${token}`);
+    }
+    
+    // Special case for admin
+    if (token === 'THULIADMIN') {
+        document.body.classList.add('admin-mode');
+    }
+}
+
+// Function to update the gallery with images
+function updateGallery(images) {
+    const galleryContainer = document.querySelector('.gallery-container');
+    galleryContainer.innerHTML = '';
+    
+    // If no images, show a message
+    if (images.length === 0) {
+        galleryContainer.innerHTML = `
+            <div class="gallery-slide" style="display: flex; justify-content: center; align-items: center;">
+                <p>No images available</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Add images to gallery
+    images.forEach((img, index) => {
+        galleryContainer.innerHTML += `
+            <div class="gallery-slide">
+                <img src="images/${img}" alt="Gallery Image ${index + 1}">
+            </div>
+        `;
+    });
+    
+    // Update gallery indicators
+    updateGalleryIndicators(images.length);
+    
+    // Reset to first slide
+    currentSlide = 0;
+    showSlide(currentSlide);
+}
+
+// Function to setup gallery navigation
+function setupGallery() {
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const galleryContainer = document.querySelector('.gallery-container');
+    
+    // Previous button click
+    prevBtn?.addEventListener('click', function() {
+        showSlide(currentSlide - 1);
+        resetSlideInterval();
+    });
+    
+    // Next button click
+    nextBtn?.addEventListener('click', function() {
+        showSlide(currentSlide + 1);
+        resetSlideInterval();
+    });
+    
+    // Touch events for mobile swipe
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    galleryContainer?.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    galleryContainer?.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+    
+    function handleSwipe() {
+        if (touchEndX < touchStartX - 50) {
+            // Swipe left - next slide
+            showSlide(currentSlide + 1);
+        } else if (touchEndX > touchStartX + 50) {
+            // Swipe right - previous slide
+            showSlide(currentSlide - 1);
+        }
+        resetSlideInterval();
+    }
+    
+    // Start auto slide
+    startSlideInterval();
+}
+
+// Function to show a specific slide
+function showSlide(index) {
+    const slides = document.querySelectorAll('.gallery-slide');
+    const indicators = document.querySelectorAll('.gallery-indicator span');
+    const totalSlides = slides.length;
+    
+    if (totalSlides === 0) return;
+    
+    // Wrap around if at ends
+    if (index >= totalSlides) {
+        index = 0;
+    } else if (index < 0) {
+        index = totalSlides - 1;
+    }
+    
+    // Update current slide
+    currentSlide = index;
+    
+    // Scroll to slide
+    slides[index].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+    });
+    
+    // Update indicators
+    indicators.forEach((indicator, i) => {
+        indicator.classList.toggle('active', i === index);
+    });
+}
+
+// Function to update gallery indicators
+function updateGalleryIndicators(count) {
+    const indicatorContainer = document.querySelector('.gallery-indicator');
+    if (!indicatorContainer) return;
+    
+    indicatorContainer.innerHTML = '';
+    
+    for (let i = 0; i < count; i++) {
+        indicatorContainer.innerHTML += `
+            <span data-index="${i}" class="${i === 0 ? 'active' : ''}"></span>
+        `;
+    }
+    
+    // Add click event to indicators
+    document.querySelectorAll('.gallery-indicator span').forEach(indicator => {
+        indicator.addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            showSlide(index);
+            resetSlideInterval();
+        });
+    });
+}
+
+// Function to start auto slide
+function startSlideInterval() {
+    const slides = document.querySelectorAll('.gallery-slide');
+    if (slides.length > 1) {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 5000);
+    }
+}
+
+// Function to reset auto slide interval
+function resetSlideInterval() {
+    clearInterval(slideInterval);
+    startSlideInterval();
+}
+
+// Function to update results table
+function updateResults(results) {
+    const resultsTable = document.querySelector('.results-table tbody');
+    if (!resultsTable) return;
+    
+    resultsTable.innerHTML = '';
+    
+    results.forEach(result => {
+        resultsTable.innerHTML += `
+            <tr>
+                <td>${result.subject}</td>
+                <td>${result.grade}</td>
+                <td>${result.teacher}</td>
+            </tr>
+        `;
+    });
+}
+
+// Function to update results summary
+function updateResultsSummary(results) {
+    const bestSubjectsElement = document.getElementById('bestSubjects');
+    const overallGradeElement = document.getElementById('overallGrade');
+    
+    if (!bestSubjectsElement || !overallGradeElement) return;
+    
+    // Filter out "Not Available" entries
+    const validResults = results.filter(result => !result.grade.includes("Not Available"));
+    
+    if (validResults.length === 0) {
+        bestSubjectsElement.textContent = "No data available";
+        overallGradeElement.textContent = "N/A";
+        return;
+    }
+    
+    // Find best subjects (grade A)
+    const bestSubjects = validResults.filter(result => result.grade === "A");
+    
+    if (bestSubjects.length > 0) {
+        bestSubjectsElement.textContent = bestSubjects.map(sub => sub.subject).join(", ");
+    } else {
+        // If no A grades, find B grades
+        const goodSubjects = validResults.filter(result => result.grade === "B");
+        if (goodSubjects.length > 0) {
+            bestSubjectsElement.textContent = goodSubjects.map(sub => sub.subject).join(", ");
+        } else {
+            bestSubjectsElement.textContent = validResults[0].subject; // Just show first subject
+        }
+    }
+    
+    // Calculate overall grade (simplified)
+    const gradeValues = {
+        "A": 4,
+        "B": 3,
+        "C": 2,
+        "S": 1,
+        "F": 0
+    };
+    
+    let total = 0;
+    validResults.forEach(result => {
+        total += gradeValues[result.grade] || 0;
+    });
+    
+    const average = total / validResults.length;
+    
+    if (average >= 3.5) {
+        overallGradeElement.textContent = "A (Excellent)";
+    } else if (average >= 2.5) {
+        overallGradeElement.textContent = "B (Good)";
+    } else if (average >= 1.5) {
+        overallGradeElement.textContent = "C (Satisfactory)";
+    } else {
+        overallGradeElement.textContent = "S (Pass)";
+    }
+}
+
+// Function to track user access (mock implementation)
+function trackUserAccess(username, token) {
+    // In a real app, this would send data to a server
+    console.log(`User accessed: ${username} with token: ${token || 'Default'}`);
+    
+    // Update admin panel if visible
+    if (adminSection.style.display === 'block') {
+        loadUserData();
+    }
+}
+
+// Function to load user data in admin panel
+function loadUserData() {
+    const userTable = document.querySelector('.user-table tbody');
+    if (!userTable) return;
+    
+    userTable.innerHTML = '';
+    
+    userData.forEach(user => {
+        userTable.innerHTML += `
+            <tr>
+                <td>${user.username}</td>
+                <td>${user.token || 'Default'}</td>
+                <td>${user.lastAccess}</td>
+                <td>
+                    <button class="admin-action-btn view-btn" title="View">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="admin-action-btn message-btn" title="Message">
+                        <i class="fas fa-envelope"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+    
+    // Update user count
+    const totalUsersElement = document.getElementById('totalUsers');
+    if (totalUsersElement) {
+        totalUsersElement.textContent = userData.length;
+    }
+    
+    // Add event listeners to action buttons
+    document.querySelectorAll('.view-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const row = this.closest('tr');
+            const username = row.cells[0].textContent;
+            const token = row.cells[1].textContent;
+            alert(`Viewing details for ${username}\nToken: ${token}`);
+        });
+    });
+    
+    document.querySelectorAll('.message-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const row = this.closest('tr');
+            const username = row.cells[0].textContent;
+            alert(`Messaging feature would open for ${username}`);
+        });
+    });
+}
+
+// Function to export user data
+function exportUserData() {
+    // In a real app, this would generate a CSV or similar
+    alert('Exporting user data... This would download a file in a real implementation.');
+    console.log('Exporting user data:', userData);
+}
+        
+    </script>
+</body>
+</html>
