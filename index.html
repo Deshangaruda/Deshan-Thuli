@@ -705,33 +705,6 @@ header {
 }
 
 /* Results Panel */
-.results-summary {
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.summary-card {
-    flex: 1;
-    background: rgba(0, 191, 255, 0.1);
-    border: 1px solid var(--neno-blue);
-    border-radius: 10px;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 0 10px var(--light-blue);
-}
-
-.summary-card h3 {
-    color: var(--neno-blue);
-    font-size: 1rem;
-    margin-bottom: 10px;
-}
-
-.summary-card p {
-    font-size: 1.2rem;
-    font-weight: 600;
-}
 
 .results-table {
     width: 100%;
@@ -1130,6 +1103,7 @@ footer {
   margin: 10px;
   padding: 10px ;
   border: none;
+  bottom: 5px;
 
   color: #FFF;
   cursor: pointer;
@@ -1189,14 +1163,140 @@ footer {
   color: #000;
   font-weight: bold;
 }
-
+.book-content {
+	position: absolute;
+	top: 52%;
+	left: 50%;
+	width: 330px;
+	height: 467px;
+	background: #C8AA94;
+  box-shadow: inset 600px 0 50px #000000cc, 0 20px 100px #000000e6;
+  transform-style: preserve-3d;
+	transform: translate(-50%,-50%) perspective(2000px);
+	transition: 2s cubic-bezier(0, 0, .3, .88);
+}
+.book-content:hover {
+	transform: translate(-50%,-50%) perspective(2000px);
+	box-shadow: inset 20px 0 50px #000000cc, 0 10px 100px #000000e6;
+}
+.book-content:before {
+	content: '';
+	position: absolute;
+  width: 101%;
+	height: 7px;
+	top: -6px;
+	left: 0;
+	background: #3B2E26;
+	transform-origin: bottom;
+	transform: skewX(-45deg);
+  border-top-right-radius: 5px;
+}
+.book-content:after {
+	content: '';
+	position: absolute;
+  width: 7px;
+	height: 100.5%;
+	top: 0;
+	right: -7px;
+	background: #3B2E26;
+	transform-origin: left;
+	transform: skewY(-45deg);
+}
+.book-cover {
+  position: relative;
+	width: 100%;
+	height: 100%;
+	transform-origin: left;
+	transition: 2s cubic-bezier(0, 0, .3, .88);
+  background: url(./book-cover.jpg);
+  background-size: cover;
+  z-index: 1;
+}
+.book-content:hover .book-cover {
+	transform: rotateY(-135deg);
+}
+.book-page {
+	position: absolute;
+  width: 100%;
+  height: 100%;
+	top: 0;
+	left: 0;
+  padding: 20px;
+  border-left: 7px solid #3B2E26;
+  border-bottom: 5px solid #3B2E26;
+  font-family: 'MedievalSharp', cursive;
+}
+/* bool 1*/
+.book-content-1 {
+	position: absolute;
+	top: 52%;
+	left: 47%;
+	width: 300px;
+	height: 445px;
+	background: #C8AA94;
+  box-shadow: inset 600px 0 50px #000000cc, 0 20px 100px #000000e6;
+  transform-style: preserve-3d;
+	transform: translate(-50%,-50%) perspective(2000px);
+	transition: 2s cubic-bezier(0, 0, .3, .88);
+}
+.book-content-1:hover {
+	transform: translate(-50%,-50%) perspective(2000px);
+	box-shadow: inset 20px 0 50px #000000cc, 0 10px 100px #000000e6;
+}
+.book-content-1:before {
+	content: '';
+	position: absolute;
+  width: 90%;
+	height: 7px;
+	top: -6px;
+	left: 0;
+	background: #3B2E26;
+	transform-origin: bottom;
+	transform: skewX(-45deg);
+  border-top-right-radius: 5px;
+}
+.book-content-1:after {
+	content: '';
+	position: absolute;
+  width: 7px;
+	height: 100.5%;
+	top: 0;
+	right: -7px;
+	background: #3B2E26;
+	transform-origin: left;
+	transform: skewY(-45deg);
+}
+.book-cover-1 {
+  position: relative;
+	width: 100%;
+	height: 100%;
+	transform-origin: left;
+	transition: 2s cubic-bezier(0, 0, .3, .88);
+  background: url(./book-cover.jpg);
+  background-size: cover;
+  z-index: 1;
+}
+.book-content-1:hover .book-cover-1 {
+	transform: rotateY(-135deg);
+}
+.book-page-1 {
+	position: absolute;
+  width: 100%;
+  height: 100%;
+	top: 0;
+	left: 0;
+  padding: 20px;
+  border-left: 7px solid #3B2E26;
+  border-bottom: 5px solid #3B2E26;
+  font-family: 'MedievalSharp', cursive;
+}
 
     </style>
     <link rel="stylesheet" href="school1.css">
-    <link rel="stylesheet" href="i.css">
+    
 </head>
 <body>
-    <!-- Loading Animation -->
+     <!-- Loading Animation -->
     <div class="loader">
         <div class="loader-content">
             <h1>Thuli</h1>
@@ -1220,22 +1320,15 @@ footer {
             <a href="" class="mobile-nav-link">Contact</a>
         </nav>
     </header>
-    
+
     <!-- Main Content -->
     <main class="main-content">
         <div class="container">
-            <!-- Thank You Message -->
-            <section class="thank-you-section">
-                <h2>සාදරයෙන් පිළිගනිමු!</h2>
-                <p class="thank-you-message">
-                    මාගේ ජිවිතයේ ඉදිරි පියවරක් තැබීමට උපකාර කළ ඔබ වෙනුවෙන් මෙලෙස මම උපහාර දක්වමි.
-                    <br>(⚠️Please use your Token for login⚠️)
-                </p>
-            </section>
             
-            <!-- Token Form -->
-       <!-- Replace the existing token form section with this: -->
-<form id="tokenForm" class="token-form">
+            <article class="book-content">
+      <div class="book-cover"></div>
+      <div class="book-page">
+        <form id="tokenForm" class="token-form">
     <h3>Access Personalized Content</h3>
     <div class="form-group">
         <label for="username">Your Name</label>
@@ -1254,9 +1347,20 @@ footer {
         <i class="fas fa-unlock-alt"></i> Access Content
     </button>
 </form>
+      </div>
+    </article>
+            
             
             <!-- Content Container (hidden initially) -->
             <div id="contentContainer" class="content-container">
+                <!-- Thank You Message -->
+            <section class="thank-you-section">
+                <h2>සාදරයෙන් පිළිගනිමු!</h2>
+                <p class="thank-you-message">
+                    මාගේ ජිවිතයේ ඉදිරි පියවරක් තැබීමට උපකාර කළ ඔබ වෙනුවෙන් මෙලෙස මම උපහාර දක්වමි.
+                    
+                </p>
+            </section>
                 <!-- Panel Buttons -->
                 <div class="panel-buttons">
                     <div class="panel-btn" data-panel="message">
@@ -1278,10 +1382,15 @@ footer {
                     <!-- Message Panel -->
                     <div id="messagePanel" class="panel message-panel">
                         <h2>Personal Message</h2>
+                         <article class="book-content-1">
+                               <div class="book-cover-1"></div>
+                                <div class="book-page-1">
                         <textarea placeholder="Type your personal message here..."></textarea>
+                         
                         <button class="save-btn">
                             <i class="fas fa-save"></i> Save Message
-                        </button>
+                        </button>       </div>
+                         </article>
                     </div>
                     
                     <!-- Gallery Panel -->
@@ -1302,7 +1411,9 @@ footer {
                     <!-- Results Panel -->
                     <div id="resultsPanel" class="panel results-panel">
                         <h2>Results</h2>
-                        
+                        <article class="book-content-1">
+                               <div class="book-cover-1"></div>
+                                <div class="book-page-1">
                         <table class="results-table">
                             <thead>
                                 <tr>
@@ -1313,6 +1424,8 @@ footer {
                             </thead>
                             <tbody></tbody>
                         </table>
+                                </div>
+                        </article>
                     </div>
                 </div>
             </div>
@@ -1346,24 +1459,7 @@ footer {
                 </div>
             </div>
         </div>
-        <section>
-            <div class="banner">
-                <div class="slider" style="--quantity: 10">
-                    <div class="item" style="--position: 1"><img src="thuli.png" alt=""></div>
-                    <div class="item" style="--position: 2"><img src="images/dragon_2.jpg" alt=""></div>
-                    <div class="item" style="--position: 3"><img src="images/dragon_3.jpg" alt=""></div>
-                    <div class="item" style="--position: 4"><img src="images/dragon_4.jpg" alt=""></div>
-                    <div class="item" style="--position: 5"><img src="images/dragon_5.jpg" alt=""></div>
-                    <div class="item" style="--position: 6"><img src="images/dragon_6.jpg" alt=""></div>
-                    <div class="item" style="--position: 7"><img src="images/dragon_7.jpg" alt=""></div>
-                    <div class="item" style="--position: 8"><img src="images/dragon_8.jpg" alt=""></div>
-                    <div class="item" style="--position: 9"><img src="images/dragon_9.jpg" alt=""></div>
-                    <div class="item" style="--position: 10"><img src="images/dragon_10.jpg" alt=""></div>
-                </div>
-                
-            </div>
         
-        </section>
     </main>
     
     <!-- WhatsApp Button -->
@@ -1377,7 +1473,7 @@ footer {
     </button>
     
     <!-- Footer Section -->
-    <img src="images/footer-bg.jpg" alt="Classroom Image" class="footer-image">
+    
     <footer>
         <div class="social-links">
             <a href="https://www.facebook.com/profile.php?id=61558585898578&mibextid=ZbWKwL" class="social-link" title="Facebook">
@@ -1398,15 +1494,13 @@ footer {
             <div class="quote">
                 "The influence of a good teacher can never be erased."
             </div>
-            <div class="quote">
-                "Teaching is the profession that creates all other professions."
-            </div>
+            
         </div>
         
         <div class="credits">
             <p>Created with gratitude by Thuli</p>
             <p>Powered by <span>DeepSeek</span> and <span>GitHub</span></p>
-            <p class="copyright">&copy; 2023 Thank You Teachers Project</p>
+            <p class="copyright">&copy; 2025 Thank You Teachers Project</p>
         </div>
     </footer>
 
@@ -1429,15 +1523,15 @@ const tokenDatabase = {
         message: "Dear Sir/Madam,\n\nYour guidance in Mathematics has been invaluable. Thank you for your patience and dedication in helping me understand complex concepts.\n\nWith gratitude,\nThuli",
         images: ["math-class.jpg", "science-lab.jpg", "school-event1.jpg"],
         results: [
-            { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
-            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
-            { subject: "History", grade: "A", teacher: "Mr. washantha" },
-            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
-            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
-            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
-            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
-            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
-            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+            { subject: "Mathematics", grade: "soon", },
+            { subject: "Science", grade: "soon",  },
+            { subject: "History", grade: "soon", },
+            { subject: "English", grade: "soon", },
+            { subject: "Sinhala", grade: "soon",  },
+            { subject: "ICT", grade: "soon",  },
+            { subject: "Art", grade: "soon",  },
+            { subject: "Geography", grade: "soon", },
+            { subject: "Buddahish", grade: "soon", }
         ]
     },
     
@@ -1446,15 +1540,15 @@ const tokenDatabase = {
         message: "Respected Teacher,\n\nYour English lessons were always engaging and helped me improve my language skills significantly. Thank you for your encouragement!\n\nSincerely,\nThuli",
         images: ["english-class.jpg", "library.jpg"],
         results: [
-        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
-            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
-            { subject: "History", grade: "A", teacher: "Mr. washantha" },
-            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
-            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
-            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
-            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
-            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
-            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+         { subject: "Mathematics", grade: "soon", },
+            { subject: "Science", grade: "soon",  },
+            { subject: "History", grade: "soon", },
+            { subject: "English", grade: "soon", },
+            { subject: "Sinhala", grade: "soon",  },
+            { subject: "ICT", grade: "soon",  },
+            { subject: "Art", grade: "soon",  },
+            { subject: "Geography", grade: "soon", },
+            { subject: "Buddahish", grade: "soon", }
         ]
     },
     
@@ -1463,15 +1557,15 @@ const tokenDatabase = {
         message: "To my ICT Teacher,\n\nYour innovative teaching methods made learning technology exciting. Thank you for preparing me for the digital world!\n\nBest regards,\nThuli",
         images: ["computer-lab.jpg"],
         results: [
-        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
-            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
-            { subject: "History", grade: "A", teacher: "Mr. washantha" },
-            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
-            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
-            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
-            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
-            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
-            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+         { subject: "Mathematics", grade: "soon", },
+            { subject: "Science", grade: "soon",  },
+            { subject: "History", grade: "soon", },
+            { subject: "English", grade: "soon", },
+            { subject: "Sinhala", grade: "soon",  },
+            { subject: "ICT", grade: "soon",  },
+            { subject: "Art", grade: "soon",  },
+            { subject: "Geography", grade: "soon", },
+            { subject: "Buddahish", grade: "soon", }
         ]
     },
     
@@ -1480,15 +1574,15 @@ const tokenDatabase = {
         message: "Dear Commerce Teacher,\n\nYour real-world examples made complex business concepts easy to understand. Thank you for your practical approach!\n\nGratefully,\nThuli",
         images: ["commerce-class.jpg", "business-fair.jpg", "field-trip1.jpg", "award-ceremony.jpg"],
         results: [
-        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
-            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
-            { subject: "History", grade: "A", teacher: "Mr. washantha" },
-            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
-            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
-            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
-            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
-            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
-            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+         { subject: "Mathematics", grade: "soon", },
+            { subject: "Science", grade: "soon",  },
+            { subject: "History", grade: "soon", },
+            { subject: "English", grade: "soon", },
+            { subject: "Sinhala", grade: "soon",  },
+            { subject: "ICT", grade: "soon",  },
+            { subject: "Art", grade: "soon",  },
+            { subject: "Geography", grade: "soon", },
+            { subject: "Buddahish", grade: "soon", }
         ]
     },
     
@@ -1497,15 +1591,15 @@ const tokenDatabase = {
         message: "To my Geography Teacher,\n\nYour passion for the subject was contagious. Thank you for making our planet's wonders come alive in the classroom!\n\nWarm regards,\nThuli",
         images: ["geography-field.jpg"],
         results: [
-        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
-            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
-            { subject: "History", grade: "A", teacher: "Mr. washantha" },
-            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
-            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
-            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
-            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
-            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
-            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+         { subject: "Mathematics", grade: "soon", },
+            { subject: "Science", grade: "soon",  },
+            { subject: "History", grade: "soon", },
+            { subject: "English", grade: "soon", },
+            { subject: "Sinhala", grade: "soon",  },
+            { subject: "ICT", grade: "soon",  },
+            { subject: "Art", grade: "soon",  },
+            { subject: "Geography", grade: "soon", },
+            { subject: "Buddahish", grade: "soon", }
         ]
     },
     
@@ -1514,15 +1608,15 @@ const tokenDatabase = {
         message: "Dear Dancing Instructor,\n\nThank you for helping me express myself through movement and for your patience during rehearsals. You've helped build my confidence!\n\nWith appreciation,\nThuli",
         images: ["dance-performance.jpg", "cultural-event.jpg"],
         results: [
-        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
-            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
-            { subject: "History", grade: "A", teacher: "Mr. washantha" },
-            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
-            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
-            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
-            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
-            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
-            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+         { subject: "Mathematics", grade: "soon", },
+            { subject: "Science", grade: "soon",  },
+            { subject: "History", grade: "soon", },
+            { subject: "English", grade: "soon", },
+            { subject: "Sinhala", grade: "soon",  },
+            { subject: "ICT", grade: "soon",  },
+            { subject: "Art", grade: "soon",  },
+            { subject: "Geography", grade: "soon", },
+            { subject: "Buddahish", grade: "soon", }
     ]
     },
     
@@ -1531,15 +1625,15 @@ const tokenDatabase = {
         message: "To my Science Teachers,\n\nYour experiments and demonstrations made learning fun and memorable. Thank you for sparking my curiosity about the natural world!\n\nRespectfully,\nThuli",
         images: ["science-experiment.jpg", "lab-work.jpg", "science-fair.jpg"],
         results: [
-        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
-            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
-            { subject: "History", grade: "A", teacher: "Mr. washantha" },
-            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
-            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
-            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
-            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
-            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
-            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+         { subject: "Mathematics", grade: "soon", },
+            { subject: "Science", grade: "soon",  },
+            { subject: "History", grade: "soon", },
+            { subject: "English", grade: "soon", },
+            { subject: "Sinhala", grade: "soon",  },
+            { subject: "ICT", grade: "soon",  },
+            { subject: "Art", grade: "soon",  },
+            { subject: "Geography", grade: "soon", },
+            { subject: "Buddahish", grade: "soon", }
     
     ]    },
     
@@ -1548,15 +1642,15 @@ const tokenDatabase = {
         message: "Dear Literature Teacher,\n\nThank you for opening my eyes to the beauty of words and stories. Your interpretations added depth to every text we studied.\n\nYours sincerely,\nThuli",
         images: ["literature-class.jpg"],
         results: [
-        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
-            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
-            { subject: "History", grade: "A", teacher: "Mr. washantha" },
-            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
-            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
-            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
-            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
-            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
-            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+         { subject: "Mathematics", grade: "soon", },
+            { subject: "Science", grade: "soon",  },
+            { subject: "History", grade: "soon", },
+            { subject: "English", grade: "soon", },
+            { subject: "Sinhala", grade: "soon",  },
+            { subject: "ICT", grade: "soon",  },
+            { subject: "Art", grade: "soon",  },
+            { subject: "Geography", grade: "soon", },
+            { subject: "Buddahish", grade: "soon", }
         ]
     },
     
@@ -1565,15 +1659,15 @@ const tokenDatabase = {
         message: "To my Health Education Teacher,\n\nThank you for teaching me the importance of wellness and for your caring approach to student well-being.\n\nWith thanks,\nThuli",
         images: ["sports-day.jpg", "health-class.jpg"],
         results: [
-        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
-            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
-            { subject: "History", grade: "A", teacher: "Mr. washantha" },
-            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
-            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
-            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
-            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
-            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
-            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+         { subject: "Mathematics", grade: "soon", },
+            { subject: "Science", grade: "soon",  },
+            { subject: "History", grade: "soon", },
+            { subject: "English", grade: "soon", },
+            { subject: "Sinhala", grade: "soon",  },
+            { subject: "ICT", grade: "soon",  },
+            { subject: "Art", grade: "soon",  },
+            { subject: "Geography", grade: "soon", },
+            { subject: "Buddahish", grade: "soon", }
         ]
     },
     
@@ -1582,15 +1676,15 @@ const tokenDatabase = {
         message: "Dear Media Studies Teacher,\n\nYour insights into communication and media literacy have been invaluable. Thank you for preparing me for the modern world!\n\nBest wishes,\nThuli",
         images: ["media-class.jpg", "presentation-day.jpg", "project-work.jpg"],
         results: [
-        { subject: "Mathematics", grade: "A", teacher: "Mis. Senuz"},
-            { subject: "Science", grade: "A", teacher: "Mis. Madushani" },
-            { subject: "History", grade: "A", teacher: "Mr. washantha" },
-            { subject: "English", grade: "A", teacher: "Mis. Madhavi" },
-            { subject: "Sinhala", grade: "A", teacher: "Mis. vimalawathi" },
-            { subject: "ICT", grade: "A", teacher: "Mis. Shashikala" },
-            { subject: "Art", grade: "A", teacher: "Mr. kumarathunga" },
-            { subject: "Geography", grade: "A", teacher: "Mis. Surangi" },
-            { subject: "Buddahish", grade: "A", teacher: "Mis. Airangani" }
+         { subject: "Mathematics", grade: "soon", },
+            { subject: "Science", grade: "soon",  },
+            { subject: "History", grade: "soon", },
+            { subject: "English", grade: "soon", },
+            { subject: "Sinhala", grade: "soon",  },
+            { subject: "ICT", grade: "soon",  },
+            { subject: "Art", grade: "soon",  },
+            { subject: "Geography", grade: "soon", },
+            { subject: "Buddahish", grade: "soon", }
         ]
     },
     
@@ -1690,6 +1784,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Hide form with animation
         tokenForm.classList.add('hidden');
+        
         
         // Show content after form hides
         setTimeout(() => {
@@ -2101,5 +2196,6 @@ function exportUserData() {
 }
         
     </script>
+    <script src="app.js"></script>
 </body>
 </html>
