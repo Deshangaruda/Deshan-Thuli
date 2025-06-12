@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Reboot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+       /* Mobile-First Cyberpunk Styles */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #0a0a0a;
+    color: #0ff;
+    font-family: 'Rajdhani', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.cyberpunk-container {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, #0a0a1a 0%, #000 100%);
+    overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.glitch-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(0deg, transparent 45%, rgba(0, 255, 255, 0.1) 45%, rgba(0, 255, 255, 0.1) 55%, transparent 55%),
+        linear-gradient(90deg, transparent 45%, rgba(0, 255, 255, 0.1) 45%, rgba(0, 255, 255, 0.1) 55%, transparent 55%);
+    background-size: 0.5em 0.5em;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 255, 255, 0.05) 0%,
+        rgba(0, 0, 0, 0) 5%
+    );
+    background-size: 100% 0.3em;
+    pointer-events: none;
+    animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 100%; }
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.cyberpunk-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #0ff;
+    text-shadow: 0 0 5px #0ff;
+    margin-bottom: 0.5rem;
+    word-break: break-word;
+}
+
+.cyberpunk-subtitle {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    color: #f0f;
+    text-shadow: 0 0 3px #f0f;
+    margin-bottom: 1.5rem;
+}
+
+.countdown-container {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid #0ff;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    border-radius: 5px;
+}
+
+.countdown {
+    font-family: 'Orbitron', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    color: #f0f;
+    text-shadow: 0 0 3px #f0f;
+}
+
+.countdown > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.countdown span {
+    font-size: 1.8rem;
+    line-height: 1;
+}
+
+.countdown .label {
+    font-size: 0.7rem;
+    margin-top: 0.3rem;
+    color: #0ff;
+}
+
+.terminal {
+    background-color: rgba(0, 10, 20, 0.8);
+    border: 1px solid #0ff;
+    margin: 1.5rem 0;
+    text-align: left;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.terminal-header {
+    background-color: rgba(0, 20, 30, 0.9);
+    padding: 0.5rem;
+    display: flex;
+    border-bottom: 1px solid #0ff;
+}
+
+.terminal-button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.terminal-button.red { background-color: #ff5f56; }
+.terminal-button.yellow { background-color: #ffbd2e; }
+.terminal-button.green { background-color: #27c93f; }
+
+.terminal-body {
+    padding: 1rem;
+    font-family: 'Courier New', monospace;
+    color: #0f0;
+    line-height: 1.4;
+    font-size: 0.9rem;
+    min-height: 80px;
+}
+
+.blink {
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.notification-form {
+    margin-top: 1.5rem;
+}
+
+.cyberpunk-input {
+    background-color: rgba(0, 20, 30, 0.8);
+    border: 1px solid #0ff;
+    color: #0ff;
+    padding: 0.8rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.2);
+}
+
+.cyberpunk-input::placeholder {
+    color: rgba(0, 255, 255, 0.5);
+}
+
+.cyberpunk-button {
+    background-color: transparent;
+    border: 1px solid #f0f;
+    color: #f0f;
+    padding: 0.8rem;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-shadow: 0 0 3px #f0f;
+    box-shadow: 0 0 5px rgba(255, 0, 255, 0.2);
+    width: 100%;
+    border-radius: 4px;
+}
+
+.cyberpunk-button:hover {
+    background-color: rgba(255, 0, 255, 0.2);
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.4);
+}
+
+.confirmation-message {
+    color: #0f0;
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    min-height: 1.2rem;
+}
+
+/* Glitch effect */
+.glitch {
+    position: relative;
+}
+
+.glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+}
+
+.glitch::before {
+    color: #f0f;
+    z-index: -1;
+    animation: glitch-effect 3s infinite;
+}
+
+.glitch::after {
+    color: #0f0;
+    z-index: -2;
+    animation: glitch-effect 2s infinite reverse;
+}
+
+@keyframes glitch-effect {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+/* Desktop adjustments */
+@media (min-width: 768px) {
+    .cyberpunk-title {
+        font-size: 3rem;
+    }
+    
+    .cyberpunk-subtitle {
+        font-size: 1.3rem;
+    }
+    
+    .countdown span {
+        font-size: 2.2rem;
+    }
+    
+    .countdown .label {
+        font-size: 0.8rem;
+    }
+    
+    .terminal-body {
+        font-size: 1rem;
+    }
+} 
+    </style>
+</head>
+<body>
+    <div class="cyberpunk-container">
+        <div class="glitch-overlay"></div>
+        <div class="content">
+            <h1 class="cyberpunk-title glitch" data-text="SYSTEM_REBOOT">SYSTEM_REBOOT</h1>
+            <div class="cyberpunk-subtitle">Upgrade in Progress</div>
+            
+            <div class="countdown-container">
+                <div id="countdown" class="countdown">
+                    <div><span id="days">00</span><span class="label">DAYS</span></div>
+                    <div><span id="hours">00</span><span class="label">HRS</span></div>
+                    <div><span id="minutes">00</span><span class="label">MIN</span></div>
+                    <div><span id="seconds">00</span><span class="label">SEC</span></div>
+                </div>
+            </div>
+            
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-button red"></div>
+                    <div class="terminal-button yellow"></div>
+                    <div class="terminal-button green"></div>
+                </div>
+                <div class="terminal-body">
+                    <p>> Booting sequence...</p>
+                    <p>> Systems check...</p>
+                    <p class="blink">> _</p>
+                </div>
+            </div>
+            
+            <div class="notification-form">
+                <p>Notify me when live:</p>
+                <input type="tel" id="whatsapp-number" placeholder="WhatsApp number" class="cyberpunk-input">
+                <button id="notify-me" class="cyberpunk-button">ALERT ME</button>
+                <div id="confirmation" class="confirmation-message"></div>
+            </div>
+        </div>
+        <div class="scanlines"></div>
+    </div>
+    
+    <script>
+        // Set your target date and time here (YYYY, MM-1, DD, HH, MM, SS)
+const targetDate = new Date(2025, 7, 14, 17, 59, 59); // Dec 31, 2023 at 23:59:59
+
+// WhatsApp configuration
+const whatsappNumber = "94771234567"; // Replace with your WhatsApp number
+const whatsappMessage = "Our website is now live! Visit us: [yourwebsite.com]";
+
+// Countdown function
+function updateCountdown() {
+    const now = new Date();
+    const diff = targetDate - now;
+    
+    if (diff <= 0) {
+        document.getElementById('days').textContent = '00';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        document.getElementById('seconds').textContent = '00';
+        document.querySelector('.cyberpunk-title').textContent = "SYSTEM_ONLINE";
+        document.querySelector('.cyberpunk-subtitle').textContent = "Upgrade Complete";
+        return;
+    }
+    
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    
+    document.getElementById('days').textContent = days.toString().padStart(2, '0');
+    document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    
+    // Add glitch effect when under 1 hour
+    if (diff < 3600000) {
+        document.getElementById('countdown').classList.add('glitch');
+    }
+}
+
+// WhatsApp notification function
+function setupWhatsAppNotification() {
+    const notifyButton = document.getElementById('notify-me');
+    const phoneInput = document.getElementById('whatsapp-number');
+    const confirmation = document.getElementById('confirmation');
+    
+    notifyButton.addEventListener('click', function() {
+        const phoneNumber = phoneInput.value.trim();
+        
+        if (!phoneNumber) {
+            confirmation.textContent = "Enter a valid phone number";
+            return;
+        }
+        
+        // Simple validation
+        const cleanedNumber = phoneNumber.replace(/\D/g, '');
+        
+        if (cleanedNumber.length < 9) {
+            confirmation.textContent = "Invalid phone number";
+            return;
+        }
+        
+        // Store the number
+        localStorage.setItem('notificationNumber', cleanedNumber);
+        confirmation.textContent = "Alert registered! We'll notify you.";
+        phoneInput.value = "";
+    });
+}
+
+// Short terminal animation
+function terminalAnimation() {
+    const terminal = document.querySelector('.terminal-body');
+    const lines = [
+        "> Booting sequence... [OK]",
+        "> Systems check... [OK]",
+        "> Standby for launch..."
+    ];
+    
+    let currentLine = 0;
+    
+    function addLine() {
+        if (currentLine < lines.length) {
+            // Replace the blinking cursor line
+            if (currentLine > 0) {
+                terminal.removeChild(terminal.lastElementChild.previousElementSibling);
+            }
+            
+            const newLine = document.createElement('p');
+            newLine.textContent = lines[currentLine];
+            terminal.insertBefore(newLine, terminal.lastElementChild);
+            currentLine++;
+            
+            if (currentLine < lines.length) {
+                setTimeout(addLine, 1500);
+            }
+        }
+    }
+    
+    setTimeout(addLine, 1000);
+}
+
+// Initialize everything
+document.addEventListener('DOMContentLoaded', function() {
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    setupWhatsAppNotification();
+    terminalAnimation();
+    
+    // Check for existing notification request
+    if (localStorage.getItem('notificationNumber')) {
+        document.getElementById('confirmation').textContent = "We'll notify you at launch!";
+    }
+});
+
+// Function to send WhatsApp message when site goes live
+function sendWhatsAppNotification() {
+    const storedNumber = localStorage.getItem('notificationNumber');
+    if (storedNumber) {
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+        // In production, this would be server-side code
+        console.log(`Notification would be sent via: ${whatsappUrl}`);
+    }
+}
+    </script>
+</body>
+</html>
