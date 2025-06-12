@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thuli | Cyberspace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS will go here */
+        :root {
+            --primary: #00f0ff;
+            --secondary: #ff00f0;
+            --dark: #0a0a20;
+            --darker: #050510;
+            --light: #f0f0ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Cyber Glow Effect */
+        .cyber-glow {
+            text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary), 0 0 20px var(--primary);
+        }
+
+        
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background-color: rgba(10, 10, 32, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .logo {
+            position: relative;
+            font-size: 2rem;
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--primary);
+            position: relative;
+        }
+
+        .logo span::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover span::before {
+            width: 100%;
+        }
+
+        .logo .logo-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            border-radius: 50%;
+            margin-left: 5px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--light);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-content h1 span {
+            color: var(--primary);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .hero-content .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 5px;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content .btn:hover {
+            background: var(--primary);
+            color: var(--dark);
+            box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+        }
+
+        .hero-image {
+            position: absolute;
+            right: 10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.2;
+            border-radius: 50%;
+            filter: blur(50px);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        /* Login Selection Buttons */
+        .login-selection {
+            display: flex;
+            gap: 20px;
+            margin-top: 2rem;
+        }
+        
+        .login-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 180px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .teacher-btn {
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            color: white;
+        }
+        
+        .security-btn {
+            background: linear-gradient(45deg, #e74c3c, #f39c12);
+            color: white;
+        }
+        
+        .login-btn i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .login-btn:hover::before {
+            left: 100%;
+        }
+        
+       
+
+        /* Projects Section */
+        .section {
+            padding: 100px 10%;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 240, 255, 0.2);
+            border-color: var(--primary);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .project-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .project-info {
+            padding: 20px;
+        }
+
+        .project-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .project-info p {
+            margin-bottom: 15px;
+            color: rgba(240, 240, 255, 0.8);
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .project-tags span {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .project-links a {
+            color: var(--light);
+            margin-right: 15px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .project-links a:hover {
+            color: var(--primary);
+        }
+
+        /* News Section */
+        .news-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .news-slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .news-card {
+            min-width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin: 0 10px;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .news-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 5px 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .news-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .news-card p {
+            margin-bottom: 15px;
+            color: rgba(240, 240, 255, 0.8);
+        }
+
+        .news-date {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .news-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .news-nav button {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .news-nav button:hover {
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: flex;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .contact-info p {
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .contact-details {
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .contact-item i {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 240, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            color: var(--primary);
+        }
+
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 5px;
+            color: var(--light);
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary);
+            color: var(--dark);
+            box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+        }
+
+        /* Sponsors Section */
+        .sponsors {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .sponsor-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s;
+        }
+
+        .sponsor-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .sponsor-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 2rem;
+            color: var(--primary);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .sponsor-item:hover .sponsor-icon {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .sponsor-name {
+            color: var(--light);
+            font-size: 1.1rem;
+        }
+
+        /* Social Links */
+        .social-links {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--light);
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .social-link:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .social-link:hover::before {
+            left: 100%;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--darker);
+            padding: 30px 10%;
+            text-align: center;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+
+        .footer-logo span {
+            color: var(--primary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            color: rgba(240, 240, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInTop {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .animate-left {
+            animation: slideInLeft 1s ease forwards;
+        }
+
+        .animate-right {
+            animation: slideInRight 1s ease forwards;
+        }
+
+        .animate-top {
+            animation: slideInTop 1s ease forwards;
+        }
+
+        .animate-fade {
+            animation: fadeIn 1.5s ease forwards;
+        }
+
+        /* Text Animation */
+        .text-animate {
+            display: inline-block;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            header {
+                padding: 20px 5%;
+            }
+            .section {
+                padding: 80px 5%;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            .hero-image {
+                width: 400px;
+                height: 400px;
+                right: 5%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                z-index: 101;
+            }
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: var(--darker);
+                backdrop-filter: blur(10px);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.5s;
+                z-index: 100;
+                border-left: 1px solid rgba(0, 240, 255, 0.2);
+            }
+            nav.active {
+                right: 0;
+            }
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav ul li {
+                margin: 20px 0;
+            }
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 100px;
+            }
+            .hero-content {
+                max-width: 100%;
+            }
+            .hero-image {
+                position: relative;
+                right: auto;
+                margin-top: 50px;
+                width: 300px;
+                height: 300px;
+            }
+            .contact-container {
+                flex-direction: column;
+            }
+            .social-links {
+                flex-direction: row;
+                position: static;
+                transform: none;
+                justify-content: center;
+                margin-top: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .project-card {
+                min-width: 100%;
+            }
+        }
+        /* Loading Animation - "Thuli" */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a20;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #000000;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .loader-text::after {
+            content: "Thuli";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #ff00f0;
+            width: 0%;
+            overflow: hidden;
+            animation: textReveal 2s ease-in-out forwards;
+        }
+        
+        @keyframes textReveal {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
+        .loader-bar {
+            width: 300px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .loader-progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #f39c12, #ff00f0);
+            animation: progress 2s ease-in-out forwards;
+        }
+        
+        @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
+    </style>
+</head>
+<body>
+   
+    <!-- Loading Animation -->
+    <div class="loader">
+        <div class="loader-text">Thuli</div>
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo">Th<span>uli</span><div class="logo-dot"></div></a>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#sponsors">Sponsors</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="cyber-glow">
+                <span class="text-animate" style="animation-delay: 0.5s">Welcome</span> 
+                <span class="text-animate" style="animation-delay: 0.7s">to</span> 
+                <span class="text-animate" style="animation-delay: 0.9s">My</span> 
+                <span class="text-animate" style="animation-delay: 1.1s">Cyberspace</span>
+            </h1>
+            <p class="animate-fade" style="animation-delay: 1.3s">Exploring the digital frontier with innovative projects and cutting-edge technology.</p>
+            <!-- Login Selection Buttons -->
+            <div class="login-selection">
+                <a href="index_1.html" class="login-btn teacher-btn">
+                    <i class="fas fa-chalkboard-teacher"></i> Teachers
+                </a>
+                <a href="Thuli_Admin.html" class="login-btn security-btn">
+                    <i class="fas fa-shield-alt"></i> Security Login
+                </a>
+            </div>
+        </div>
+        <div class="hero-image"></div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section" id="projects">
+        <h2 class="section-title animate-top">My Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card animate-left" style="animation-delay: 0.3s">
+                <img src="image/cyberpunk-city-street-night-with-neon-lights-futuristic-aesthetic.jpg" alt="Project 1">
+                <div class="project-info">
+                    <h3>Cyber Security Dashboard</h3>
+                    <p>A comprehensive dashboard for monitoring network security in real-time with threat detection.</p>
+                    <div class="project-tags">
+                        <span>Html</span>
+                        <span>Css</span>
+                        <span>Cybersecurity</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="Thuli_Admin.html"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        <a href="https://github.com/Deshangaruda"><i class="fab fa-github"></i> GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card animate-top" style="animation-delay: 0.5s">
+                <img src="image/fantasy-scene-anime-style.jpg" alt="Project 2">
+                <div class="project-info">
+                    <h3>Web accsess Card</h3>
+                    <p>An advanced AI system that generates creative content based on user input and preferences.</p>
+                    <div class="project-tags">
+                        
+                    </div>
+                    <div class="project-links">
+                        <a href="web card.png"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        <a href="https://github.com/Deshangaruda"><i class="fab fa-github"></i> GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card animate-right" style="animation-delay: 0.7s">
+                <img src="https://source.unsplash.com/random/600x400/?blockchain,crypto" alt="Project 3">
+                <div class="project-info">
+                    <h3>Soon</h3>
+                    <p>A tool for exploring and analyzing transactions on various blockchain networks.</p>
+                    <div class="project-tags">
+                        <span>Solidity</span>
+                        <span>Web3.js</span>
+                        <span>Ethereum</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        <a href="#"><i class="fab fa-github"></i> GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="section" id="news">
+        <h2 class="section-title animate-top">Latest News</h2>
+        <div class="news-container">
+            <div class="news-slider">
+                <div class="news-card">
+                    <span class="news-date">July 15, 2025</span>
+                    <h3>New Project Launch</h3>
+                    <p>We're excited to announce the launch of our new cybersecurity tool that helps businesses protect their digital assets more effectively.</p>
+                    <a href="index_1.html" class="btn">Visit</a>
+                </div>
+                <div class="news-card">
+                    <span class="news-date">july 15, 2025</span>
+                    <h3>Partnership Announcement</h3>
+                    <p>We've partnered with DeepSeek to integrate their AI technology into our upcoming products.</p>
+                    <a href="#" class="btn">Read More</a>
+                </div>
+                <div class="news-card">
+                    <span class="news-date">Soon, 2025</span>
+                    <h3>Coming Soon</h3>
+                    <p>Our team has contributed to several open-source projects this month, including major security enhancements.</p>
+                    <a href="#" class="btn">Read More</a>
+                </div>
+            </div>
+            <div class="news-nav">
+                <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <h2 class="section-title animate-top">Get In Touch</h2>
+        <div class="contact-container">
+            <div class="contact-info animate-left" style="animation-delay: 0.3s">
+                <h3>Contact Information</h3>
+                <p>Have a project in mind or want to collaborate? Feel free to reach out through any of these channels.</p>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>contact@Thulideshan@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+94 (75) 455-1129</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Sri Lanka, Badulla</span>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form animate-right" style="animation-delay: 0.5s">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sponsors Section -->
+    <section class="section" id="sponsors">
+        <h2 class="section-title animate-top">Create By</h2>
+        <div class="sponsors">
+            <div class="sponsor-item animate-left" style="animation-delay: 0.3s">
+                <div class="sponsor-icon">
+                    <i class="fab fa-youtube"></i>
+                </div>
+                <span class="sponsor-name">YouTube</span>
+            </div>
+            <div class="sponsor-item animate-top" style="animation-delay: 0.5s">
+                <div class="sponsor-icon">
+                    <i class="fab fa-github"></i>
+                </div>
+                <span class="sponsor-name">GitHub</span>
+            </div>
+            <div class="sponsor-item animate-right" style="animation-delay: 0.7s">
+                <div class="sponsor-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <span class="sponsor-name">DeepSeek</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Links -->
+    <div class="social-links">
+        <a href="https://wa.me/94754551129" class="social-link"><i class="fab fa-whatsapp"></i></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61558585898578&mibextid=ZbWKwL" class="social-link"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://github.com/Deshangaruda" class="social-link"><i class="fab fa-github"></i></a>
+        <a href="https://www.instagram.com/thuli_deshan?igsh=MWY4cHA0M3U1b3NyMg==" class="social-link"><i class="fab fa-instagram"></i></a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Th<span>uli</span></div>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#projects">Projects</a>
+                <a href="#news">News</a>
+                <a href="#contact">Contact</a>
+                <a href="#sponsors">Sponsors</a>
+            </div>
+            <p class="copyright">© 2025 Thuli. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Loading Animation
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loader').classList.add('hidden');
+            }, 2000);
+        });
+      
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+
+        menuToggle.addEventListener('click', function() {
+            nav.classList.toggle('active');
+            menuToggle.innerHTML = nav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close menu when clicking on a link
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    nav.classList.remove('active');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+        });
+
+        // News Slider
+        const newsSlider = document.querySelector('.news-slider');
+        const newsCards = document.querySelectorAll('.news-card');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        let currentSlide = 0;
+        const cardWidth = newsCards[0].clientWidth;
+
+        function updateSlider() {
+            newsSlider.style.transform = `translateX(-${currentSlide * cardWidth}px)`;
+        }
+
+        nextBtn.addEventListener('click', function() {
+            currentSlide = (currentSlide + 1) % newsCards.length;
+            updateSlider();
+        });
+
+        prevBtn.addEventListener('click', function() {
+            currentSlide = (currentSlide - 1 + newsCards.length) % newsCards.length;
+            updateSlider();
+        });
+
+        // Auto slide news
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % newsCards.length;
+            updateSlider();
+        }, 5000);
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Text animation on scroll
+        const animateElements = document.querySelectorAll('.animate-left, .animate-right, .animate-top, .animate-fade, .text-animate');
+
+        function checkScroll() {
+            animateElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.style.opacity = '1';
+                }
+            });
+        }
+
+        // Initial check
+        checkScroll();
+
+        // Check on scroll
+        window.addEventListener('scroll', checkScroll);
+
+        // Typewriter effect for hero text
+        const heroTitle = document.querySelector('.hero-content h1');
+        const textElements = heroTitle.querySelectorAll('.text-animate');
+        
+        textElements.forEach((element, index) => {
+            const text = element.textContent;
+            element.textContent = '';
+            
+            let i = 0;
+            const typingInterval = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typingInterval);
+                }
+            }, 100 + (index * 50));
+        });
+    </script>
+</body>
+</html>
