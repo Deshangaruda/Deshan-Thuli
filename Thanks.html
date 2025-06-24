@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You Miss Madhavi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #8f21dd;
+      --secondary-color: #360060;
+      --text-color: #000000;
+      --light-bg: #f7f7f7;
+      --white: #ffffff;
+    }
+    
+    body {
+      font-family: 'Noto Sans Sinhala', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* Profile Section */
+    .profile {
+      text-align: center;
+      margin: 40px 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s, transform 0.8s;
+    }
+    
+    .profile.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .profile img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid var(--primary-color);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .profile h1 {
+      color: var(--primary-color);
+      margin: 15px 0 5px;
+    }
+    
+    .profile p {
+      color: #666;
+      margin-bottom: 15px;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    .social-links a {
+      color: var(--primary-color);
+      font-size: 24px;
+      transition: color 0.3s;
+    }
+    
+    .social-links a:hover {
+      color: var(--secondary-color);
+    }
+    
+    /* Letter Section */
+    .section-title {
+      text-align: center;
+      color: var(--primary-color);
+      margin: 40px 0 20px;
+    }
+    
+    .letter-card {
+      background: #ffffff42;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(180, 10, 166, 0.877);
+      max-width: 800px;
+      margin: 30px auto;
+      line-height: 1.8;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s, transform 0.8s;
+    }
+    
+    .letter-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .signature {
+      text-align: right;
+      font-style: italic;
+      margin-top: 20px;
+    }
+    
+    /* Typed Message */
+    #typed-text {
+      min-height: 200px;
+      white-space: pre-wrap;
+      font-size: 18px;
+    }
+    
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 20px;
+      background-color: #f80a0ae8;
+      animation: blink 15s infinite;
+      vertical-align: middle;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    
+    /* Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    
+    .gallery img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+    
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    
+    /* Audio Player */
+    .audio-section {
+      text-align: center;
+      margin: 40px 0;
+    }
+    
+    audio {
+      display: block;
+      margin: 20px auto;
+      width: 100%;
+      max-width: 400px;
+    }
+    
+    /* Download Button */
+    .download-btn {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 25px;
+      font-size: 16px;
+      background-color: var(--primary-color);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      width: fit-content;
+      transition: background-color 0.3s;
+    }
+    
+    .download-btn:hover {
+      background-color: var(--secondary-color);
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+      background-color: var(--white);
+      color: #666;
+    }
+    
+   /* Loading Animation - "Thuli" */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #7700ff80, #0a0a2088);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .loader-text::after {
+            content: "Thuli";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #e100ff;
+            width: 0%;
+            overflow: hidden;
+            animation: textReveal 2s ease-in-out forwards;
+        }
+        
+        @keyframes textReveal {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
+        .loader-bar {
+            width: 300px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.226);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .loader-progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff00f0, #fffb02);
+            animation: progress 2s ease-in-out forwards;
+        }
+        
+        @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+  </style>
+</head>
+<body>
+  <!-- Loading Animation -->
+    <div class="loader">
+        <div class="loader-text">Thuli</div>
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+    </div>
+
+  <div class="container">
+    <!-- Profile Section -->
+    <section class="profile">
+      <img src="image/Thuli@deshan.png" alt="Deshan's Photo">
+      <h1>Deshan Karunarathne</h1>
+      <p>Student | Dreamer | Coder</p>
+      <div class="social-links">
+        <a href="https://wa.me/94754551129" class="social-link"><i class="fab fa-whatsapp"></i></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61558585898578&mibextid=ZbWKwL" class="social-link"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://github.com/Deshangaruda" class="social-link"><i class="fab fa-github"></i></a>
+        <a href="https://www.instagram.com/thuli_deshan?igsh=MWY4cHA0M3U1b3NyMg==" class="social-link"><i class="fab fa-instagram"></i></a>
+      </div>
+    </section>
+
+    <!-- Thank You Letter Section -->
+    <h2 class="section-title">Thank You Note to Miss Madhavi</h2>
+    
+    <section id="thank-you-note">
+      <div class="letter-card" id="typed-text">
+      <div class="cursor"></div>
+      
+    </div>
+    <!-- Background Music -->
+    <div class="audio-section">
+      <h3 class="section-title">🎵 Background Music</h3>
+      <audio controls>
+        <source src="music/Guru githaya.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+    <h2 class="section-title">Entry Token</h2>
+    <section id="thank-you-note">
+      <div class="letter-card" >
+        
+        <p><center><b> TULI001_M</b></center></p></div>
+    </div>
+
+   
+
+
+    
+
+    
+
+    <!-- Download Section -->
+    <a href="#" class="download-btn" id="download-pdf">
+      <i class="fas fa-download"></i> Download as PDF
+    </a>
+    <!-- Download Section -->
+    <a href="index_1.html" class="download-btn" id="More">
+       Entry 
+    </a>
+  </div>
+
+  <footer>
+    <p>Copyright © Deshan Karunarathne 2025 | Made with ❤️</p>
+  </footer>
+
+
+  <script>
+    // Loading Animation
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loader').classList.add('hidden');
+            }, 2000);
+        });
+        alert("You can access the website I was creating earlier and get the exam index number, and ordinary level exam results. Since the website contains private content, use the token THHULAI001_M (a code valid only for you) to enter. Click the entry button below to access the website And Play Background music please!");
+
+    // Scroll animations
+    function checkVisibility() {
+      const elements = document.querySelectorAll('.profile, .letter-card');
+      
+      elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (elementTop < windowHeight - 100) {
+          element.classList.add('visible');
+        }
+      });
+    }
+    
+    window.addEventListener('scroll', checkVisibility);
+    document.addEventListener('DOMContentLoaded', checkVisibility);
+
+    // Typing effect
+    const message = "ආදරණීය ගුරු මෑණියණි❣️,\n\n මාගේ ජීවිතයේ අකමැතිම විෂය වී තිබුණු English විෂයට කැමැත්තක් හා උනන්දුවක් ඇති වුයේ මා 7 ශ්‍රේණියේදි ඔබ English වලට කියාදුන් කෙටි ක්‍රම නිසායි.🙂\n\nනමුත් මා තුළ English පිළිබද දැනුම මගහැරී තිබූ නිසා ඔබ පවසන දෙය වැටහී ගියත් එය බාවිතා කිරීමට හෝ වැඩිදුරටත් තේරුම් ගැනීමට නොහැකි විය.😓\n\nඔබ සැමවිටම වාර විභාගයේ English ළකුණු අඩු  යැයි පැවසුවත් මා එය වැඩිපුර නොසිතුවේ එය එතරම් වැදගත් නොවෙ යැයි සිතායි.🫣\n\nනමුත් 9 ශ්‍රේණියේදි මා හට පැවති මානසික ව්‍යාකූලතාවය නිසා මා ඉන් මිදීමට ඉගෙනීමට යොමු විය(⚠️මේ පිලිබදව කිසිවෙකු නොදනී...!⚠️).එලෙස මාගේ මනස පාලනයට මා යොමු වූවත් English විෂයට ලකුණු නොමැති වීම නිසා මා මහත් අපහසුතාවයට පත්විය.😖\n\nඒ නිසා මට තවත් අභියෝගයක් වූ මේ විෂය ඉගෙනීමට ගුරුතුමියගෙන් උපකාර ලබා ගැනිමට සිතුනත් මා එයට බිය විය.🥺9/10 ශ්‍රේණිවලදීත් මෙහි කිසිදු වෙනසක් සිදු නොවී පසුතැවිල්ලෙන් කාලය ගෙවී ගියේය.😔\n\nනමුත් ඔබ සැමවිටම ලකුණු මදි්‍ යැයි පැවසන වදන් පමණක් මාගේ උනන්දුව හා ගුරුතුමියගෙන් උපකාර ඉල්ලිමට ඇති බියත් වැඩි කර වූයේය.🥺\n\nගුරුතුමියට මා පිලිබද උනන්වදුවක් ඇති වූයේත් english විෂය පිලිබද මාගේ කැමැත්ත වැඩි වූයේත් grade 11  second term test එකට engish වලට ලකුණු 64ක් ගත් පසු බව මට සිතෙයි.🙂\n\nඉන් පසු ගුරුතුමිය මට english වල නොතේරෙන දේවල්,නොදන්න දේවල් , පේපර් වලට පිලිතුරු ලියන විදිහ පාසලේදීත් ,ගුරුතුමිය නිවසේ සිටත් මා වෙනුවෙන්  ගුරුතුමියගේ වටිනා කාලය කැපකරමින්  ඉවසීමෙන් යුතුව මා හට ඉගැන්වූ අයුරු මට සැමවිටම සිහියට නැගෙයි.💖💖මේ මතකයන් මගේ ජීවිතයේ සදා අමරණීය මතකයන්‍ ය.💖💖💖💖\nගුරුතුමිය මට අනිත් ළමයි ඉදිරියේ බැන්නත් 😞මම දන්නවා ගුරුවරුන් එසේ කිරීමෙන් බලාපොරොත්තු වන්නේ ළමයින් ව යහමගට ගැනීමයි.🙃 \n\nනමුත් මම නැති තැන මගේ හොද පවසන බව දිනක් මට එක් යාලුවෙක් පැවසුවා.😌එහෙත් එහි සත්‍යතාව මා නොදන්නා නමුත් මා තුල ගුරුවරුන්ට ඇති ගෞරවය හා ආදරය නිසා මම එය සත්‍යය යැයි සිතමි.\n\nනමුදු මාතුල ඒ පිලිබදව කනස්සල්ලක්ද පවතී. ඒමට මගේ හොද නරක පිලිබදව කිසිවෙකු සෘජු ව නොපවසන නිසාය.නමුත්ගුරුතුමිය පන්තිභාර අවදියේදී ලබා දුන් උපදෙස් මාගේ වැරදි පෙන්වා දීම්,මාගේ වැරදි හදා ගැනිමට මට බෙහෙවින් උපකාර විය.\n\nමා හට සතුට කියන දෙය අහිමි වුවත් නැවත එය කිසිදිනක නොලැබුනැත් ගුරුතුමිය අසල සිටින විට මම සතුටින් සිටියේය🥹🥹. ගුරුතුමියට මගේ අදහස් තේරුම් ගැනීමටත්,මා කැමති දේ කුමක් දැන් ගුරුතුමිය දැන සිටීමත් නිසා මට මම කැමති දේ පිලිබදව නොබියව පැවසීමට තරම් ශක්තියක් මට ලැබුනේ ගුරුතුමිය කෙරෙහි තිබු දැඩි විශ්වාසයක්,ආදරයත්,ගෞරවයත් නිසායි..\n\nගුරුතුමිය වෙනත් පාසලකට මාරුවීයන බව පැවසූ විට ගුරුතුමියගෙන් ඉගෙනගත් ශිෂ්‍යයෙකු ලෙස සිතට දැඩි දුකක් ඇති වූවත්🤧💔🤧 මා ගුරුතුමියගේ බලාපොරොත්තුව ඉටුවේවා යැයි ප්‍රර්ථනා කරමි. \n\nමා අතින් ගුරුතුමියගේ හිත රිදෙන යමක් සිදු වූවා නම්,විශ්වාසය බිදෙන 💔යමක් සිදු වූවානම් මම මගේ හදවතින්ම සමාව අයදිමි. මම කිසි විටකත් මා නිසා මට ආදරය කරන මාව විශ්වාස කරන අයගේ හිත රිදවීමට කිසි විටකත් අපේක්ෂා නොකරමි. කිමද විශ්වාසය යනු යමෙකු පණ පිටින් විනාශ කිරීමට හැකි ප්‍රභල අවියක් බව මා දන්න නිසා සහ මට කිසිවෙකු හිතක්  මම නිසා දුකට පත් වීම මාහට දරා ගත නොහැකි මානසික පිඩනයක් ගෙන දෙන නිසාත් ය.\n\nආදරණීය ගුරු මෑණියනි❣️ මා මගේ මවට ආදරය,ගෞරවය දක්වනවා මෙන් ගුරුතුමියට බෙහෙවින් ආදරය ද,ගෞරවය ද දක්වමි😊😊❣️❣️❣️. සමහර විට මෙය මා ගුරුතුමිය වෙත තබන අවසාන සටහනද විය හැකිය  😔.ගුරුතුමියගේ හීන වලට ගුරුතුමියට කෙදිනක හෝ යාමට හැකි වේවා යැයි මම ප්‍රාර්ථනා කරමි.\n\nsocial Media තුළ හදවතේ ගුරුවරු ලෙස සිසුන් අමතර පන්ති ගුරුවරුන්ව නම් කරත් මාගේ හදවතේ ගුරුවරියක ලෙස ආදරණීය ගුරු මෑණියණි ඔබ සදාකල් රැදෙනු ඇත.ගුරු මැණියනි මම දිනක ඔබ මා වෙනුවෙන් කල කැප කිරීම් වලට සාර්ථක පුද්ගලයෙකු ලෙස කෘතගුණ දක්වමි.\n\nමා වඩාත් ආදරය කරන විශ්වාස කරන ගුරුවරයා -🌹Mis.Madhavi 🌹- බව මම මෙසේ සටහන් තබමි🌹.\n\nමීට,\n Deshan@Thuli                          ({😔මෙහි කිසිදු වරදක් ඇත්නම් මා එයට සමාව අයදිමි😔}Reply Please 📝)\n\n\n\n – Deshan @ Thuli";
+    let i = 0;
+    const speed = 50;
+    const typedTextElement = document.getElementById('typed-text');
+    const cursorElement = document.querySelector('.cursor');
+    
+    function typeEffect() {
+      if (i < message.length) {
+        if (message.charAt(i) === '\n') {
+          typedTextElement.innerHTML += '<br>';
+        } else {
+          typedTextElement.innerHTML += message.charAt(i);
+        }
+        i++;
+        setTimeout(typeEffect, speed);
+      } else {
+        cursorElement.style.display = 'none';
+      }
+    }
+    
+    setTimeout(typeEffect, 1500);
+
+    // PDF Download
+    document.getElementById('download-pdf').addEventListener('click', (e) => {
+      e.preventDefault();
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      
+      doc.setFont("helvetica");
+      doc.setFontSize(12);
+      
+      const letterText = document.querySelector('.letter-card').innerText;
+      const lines = doc.splitTextToSize(letterText, 180);
+      
+      doc.text(lines, 15, 15);
+      doc.save('Thank_You_Miss_Madhavi.pdf');
+    });
+  </script>
+</body>
+</html>
