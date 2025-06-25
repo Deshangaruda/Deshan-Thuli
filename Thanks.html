@@ -321,7 +321,7 @@
     
 
     <!-- Download Section -->
-    <a href="ThankYou_card.pdf" class="download-btn" id="download-pdf">
+    <a href="ThankYou_card.pdf" download="Thank_You_Madhavi_Teacher.pdf"  class="download-btn" id="download-pdf">
       <i class="fas fa-download"></i> Download as PDF
     </a>
     <!-- Download Section -->
@@ -384,21 +384,6 @@
     
     setTimeout(typeEffect, 1500);
 
-    // PDF Download
-    document.getElementById('download-pdf').addEventListener('click', (e) => {
-      e.preventDefault();
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      
-      doc.setFont("helvetica");
-      doc.setFontSize(12);
-      
-      const letterText = document.querySelector('.letter-card').innerText;
-      const lines = doc.splitTextToSize(letterText, 180);
-      
-      doc.text(lines, 15, 15);
-      doc.save('ThankYou_card.pdf');
-    });
   </script>
 </body>
 </html>
