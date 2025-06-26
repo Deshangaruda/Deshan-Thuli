@@ -259,6 +259,24 @@
             0% { width: 0%; }
             100% { width: 100%; }
         }
+        
+        .music-control {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--primary-color);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
+
   </style>
 </head>
 <body>
@@ -313,7 +331,14 @@
     </div>
    </section>
 
-   
+   <audio id="backgroundMusic" loop>
+    <source src="music/Guru githaya.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Music control button -->
+  <div class="music-control" id="musicControl">
+    <i class="fas fa-music"></i>
+  </div>
 
 
     
@@ -383,6 +408,53 @@
     }
     
     setTimeout(typeEffect, 1500);
+
+
+   document.addEventListener('DOMContentLoaded', function() {
+      const bgMusic = document.getElementById('backgroundMusic');
+      const musicControl = document.getElementById('musicControl');
+      let musicPlaying = false;
+      
+      // මුලින්ම muted ලෙස autoplay කිරීමට උත්සාහ කරන්න
+      bgMusic.muted = true;
+      bgMusic.volume = 0.5; // ශබ්දය මධ්යස්ථ මට්ටමකට සකසන්න
+      
+      const playMusic = () => {
+        bgMusic.play()
+          .then(() => {
+            musicPlaying = true;
+            bgMusic.muted = false;
+            musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+          })
+          .catch(error => {
+            console.log('Auto-play was prevented:', error);
+            // User interaction අවශ්ය විට මෙම පණිවුඩය පෙන්වන්න
+            musicControl.innerHTML = '<i class="fas fa-play"></i>';
+            musicControl.style.backgroundColor = '#e74c3c';
+          });
+      };
+      
+      // පිටුව ලෝඩ් වූ වහාම සංගීතය ආරම්භ කිරීමට උත්සාහ කරන්න
+      playMusic();
+      
+      // Music control button click event
+      musicControl.addEventListener('click', function() {
+        if (musicPlaying) {
+          bgMusic.pause();
+          musicControl.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+          playMusic();
+        }
+        musicPlaying = !musicPlaying;
+      });
+      
+      // පිටුවේ කොතැනක හෝ ක්ලික් කළ විට සංගීතය සක්‍රිය කිරීමට උත්සාහ කරන්න
+      document.body.addEventListener('click', function() {
+        if (bgMusic.paused && !musicPlaying) {
+          playMusic();
+        }
+      });
+    });
 
   </script>
 </body>
