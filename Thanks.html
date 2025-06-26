@@ -276,6 +276,50 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       z-index: 1000;
     }
+    .exam-info {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(235, 238, 238, 0.1);
+    border: 1px solid #ff00f0;
+    border-radius: 8px;
+    font-family: 'Noto Sans Sinhala', sans-serif;
+}
+
+.exam-info p {
+    margin-bottom: 10px;
+}
+
+.exam-info strong {
+    color: #8f21dd;
+}
+
+.results-link-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 20px;
+    background-color: #8502ff;
+    color: #000000;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: all var(--transition-speed);
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-heading);
+    letter-spacing: 1px;
+    box-shadow: 0 0 10px #e100ff;
+}
+
+.results-link-btn:hover {
+    background-color: #f7f7f7;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 42, 110, 0.541);
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px #e100ff; }
+    to { box-shadow: 0 0 20px #ff00f0; }
+}
 
   </style>
 </head>
@@ -330,6 +374,18 @@
         <p><center><b>THULI001_M</b></center></p>
     </div>
    </section>
+
+    <section class="thank-you-note">
+      <div class="letter-card">
+        <div class="exam-info">
+                        <center><p><strong>EXAM INDEX NUMBER:</strong> 43712088</p></center>
+                        <center><button class="results-link-btn" onclick="window.open('https://www.doenets.lk/examresults', '_blank')">
+                            <i class="fas fa-external-link-alt"></i> VIEW RESULTS
+                        </button></center>
+                    </div>
+      </div>
+    </section>
+    
 
    <audio id="backgroundMusic" loop>
     <source src="music/Guru githaya.mp3" type="audio/mpeg">
