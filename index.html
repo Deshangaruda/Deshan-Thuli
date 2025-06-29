@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thuli | Deshan</title>
+    <title>Thuli | Cyberspace</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="shortcut icon" href="image/Thuli@Deshan.ico" type="image/x-icon">
     <link rel="icon" href="image/Thuli@Deshan.ico" sizes="32*32">
@@ -272,6 +272,72 @@
             left: 100%;
         }
         
+        letter-card {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(3, 255, 213, 0.877);
+      max-width: 800px;
+      margin: 30px auto;
+      line-height: 1.8;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s, transform 0.8s;
+    }
+    
+    .letter-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+        .exam-info {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgb(235, 238, 238);
+    border: 1px solid #00f0ff;
+    border-radius: 8px;
+    font-family: 'Noto Sans Sinhala', sans-serif;
+    align-items: center;
+}
+
+.exam-info p {
+    margin-bottom: 10px;
+    color: #000;
+    text-align: center;
+}
+
+.exam-info strong {
+    color: #8f21dd;
+    text-align: center;
+}
+
+.results-link-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 20px;
+    background-color: #02ccff;
+    color: #000000;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: all var(--transition-speed);
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-heading);
+    letter-spacing: 1px;
+    box-shadow: 0 0 10px #00f7ffc4;
+    
+}
+
+.results-link-btn:hover {
+    background-color: #f7f7f7;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 42, 110, 0.541);
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px #e100ff; }
+    to { box-shadow: 0 0 20px #ff00f0; }
+}
        
 
         /* Projects Section */
@@ -844,7 +910,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #0a0a20;
+            background: #00000086;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -861,7 +927,7 @@
         .loader-text {
             font-size: 3rem;
             font-weight: bold;
-            color: #000000;
+            color: #f39c12;
             margin-bottom: 2rem;
             position: relative;
         }
@@ -871,7 +937,7 @@
             position: absolute;
             left: 0;
             top: 0;
-            color: #ff00f0;
+            color: #ff009d;
             width: 0%;
             overflow: hidden;
             animation: textReveal 2s ease-in-out forwards;
@@ -893,7 +959,7 @@
         .loader-progress {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #f39c12, #ff00f0);
+            background: linear-gradient(90deg, #ff00f0, #0a0a20);
             animation: progress 2s ease-in-out forwards;
         }
         
@@ -901,7 +967,26 @@
             0% { width: 0%; }
             100% { width: 100%; }
         }
-        
+
+       .music-control {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #f7f7f7;
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(234, 0, 255, 0.473);
+      z-index: 1000;
+    }
+    
+    
+
     </style>
 </head>
 <body>
@@ -944,7 +1029,7 @@
             <!-- Login Selection Buttons -->
             <div class="login-selection">
                 <a href="temp.html" class="login-btn teacher-btn">
-                    <i class="fas fa-chalkboard-teacher"></i>Greeting For Teacher
+                    <i class="fas fa-chalkboard-teacher"></i> Teachers
                 </a>
                 <a href="Thuli_Admin.html" class="login-btn security-btn">
                     <i class="fas fa-shield-alt"></i> Security Login
@@ -952,6 +1037,18 @@
             </div>
         </div>
         <div class="hero-image"></div>
+
+    </section>
+
+    <section class="section">
+      <div class="letter-card">
+        <div class="exam-info">
+                        <p><strong>EXAM INDEX NUMBER:</strong> 43712088</p>
+                        <center><button class="results-link-btn" onclick="window.open('https://www.doenets.lk/examresults', '_blank')">
+                            <i class="fas fa-external-link-alt"></i> VIEW RESULTS
+                        </button></center>
+                    </div>
+      </div>
     </section>
 
     <!-- Projects Section -->
@@ -974,7 +1071,7 @@
                     </div>
                 </div>
             </div>
-            <div class="project-card animate-top" style="animation-delay: 0.5s">
+            <div class="project-card animate-top" style="animation-delay: 1.5s">
                 <img src="image/fantasy-scene-anime-style.jpg" alt="Project 2">
                 <div class="project-info">
                     <h3>Web accsess Card</h3>
@@ -988,24 +1085,10 @@
                     </div>
                 </div>
             </div>
-            <div class="project-card animate-right" style="animation-delay: 0.7s">
-                <img src="https://source.unsplash.com/random/600x400/?blockchain,crypto" alt="Project 3">
-                <div class="project-info">
-                    <h3>Soon</h3>
-                    <p>A tool for exploring and analyzing transactions on various blockchain networks.</p>
-                    <div class="project-tags">
-                        <span>Solidity</span>
-                        <span>Web3.js</span>
-                        <span>Ethereum</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                        <a href="#"><i class="fab fa-github"></i> GitHub</a>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </section>
+
 
     <!-- News Section -->
     <section class="section" id="news">
@@ -1020,16 +1103,11 @@
                 </div>
                 <div class="news-card">
                     <span class="news-date">july 15, 2025</span>
-                    <h3>Partnership Announcement</h3>
-                    <p>We've partnered with DeepSeek to integrate their AI technology into our upcoming products.</p>
+                    <h3> Video </h3>
+                    <p>Watching My video</p>
                     <a href="#" class="btn">Read More</a>
                 </div>
-                <div class="news-card">
-                    <span class="news-date">Soon, 2025</span>
-                    <h3>Coming Soon</h3>
-                    <p>Our team has contributed to several open-source projects this month, including major security enhancements.</p>
-                    <a href="#" class="btn">Read More</a>
-                </div>
+                
             </div>
             <div class="news-nav">
                 <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
@@ -1037,6 +1115,7 @@
             </div>
         </div>
     </section>
+
 
     <!-- Contact Section -->
     <section class="section" id="contact">
@@ -1116,6 +1195,16 @@
         <a href="https://github.com/Deshangaruda" class="social-link"><i class="fab fa-github"></i></a>
         <a href="https://www.instagram.com/thuli_deshan?igsh=MWY4cHA0M3U1b3NyMg==" class="social-link"><i class="fab fa-instagram"></i></a>
     </div>
+
+    <!-- නව audio එලිමෙන්ට් එකතු කිරීම -->
+  <audio id="backgroundMusic" loop>
+    <source src="music/Pirates-Of-The-Caribbean-Theme.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Music control button -->
+  <div class="music-control" id="musicControl">
+    <i class="fas fa-music"></i>
+  </div>
 
     <!-- Footer -->
     <footer>
@@ -1244,6 +1333,53 @@
                 }
             }, 100 + (index * 50));
         });
+
+      document.addEventListener('DOMContentLoaded', function() {
+      const bgMusic = document.getElementById('backgroundMusic');
+      const musicControl = document.getElementById('musicControl');
+      let musicPlaying = false;
+      
+      // මුලින්ම muted ලෙස autoplay කිරීමට උත්සාහ කරන්න
+      bgMusic.muted = true;
+      bgMusic.volume = 0.5; // ශබ්දය මධ්යස්ථ මට්ටමකට සකසන්න
+      
+      const playMusic = () => {
+        bgMusic.play()
+          .then(() => {
+            musicPlaying = true;
+            bgMusic.muted = false;
+            musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+          })
+          .catch(error => {
+            console.log('Auto-play was prevented:', error);
+            // User interaction අවශ්ය විට මෙම පණිවුඩය පෙන්වන්න
+            musicControl.innerHTML = '<i class="fas fa-play"></i>';
+            musicControl.style.backgroundColor = '#00f0ff';
+          });
+      };
+      
+      // පිටුව ලෝඩ් වූ වහාම සංගීතය ආරම්භ කිරීමට උත්සාහ කරන්න
+      playMusic();
+      
+      // Music control button click event
+      musicControl.addEventListener('click', function() {
+        if (musicPlaying) {
+          bgMusic.pause();
+          musicControl.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+          playMusic();
+        }
+        musicPlaying = !musicPlaying;
+      });
+      
+      // පිටුවේ කොතැනක හෝ ක්ලික් කළ විට සංගීතය සක්‍රිය කිරීමට උත්සාහ කරන්න
+      document.body.addEventListener('click', function() {
+        if (bgMusic.paused && !musicPlaying) {
+          playMusic();
+        }
+      });
+    });
+
     </script>
 </body>
 </html>
