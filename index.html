@@ -148,6 +148,7 @@
         }
 
         /* Hero Section */
+
         .hero {
             min-height: 100vh;
             display: flex;
@@ -215,6 +216,47 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-20px); }
         }
+
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Profile Section */
+    .profile {
+      text-align: center;
+      margin: 40px 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s, transform 0.8s;
+    }
+
+    .profile.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .profile img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid var(--primary-color);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile h1 {
+      color: var(--primary-color);
+      margin: 15px 0 5px;
+    }
+
+    .profile p {
+      color: #666;
+      margin-bottom: 15px;
+    }
+
         /* Login Selection Buttons */
         .login-selection {
             display: flex;
