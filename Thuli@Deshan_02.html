@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You Miss Senuzhi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #ff0095;
+      --secondary-color: #360060;
+      --text-color: #000000;
+      --light-bg: #f7f7f7;
+      --white: #ffffff;
+    }
+    
+    body {
+      font-family: 'Noto Sans Sinhala', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* Profile Section */
+    .profile {
+      text-align: center;
+      margin: 40px 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s, transform 0.8s;
+    }
+    
+    .profile.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .profile img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid var(--primary-color);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .profile h1 {
+      color: var(--primary-color);
+      margin: 15px 0 5px;
+    }
+    
+    .profile p {
+      color: #666;
+      margin-bottom: 15px;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    .social-links a {
+      color: var(--primary-color);
+      font-size: 24px;
+      transition: color 0.3s;
+    }
+    
+    .social-links a:hover {
+      color: var(--secondary-color);
+    }
+    
+    /* Letter Section */
+    .section-title {
+      text-align: center;
+      color: var(--primary-color);
+      margin: 40px 0 20px;
+    }
+    
+    .letter-card {
+      background: #ffffff42;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(255, 0, 149, 0.877);
+      max-width: 800px;
+      margin: 30px auto;
+      line-height: 1.8;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s, transform 0.8s;
+    }
+    
+    .letter-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .signature {
+      text-align: right;
+      font-style: italic;
+      margin-top: 20px;
+    }
+    
+    /* Typed Message */
+    #typed-text {
+      min-height: 200px;
+      white-space: pre-wrap;
+      font-size: 18px;
+    }
+    
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 20px;
+      background-color: #3af80ae8;
+      animation: blink 15s infinite;
+      vertical-align: middle;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    
+    /* Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    
+    .gallery img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+    
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    
+    /* Audio Player */
+    .audio-section {
+      text-align: center;
+      margin: 40px 0;
+    }
+    
+    audio {
+      display: block;
+      margin: 20px auto;
+      width: 100%;
+      max-width: 400px;
+    }
+    
+    /* Download Button */
+    .download-btn {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 25px;
+      font-size: 16px;
+      background-color: var(--primary-color);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      width: fit-content;
+      transition: background-color 0.3s;
+    }
+    
+    .download-btn:hover {
+      background-color: var(--secondary-color);
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+      background-color: var(--white);
+      color: #666;
+    }
+    
+   /* Loading Animation - "Thuli" */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #00ff2280, #f3f30788);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #e90b8d48;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .loader-text::after {
+            content: "Thuli";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #00ff95;
+            width: 0%;
+            overflow: hidden;
+            animation: textReveal 2s ease-in-out forwards;
+        }
+        
+        @keyframes textReveal {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
+        .loader-bar {
+            width: 300px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.226);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .loader-progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #eeff00, #ff0278);
+            animation: progress 2s ease-in-out forwards;
+        }
+        
+        @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        .music-control {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #f7f7f7;
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
+    .exam-info {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(235, 238, 238, 0.1);
+    border: 1px solid #00ff0d;
+    border-radius: 8px;
+    font-family: 'Noto Sans Sinhala', sans-serif;
+}
+
+.exam-info p {
+    margin-bottom: 10px;
+}
+
+.exam-info strong {
+    color: #21dd4a;
+}
+
+.results-link-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 20px;
+    background-color: #2cff02;
+    color: #000000;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: all var(--transition-speed);
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-heading);
+    letter-spacing: 1px;
+    box-shadow: 0 0 10px #7bff00;
+}
+
+.results-link-btn:hover {
+    background-color: #f7f7f7;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 42, 166, 0.541);
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px #b700ff; }
+    to { box-shadow: 0 0 20px #b700ff; }
+}
+
+  </style>
+</head>
+<body>
+  <!-- Loading Animation -->
+    <div class="loader">
+        <div class="loader-text">Thuli</div>
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+    </div>
+
+  <div class="container">
+    <!-- Profile Section -->
+    <section class="profile">
+      <img src="img/Thuli@deshan.png" alt="Deshan's Photo">
+      <h1>Deshan Karunarathne</h1>
+      <p>Student | Dreamer | Coder</p>
+      <div class="social-links">
+        <a href="https://wa.me/94754551129" class="social-link"><i class="fab fa-whatsapp"></i></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61558585898578&mibextid=ZbWKwL" class="social-link"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://github.com/Deshangaruda" class="social-link"><i class="fab fa-github"></i></a>
+        <a href="https://www.instagram.com/thuli_deshan?igsh=MWY4cHA0M3U1b3NyMg==" class="social-link"><i class="fab fa-instagram"></i></a>
+      </div>
+    </section>
+
+    <!-- Thank You Letter Section -->
+    <h2 class="section-title">Thank You Note to Miss Senuzhi</h2>
+    
+    <section id="thank-you-note">
+      <div class="letter-card" id="typed-text">
+      <div class="cursor"></div>
+      
+    </div>
+    <!-- නව audio එලිමෙන්ට් එකතු කිරීම -->
+  <audio id="backgroundMusic" loop>
+    <source src="music/Guru githaya.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Music control button -->
+  <div class="music-control" id="musicControl">
+    <i class="fas fa-music"></i>
+  </div>
+
+
+
+
+    <!-- Background Music -->
+    <div class="audio-section">
+      <h3 class="section-title">🎵 Background Music</h3>
+      <audio controls>
+        <source src="music/Guru githaya.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+    <h2 class="section-title">Entry Token</h2>
+    <section id="thank-you-note">
+      <div class="letter-card" >
+        
+        <p><center><b> THULI001_M</b></center></p>
+    </div>
+    </section>
+    <section class="thank-you-note">
+      <div class="letter-card">
+        <div class="exam-info">
+                        <center><p><strong>EXAM INDEX NUMBER:</strong> 43712088</p></center>
+                        <center><button class="results-link-btn" onclick="window.open('https://www.doenets.lk/examresults', '_blank')">
+                            <i class="fas fa-external-link-alt"></i> VIEW RESULTS
+                        </button></center>
+                    </div>
+      </div>
+    </section>
+
+   
+
+    <!-- Download Section -->
+    <a href="ThankYou_card.pdf" download="Thank_You_Miss_Madhavi.pdf" class="download-btn" id="download-pdf">
+      <i class="fas fa-download"></i> Download as PDF
+    </a>
+    <!-- Download Section -->
+    <a href="index_1.html" class="download-btn" id="More">
+       Entry 
+    </a>
+  </div>
+
+  <footer>
+    <p>Copyright © Deshan Karunarathne 2025 | Made with ❤️</p>
+  </footer>
+
+
+  <script>
+    // Loading Animation
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loader').classList.add('hidden');
+            }, 2000);
+        });
+        alert("You can access the website I was creating earlier and get the exam index number, and ordinary level exam results. Since the website contains private content, use the token THULAI001_M (a code valid only for you) to enter. Click the entry button below to access the website And Play Background music please!");
+
+    // Scroll animations
+    function checkVisibility() {
+      const elements = document.querySelectorAll('.profile, .letter-card');
+      
+      elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (elementTop < windowHeight - 100) {
+          element.classList.add('visible');
+        }
+      });
+    }
+    
+    window.addEventListener('scroll', checkVisibility);
+    document.addEventListener('DOMContentLoaded', checkVisibility);
+
+    // Typing effect
+    const message = "ආදරණීය ගුරු මෑණියණි❣️,\n\n .........................................\n\nමීට,\n Deshan@Thuli ";
+    let i = 0;
+    const speed = 50;
+    const typedTextElement = document.getElementById('typed-text');
+    const cursorElement = document.querySelector('.cursor');
+    
+    function typeEffect() {
+      if (i < message.length) {
+        if (message.charAt(i) === '\n') {
+          typedTextElement.innerHTML += '<br>';
+        } else {
+          typedTextElement.innerHTML += message.charAt(i);
+        }
+        i++;
+        setTimeout(typeEffect, speed);
+      } else {
+        cursorElement.style.display = 'none';
+      }
+    }
+    
+    setTimeout(typeEffect, 1500);
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const bgMusic = document.getElementById('backgroundMusic');
+      const musicControl = document.getElementById('musicControl');
+      let musicPlaying = false;
+      
+      // මුලින්ම muted ලෙස autoplay කිරීමට උත්සාහ කරන්න
+      bgMusic.muted = true;
+      bgMusic.volume = 0.5; // ශබ්දය මධ්යස්ථ මට්ටමකට සකසන්න
+      
+      const playMusic = () => {
+        bgMusic.play()
+          .then(() => {
+            musicPlaying = true;
+            bgMusic.muted = false;
+            musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+          })
+          .catch(error => {
+            console.log('Auto-play was prevented:', error);
+            // User interaction අවශ්ය විට මෙම පණිවුඩය පෙන්වන්න
+            musicControl.innerHTML = '<i class="fas fa-play"></i>';
+            musicControl.style.backgroundColor = '#ff00ddf5';
+          });
+      };
+      
+      // පිටුව ලෝඩ් වූ වහාම සංගීතය ආරම්භ කිරීමට උත්සාහ කරන්න
+      playMusic();
+      
+      // Music control button click event
+      musicControl.addEventListener('click', function() {
+        if (musicPlaying) {
+          bgMusic.pause();
+          musicControl.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+          playMusic();
+        }
+        musicPlaying = !musicPlaying;
+      });
+      
+      // පිටුවේ කොතැනක හෝ ක්ලික් කළ විට සංගීතය සක්‍රිය කිරීමට උත්සාහ කරන්න
+      document.body.addEventListener('click', function() {
+        if (bgMusic.paused && !musicPlaying) {
+          playMusic();
+        }
+      });
+    });
+
+  </script>
+</body>
+</html>
