@@ -8,7 +8,7 @@ const errorMessage = document.getElementById('error-message');
 const SeeContent1 =document.getElementById('See-Content-1');
 const passwordContainer1 = document.getElementById('password-container-1');
 const passwordInput1 = document.getElementById('password-input-1');
-const submitPassword1 = document.getElementById('submit-password'-1);
+const submitPassword1 = document.getElementById('submit-password-1');
 const errorMessage1 = document.getElementById('error-message-1');
 
 const correctpassword = "001@Thuli_$Deshan:T1-M:T";
