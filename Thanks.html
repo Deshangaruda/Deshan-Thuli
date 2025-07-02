@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     :root {
-      --primary-color: #ff00ea;
+      --primary-color: #ff00d4;
       --secondary-color: #360060;
       --text-color: #000000;
       --light-bg: #f7f7f7;
@@ -62,7 +62,7 @@
       border-radius: 50%;
       object-fit: cover;
       border: 5px solid var(--primary-color);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.521);
     }
     
     .profile h1 {
@@ -194,7 +194,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, #7700ff80, #0a0a2088);
+            background: linear-gradient(90deg, #ff00dd7e, #0a0a2088);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -221,7 +221,7 @@
             position: absolute;
             left: 0;
             top: 0;
-            color: #e100ff;
+            color: #fbff00;
             width: 0%;
             overflow: hidden;
             animation: textReveal 2s ease-in-out forwards;
@@ -243,7 +243,7 @@
         .loader-progress {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #ff00f0, #8502ff);
+            background: linear-gradient(90deg, #ff00f0, #ffbc02);
             animation: progress 2s ease-in-out forwards;
         }
         
@@ -313,10 +313,15 @@
     to { box-shadow: 0 0 20px #ff00f0; }
 }
     /*card*/
-
+.card {
+  display: grid;
+  place-items: center;
+  
+  padding-block: 0.5rem;
+}
 
 .card__article {
-  position: relative;
+  
   background-color: var(--container-color);
   padding: 2.5rem;
   border-radius: 2rem;
@@ -325,7 +330,7 @@
   overflow: hidden;
 }
 .card__img {
-  width: 200px;
+  width: 150px;
   margin-bottom: 1rem;
   animation: float-img 2.5s ease-in-out infinite;
 }
@@ -397,33 +402,7 @@
     transform: translateY(0);
   }
 }
-/* Animation shape */
-.card__article:hover .card__shape {
-  animation-name: shape-animate;
-  animation-duration: 0.8s;
-  animation-iteration-count: 2; /* infinite */
-}
 
-@keyframes shape-animate {
-  0% {
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.1;
-  }
-  40% {
-    opacity: 0.3;
-  }
-  60% {
-    opacity: 0.7;
-  }
-  80% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
 /*whatsapp*/
 .whatsapp-message{
   max-width: 500px;
@@ -441,34 +420,110 @@
   background-color: #ff00b33d;
 
 }
-/*=============== BREAKPOINTS ===============*/
+.card__data1 {
+  width: 250px;
+  background-color: var(--container-color);
+  padding: 1rem ;
+  box-shadow: 0 8px 24px hsla(318, 98%, 49%, 0.979);
+  border-radius: 1rem;
+  position: absolute;
+  bottom: -9rem;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  opacity: 0;
+  transition: opacity 1s 1s;
+}
+.card__article:hover .card__data1 {
+  animation: show-data 1s forwards;
+  opacity: 1;
+  transition: opacity .3s;
+}
+
+.card__article:hover {
+  animation: remove-overflow 2s forwards;
+}
+
+.card__article:not(:hover) {
+  animation: show-overflow 2s forwards;
+}
+
+.card__article:not(:hover) .card__data1 {
+  animation: remove-data 1s forwards;
+}
+
+/* Card animation */
+@keyframes show-data {
+  50% {
+    transform: translateY(-10rem);
+  }
+  100% {
+    transform: translateY(-7rem);
+  }
+}
+
+@keyframes remove-overflow {
+  to {
+    overflow: initial;
+  }
+}
+
+@keyframes remove-data {
+  0% {
+    transform: translateY(-7rem);
+  }
+  50% {
+    transform: translateY(-10rem);
+  }
+  100% {
+    transform: translateY(.5rem);
+  }
+}
+
+@keyframes show-overflow {
+  0% {
+    overflow: initial;
+    pointer-events: none;
+  }
+  50% {
+    overflow: hidden;
+  }
+}
 /* For small devices */
 @media screen and (max-width: 340px) {
-  .card__container {
-    margin-inline: 1rem;
-  }
-  .card__article {
-    padding: 1.5rem;
-  }
-  .card__img {
-    width: 160px;
-  }
-  .card__title {
-    font-size: 2rem;
+ 
+
+  .card__data1 {
+    width: 210px;
+    padding: 0.5rem;
   }
 }
 
+/* For medium devices */
+@media screen and (min-width: 768px) {
+  .card__container {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1.5rem;
+  }
+}
 
 /* For large devices */
-@media screen and (min-width: 1024px) {
-  .card {
-    height: 100vh;
-  }
+@media screen and (min-width: 1120px) {
+ 
+
   .card__container {
-    grid-template-columns: repeat(3, 328px);
-    column-gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .card__img {
+    width: 250px;
+  }
+  .card__data {
+    width: 280px;
+    padding-inline: 0.5rem;
   }
 }
+
+
   </style>
 </head>
 <body>
@@ -483,7 +538,7 @@
   <div class="container">
     <!-- Profile Section -->
     <section class="profile">
-      <img src="image/Thuli@deshan.png" alt="Deshan's Photo">
+      <img src="img/Thuli@deshan.png" alt="Deshan's Photo">
       <h1>Deshan Karunarathne</h1>
       <p>Student | Dreamer | Coder</p>
       <div class="social-links">
@@ -495,7 +550,7 @@
     </section>
 
     <!-- Thank You Letter Section -->
-    <h2 class="section-title">Thank You Note to Miss Madhavi</h2>
+    <h2 class="section-title">Thank You Note to English Teacher</h2>
     
     <section id="thank-you-note">
       <div class="letter-card" id="typed-text">
@@ -531,15 +586,17 @@
     
                 <article class="card__article">
                     <div class="card__data">
-                        <img src="image/img3.png" alt="card image" class="card__img">
+                        <img src="img/img3.png" alt="card image" class="card__img">
                         <h1 class="card__title">Your Messages</h1>
-                        <div class="whatsapp-message">
-                      
-                      <form id="whatsappForm">
-                        <textarea  id="message" placeholder="Message write here.." required> </textarea>
+                        
+                      <div class="card__data1">
+                        <form id="whatsappForm">
+                        <textarea  id="message" placeholder="Write Message here.." required> </textarea>
                         <center><button  class="results-link-btn" type="submit">Send</button></center>
                       </form>
-                    </div>
+                      </div>
+                      
+                    
                     </div>
                     
     
@@ -603,12 +660,7 @@
                 document.querySelector('.loader').classList.add('hidden');
             }, 2000);
         });
-        alert("You can access the website I was creating earlier and get the exam index number, and ordinary level exam results. Since the website contains private content, use the token THULAI001_M (a code valid only for you) to enter. Click the entry button below to access the website And Play Background music please!");
-
-alert("▶️playing background music ,please volume down 🔉");
-
-alert("⚠️🔗කරුණාකර මෙම url ලිපිනය තවත් අයෙකුට share නොකරන්න🚫⚠️");
-
+        alert("You can access the website I was creating earlier and get the exam index number, and ordinary level exam results. Since the website contains private content, use the token 001@Thuli_$Deshan:T1-M:T (a code valid only for you) to enter. Click the entry button below to access the website And Play Background music please!");
 
     // Scroll animations
     function checkVisibility() {
