@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="si">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,19 +15,19 @@
       --light-bg: #f7f7f7;
       --white: #ffffff;
       --text-color: hsl(280, 27%, 4%);
-  --shape-gradient: linear-gradient(90deg,
-                  hsl(300, 76%, 60%),
-                  hsl(57, 81%, 60%));
-  --body-gradient: linear-gradient(180deg,
-              hsl(22, 100%, 84%),
-              hsl(265, 100%, 80%));
-  --container-color: hsl(240, 18%, 97%);
-  /*========== Font and typography ==========*/
-  --body-font: "Poppins", sans-serif;
-  --biggest-font-size: 2.25rem;
-  --normal-font-size: 1.25rem;
+      --shape-gradient: linear-gradient(90deg,
+          hsl(300, 76%, 60%),
+          hsl(57, 81%, 60%));
+      --body-gradient: linear-gradient(180deg,
+          hsl(22, 100%, 84%),
+          hsl(265, 100%, 80%));
+      --container-color: hsl(240, 18%, 97%);
+      /*========== Font and typography ==========*/
+      --body-font: "Poppins", sans-serif;
+      --biggest-font-size: 2.25rem;
+      --normal-font-size: 1.25rem;
     }
-    
+
     body {
       font-family: 'Noto Sans Sinhala', sans-serif;
       background-color: var(--light-bg);
@@ -35,13 +36,13 @@
       padding: 0;
       line-height: 1.6;
     }
-    
+
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 20px;
     }
-    
+
     /* Profile Section */
     .profile {
       text-align: center;
@@ -50,12 +51,12 @@
       transform: translateY(20px);
       transition: opacity 0.8s, transform 0.8s;
     }
-    
+
     .profile.visible {
       opacity: 1;
       transform: translateY(0);
     }
-    
+
     .profile img {
       width: 150px;
       height: 150px;
@@ -64,40 +65,40 @@
       border: 5px solid var(--primary-color);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.575);
     }
-    
+
     .profile h1 {
       color: var(--primary-color);
       margin: 15px 0 5px;
     }
-    
+
     .profile p {
       color: #666;
       margin-bottom: 15px;
     }
-    
+
     .social-links {
       display: flex;
       justify-content: center;
       gap: 15px;
     }
-    
+
     .social-links a {
       color: var(--primary-color);
       font-size: 24px;
       transition: color 0.3s;
     }
-    
+
     .social-links a:hover {
       color: var(--secondary-color);
     }
-    
+
     /* Letter Section */
     .section-title {
       text-align: center;
       color: var(--primary-color);
       margin: 40px 0 20px;
     }
-    
+
     .letter-card {
       background: #ffffff42;
       padding: 30px;
@@ -110,25 +111,25 @@
       transform: translateY(20px);
       transition: opacity 0.8s, transform 0.8s;
     }
-    
+
     .letter-card.visible {
       opacity: 1;
       transform: translateY(0);
     }
-    
+
     .signature {
       text-align: right;
       font-style: italic;
       margin-top: 20px;
     }
-    
+
     /* Typed Message */
     #typed-text {
       min-height: 200px;
       white-space: pre-wrap;
       font-size: 18px;
     }
-    
+
     .cursor {
       display: inline-block;
       width: 8px;
@@ -137,12 +138,19 @@
       animation: blink 15s infinite;
       vertical-align: middle;
     }
-    
+
     @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
     }
-    
+
     /* Gallery */
     .gallery {
       display: grid;
@@ -150,7 +158,7 @@
       gap: 20px;
       margin: 30px 0;
     }
-    
+
     .gallery img {
       width: 100%;
       height: 200px;
@@ -159,24 +167,24 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s;
     }
-    
+
     .gallery img:hover {
       transform: scale(1.05);
     }
-    
+
     /* Audio Player */
     .audio-section {
       text-align: center;
       margin: 40px 0;
     }
-    
+
     audio {
       display: block;
       margin: 20px auto;
       width: 100%;
       max-width: 400px;
     }
-    
+
     /* Download Button */
     .download-btn {
       display: block;
@@ -193,11 +201,11 @@
       width: fit-content;
       transition: background-color 0.3s;
     }
-    
+
     .download-btn:hover {
       background-color: var(--secondary-color);
     }
-    
+
     /* Footer */
     footer {
       text-align: center;
@@ -206,73 +214,83 @@
       background-color: var(--white);
       color: #666;
     }
-    
-   /* Loading Animation - "Thuli" */
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, #ff009d8a, #f1f1f141);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s, visibility 0.5s;
-        }
-        
-        .loader.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-        
-        .loader-text {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #e90b8d48;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-        
-        .loader-text::after {
-            content: "Thuli";
-            position: absolute;
-            left: 0;
-            top: 0;
-            color: #00ff95;
-            width: 0%;
-            overflow: hidden;
-            animation: textReveal 2s ease-in-out forwards;
-        }
-        
-        @keyframes textReveal {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-        
-        .loader-bar {
-            width: 300px;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.226);
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        
-        .loader-progress {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #eeff00, #ff0278);
-            animation: progress 2s ease-in-out forwards;
-        }
-        
-        @keyframes progress {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
 
-        .music-control {
+    /* Loading Animation - "Thuli" */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #ff009d8a, #f1f1f141);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s, visibility 0.5s;
+    }
+
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-text {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #e90b8d48;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .loader-text::after {
+      content: "Thuli";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #00ff95;
+      width: 0%;
+      overflow: hidden;
+      animation: textReveal 2s ease-in-out forwards;
+    }
+
+    @keyframes textReveal {
+      0% {
+        width: 0%;
+      }
+
+      100% {
+        width: 100%;
+      }
+    }
+
+    .loader-bar {
+      width: 300px;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.226);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .loader-progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #eeff00, #ff0278);
+      animation: progress 2s ease-in-out forwards;
+    }
+
+    @keyframes progress {
+      0% {
+        width: 0%;
+      }
+
+      100% {
+        width: 100%;
+      }
+    }
+
+    .music-control {
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -285,295 +303,332 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       z-index: 1000;
     }
+
     .exam-info {
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(235, 238, 238, 0.1);
-    border: 1px solid #00ff0d;
-    border-radius: 8px;
-    font-family: 'Noto Sans Sinhala', sans-serif;
-}
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(235, 238, 238, 0.1);
+      border: 1px solid #00ff0d;
+      border-radius: 8px;
+      font-family: 'Noto Sans Sinhala', sans-serif;
+    }
 
-.exam-info p {
-    margin-bottom: 10px;
-}
+    .exam-info p {
+      margin-bottom: 10px;
+    }
 
-.exam-info strong {
-    color: #21dd4a;
-}
+    .exam-info strong {
+      color: #21dd4a;
+    }
 
-.results-link-btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 20px;
-    background-color: #2cff02;
-    color: #000000;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: 600;
-    transition: all var(--transition-speed);
-    border: none;
-    cursor: pointer;
-    font-family: var(--font-heading);
-    letter-spacing: 1px;
-    box-shadow: 0 0 10px #7bff00;
-}
+    .results-link-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 20px;
+      background-color: #2cff02;
+      color: #000000;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 600;
+      transition: all var(--transition-speed);
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-heading);
+      letter-spacing: 1px;
+      box-shadow: 0 0 10px #7bff00;
+    }
 
-.results-link-btn:hover {
-    background-color: #f7f7f7;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(255, 42, 166, 0.541);
-}
+    .results-link-btn:hover {
+      background-color: #f7f7f7;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(255, 42, 166, 0.541);
+    }
 
-@keyframes glow {
-    from { box-shadow: 0 0 10px #b700ff; }
-    to { box-shadow: 0 0 20px #b700ff; }
-}
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 10px #b700ff;
+      }
+
+      to {
+        box-shadow: 0 0 20px #b700ff;
+      }
+    }
+
     /*card*/
-.card {
-  display: grid;
-  place-items: center;
-  
-  padding-block: 0.5rem;
-}
+    .card {
+      display: grid;
+      place-items: center;
 
-.card__article {
-  position: relative;
-  background-color: var(--container-color);
-  padding: 2.5rem;
-  border-radius: 2rem;
-  text-align: center;
-  box-shadow: 0 20px 24px hsla(313, 100%, 50%, 0.788);
-  overflow: hidden;
-}
-.card__img {
-  width: 200px;
-  margin-bottom: 1rem;
-  animation: float-img 2.5s ease-in-out infinite;
-}
-.card__title {
-  color: var(--title-color);
-  font-size: var(--biggest-font-size);
-  line-height: 75%;
-  margin-bottom: 1rem;
-}
-.card__description {
-  font-size: var(--normal-font-size);
-}
-.card__data {
-  position: relative;
-  z-index: 10;
-}
-.card__shapes {
-  display: grid;
-  justify-items: center;
-  row-gap: 1rem;
-  position: absolute;
-  inset: 0;
-  top: -3.5rem;
-  z-index: 1;
-}
-.card__shape {
-  display: block;
-  width: 250px;
-  height: 30px;
-  background: var(--shape-gradient);
-  border-radius: 4rem;
-  transform: rotate(-24deg);
-  opacity: 0;
-}
-.card__shape:nth-child(1) {
-  animation-delay: 0.1s;
-}
-.card__shape:nth-child(2) {
-  animation-delay: 0.2s;
-}
-.card__shape:nth-child(3) {
-  animation-delay: 0.3s;
-}
-.card__shape:nth-child(4) {
-  animation-delay: 0.4s;
-}
-.card__shape:nth-child(5) {
-  animation-delay: 0.5s;
-}
-.card__shape:nth-child(6) {
-  animation-delay: 0.6s;
-}
-.card__shape:nth-child(7) {
-  animation-delay: 0.7s;
-}
-.card__shape:nth-child(8) {
-  animation-delay: 0.8s;
-}
+      padding-block: 0.5rem;
+    }
 
-/* Animation img */
-@keyframes float-img {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-0.75rem);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
+    .card__article {
+      position: relative;
+      background-color: var(--container-color);
+      padding: 2.5rem;
+      border-radius: 2rem;
+      text-align: center;
+      box-shadow: 0 20px 24px hsla(313, 100%, 50%, 0.788);
+      overflow: hidden;
+    }
 
-/*whatsapp*/
+    .card__img {
+      width: 200px;
+      margin-bottom: 1rem;
+      animation: float-img 2.5s ease-in-out infinite;
+    }
 
-#message{
-  width: auto;
-  height: 100px;
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #ff00b33d;
+    .card__title {
+      color: var(--title-color);
+      font-size: var(--biggest-font-size);
+      line-height: 75%;
+      margin-bottom: 1rem;
+    }
 
-}
-.card__data1 {
-  width: 220px;
-  background-color: var(--container-color);
-  padding: 1rem ;
-  box-shadow: 0 8px 24px hsla(318, 98%, 49%, 0.979);
-  border-radius: 1rem;
-  position: absolute;
-  bottom: -9rem;
-  left: 0;
-  right: 0;
-  margin-inline: auto;
-  opacity: 0;
-  transition: opacity 1s 1s;
-}
-.card__article:hover .card__data1 {
-  animation: show-data 1s forwards;
-  opacity: 1;
-  transition: opacity .3s;
-}
+    .card__description {
+      font-size: var(--normal-font-size);
+    }
 
-.card__article:hover {
-  animation: remove-overflow 2s forwards;
-}
+    .card__data {
+      position: relative;
+      z-index: 10;
+    }
 
-.card__article:not(:hover) {
-  animation: show-overflow 2s forwards;
-}
+    .card__shapes {
+      display: grid;
+      justify-items: center;
+      row-gap: 1rem;
+      position: absolute;
+      inset: 0;
+      top: -3.5rem;
+      z-index: 1;
+    }
 
-.card__article:not(:hover) .card__data1 {
-  animation: remove-data 1s forwards;
-}
+    .card__shape {
+      display: block;
+      width: 250px;
+      height: 30px;
+      background: var(--shape-gradient);
+      border-radius: 4rem;
+      transform: rotate(-24deg);
+      opacity: 0;
+    }
 
-/* Card animation */
-@keyframes show-data {
-  50% {
-    transform: translateY(-10rem);
-  }
-  100% {
-    transform: translateY(-7rem);
-  }
-}
+    .card__shape:nth-child(1) {
+      animation-delay: 0.1s;
+    }
 
-@keyframes remove-overflow {
-  to {
-    overflow: initial;
-  }
-}
+    .card__shape:nth-child(2) {
+      animation-delay: 0.2s;
+    }
 
-@keyframes remove-data {
-  0% {
-    transform: translateY(-7rem);
-  }
-  50% {
-    transform: translateY(-10rem);
-  }
-  100% {
-    transform: translateY(.5rem);
-  }
-}
+    .card__shape:nth-child(3) {
+      animation-delay: 0.3s;
+    }
 
-@keyframes show-overflow {
-  0% {
-    overflow: initial;
-    pointer-events: none;
-  }
-  50% {
-    overflow: hidden;
-  }
-}
-/* For small devices */
-@media screen and (max-width: 340px) {
- 
+    .card__shape:nth-child(4) {
+      animation-delay: 0.4s;
+    }
 
-  .card__data1 {
-    width: 210px;
-    padding: 0.5rem;
-  }
-}
+    .card__shape:nth-child(5) {
+      animation-delay: 0.5s;
+    }
 
-/* For medium devices */
-@media screen and (min-width: 768px) {
-  .card__container {
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 1.5rem;
-  }
-}
+    .card__shape:nth-child(6) {
+      animation-delay: 0.6s;
+    }
 
-/* For large devices */
-@media screen and (min-width: 1120px) {
- 
+    .card__shape:nth-child(7) {
+      animation-delay: 0.7s;
+    }
 
-  .card__container {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .card__img {
-    width: 250px;
-  }
-  .card__data {
-    width: 280px;
-    padding-inline: 0.5rem;
-  }
-}
-/*=============== BREAKPOINTS ===============*/
-/* For small devices */
-@media screen and (max-width: 340px) {
-  .card__container {
-    margin-inline: 1rem;
-  }
-  .card__article {
-    padding: 1.5rem;
-  }
-  .card__img {
-    width: 160px;
-  }
-  .card__title {
-    font-size: 2rem;
-  }
-}
+    .card__shape:nth-child(8) {
+      animation-delay: 0.8s;
+    }
+
+    /* Animation img */
+    @keyframes float-img {
+      0% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-0.75rem);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    /*whatsapp*/
+
+    #message {
+      width: auto;
+      height: 100px;
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: #ff00b33d;
+
+    }
+
+    .card__data1 {
+      width: 220px;
+      background-color: var(--container-color);
+      padding: 1rem;
+      box-shadow: 0 8px 24px hsla(318, 98%, 49%, 0.979);
+      border-radius: 1rem;
+      position: absolute;
+      bottom: -9rem;
+      left: 0;
+      right: 0;
+      margin-inline: auto;
+      opacity: 0;
+      transition: opacity 1s 1s;
+    }
+
+    .card__article:hover .card__data1 {
+      animation: show-data 1s forwards;
+      opacity: 1;
+      transition: opacity .3s;
+    }
+
+    .card__article:hover {
+      animation: remove-overflow 2s forwards;
+    }
+
+    .card__article:not(:hover) {
+      animation: show-overflow 2s forwards;
+    }
+
+    .card__article:not(:hover) .card__data1 {
+      animation: remove-data 1s forwards;
+    }
+
+    /* Card animation */
+    @keyframes show-data {
+      50% {
+        transform: translateY(-10rem);
+      }
+
+      100% {
+        transform: translateY(-7rem);
+      }
+    }
+
+    @keyframes remove-overflow {
+      to {
+        overflow: initial;
+      }
+    }
+
+    @keyframes remove-data {
+      0% {
+        transform: translateY(-7rem);
+      }
+
+      50% {
+        transform: translateY(-10rem);
+      }
+
+      100% {
+        transform: translateY(.5rem);
+      }
+    }
+
+    @keyframes show-overflow {
+      0% {
+        overflow: initial;
+        pointer-events: none;
+      }
+
+      50% {
+        overflow: hidden;
+      }
+    }
+
+    /* For small devices */
+    @media screen and (max-width: 340px) {
 
 
-/* For large devices */
-@media screen and (min-width: 1024px) {
-  .card {
-    height: 100vh;
-  }
-  .card__container {
-    grid-template-columns: repeat(3, 328px);
-    column-gap: 2rem;
-  }
-}
+      .card__data1 {
+        width: 210px;
+        padding: 0.5rem;
+      }
+    }
 
+    /* For medium devices */
+    @media screen and (min-width: 768px) {
+      .card__container {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 1.5rem;
+      }
+    }
+
+    /* For large devices */
+    @media screen and (min-width: 1120px) {
+
+
+      .card__container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .card__img {
+        width: 250px;
+      }
+
+      .card__data {
+        width: 280px;
+        padding-inline: 0.5rem;
+      }
+    }
+
+    /*=============== BREAKPOINTS ===============*/
+    /* For small devices */
+    @media screen and (max-width: 340px) {
+      .card__container {
+        margin-inline: 1rem;
+      }
+
+      .card__article {
+        padding: 1.5rem;
+      }
+
+      .card__img {
+        width: 160px;
+      }
+
+      .card__title {
+        font-size: 2rem;
+      }
+    }
+
+
+    /* For large devices */
+    @media screen and (min-width: 1024px) {
+      .card {
+        height: 100vh;
+      }
+
+      .card__container {
+        grid-template-columns: repeat(3, 328px);
+        column-gap: 2rem;
+      }
+    }
   </style>
 </head>
+
 <body>
   <!-- Loading Animation -->
-    <div class="loader">
-        <div class="loader-text">Thuli</div>
-        <div class="loader-bar">
-            <div class="loader-progress"></div>
-        </div>
+  <div class="loader">
+    <div class="loader-text">Thuli</div>
+    <div class="loader-bar">
+      <div class="loader-progress"></div>
     </div>
+  </div>
 
   <div class="container">
     <!-- Profile Section -->
@@ -583,104 +638,114 @@
       <p>Student | Dreamer | Coder</p>
       <div class="social-links">
         <a href="https://wa.me/94754551129" class="social-link"><i class="fab fa-whatsapp"></i></i></a>
-        <a href="https://www.facebook.com/profile.php?id=61558585898578&mibextid=ZbWKwL" class="social-link"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61558585898578&mibextid=ZbWKwL" class="social-link"><i
+            class="fab fa-facebook-f"></i></a>
         <a href="https://github.com/Deshangaruda" class="social-link"><i class="fab fa-github"></i></a>
-        <a href="https://www.instagram.com/thuli_deshan?igsh=MWY4cHA0M3U1b3NyMg==" class="social-link"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.instagram.com/thuli_deshan?igsh=MWY4cHA0M3U1b3NyMg==" class="social-link"><i
+            class="fab fa-instagram"></i></a>
       </div>
     </section>
 
     <!-- Thank You Letter Section -->
     <h2 class="section-title">Thank You Note to Maths Teacher</h2>
-    
+
     <section id="thank-you-note">
       <div class="letter-card" id="typed-text">
-      <div class="cursor"></div>
-      
-    </div>
-    <!-- නව audio එලිමෙන්ට් එකතු කිරීම -->
-  <audio id="backgroundMusic" loop>
-    <source src="music/Guru githaya.mp3" type="audio/mpeg">
-  </audio>
+        <div class="cursor"></div>
 
-  <!-- Music control button -->
-  <div class="music-control" id="musicControl">
-    <i class="fas fa-music"></i>
-  </div>
-
-
-
-
-    <!-- Background Music -->
-    <div class="audio-section">
-      <h3 class="section-title">🎵 Background Music</h3>
-      <audio controls>
-        <source src="music/Guru githaya.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-      </audio>
-    </div>
-    <section class="thank-you-note">
-      <div class="card">
-            <div class="card__container">
-                   
-    
-                <article class="card__article">
-                    <div class="card__data">
-                        <img src="image/img3.png" alt="card image" class="card__img">
-                        <h1 class="card__title">Your Messages</h1>
-                        <div class="card__data1">
-                          <form id="whatsappForm">
-                          <textarea  id="message" placeholder="Write Message here.." required> </textarea>
-                          <center><button  class="results-link-btn" type="submit">Send</button></center>
-                          </form>
-                      </div>
-                      
-                    </div>
-                    
-    
-                    <div class="card__shapes">
-                        <span class="card__shape"></span>
-                        <span class="card__shape"></span>
-                        <span class="card__shape"></span>
-                        <span class="card__shape"></span>
-                        <span class="card__shape"></span>
-                        <span class="card__shape"></span>
-                        <span class="card__shape"></span>
-                        <span class="card__shape"></span>
-                    </div>
-                    
-                </article>
-                
-            </div>
-        </div>
-    </section>
-    <h2 class="section-title">Entry Token</h2>
-    <section id="thank-you-note">
-      <div class="letter-card" >
-        
-        <p><center><b> 002@Thuli_$Deshan:T1-S:T</b></center></p>
-    </div>
-    </section>
-    <section class="thank-you-note">
-      <div class="letter-card">
-        <div class="exam-info">
-                        <center><p><strong>EXAM INDEX NUMBER:</strong> 43712088</p></center>
-                        <center><button class="results-link-btn" onclick="window.open('https://www.doenets.lk/examresults', '_blank')">
-                            <i class="fas fa-external-link-alt"></i> VIEW RESULTS
-                        </button></center>
-                    </div>
       </div>
-    </section>
+      <!-- නව audio එලිමෙන්ට් එකතු කිරීම -->
+      <audio id="backgroundMusic" loop>
+        <source src="music/Guru githaya.mp3" type="audio/mpeg">
+      </audio>
 
-   
+      <!-- Music control button -->
+      <div class="music-control" id="musicControl">
+        <i class="fas fa-music"></i>
+      </div>
 
-    <!-- Download Section -->
-    <a href="ThankYou_card.pdf" download="Thank_You_Miss_Madhavi.pdf" class="download-btn" id="download-pdf">
-      <i class="fas fa-download"></i> Download as PDF
-    </a>
-    <!-- Download Section -->
-    <a href="index.html" class="download-btn" id="More">
-       Home
-    </a>
+
+
+
+      <!-- Background Music -->
+      <div class="audio-section">
+        <h3 class="section-title">🎵 Background Music</h3>
+        <audio controls>
+          <source src="music/Guru githaya.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+      <section class="thank-you-note">
+        <div class="card">
+          <div class="card__container">
+
+
+            <article class="card__article">
+              <div class="card__data">
+                <img src="image/img3.png" alt="card image" class="card__img">
+                <h1 class="card__title">Your Messages</h1>
+                <div class="card__data1">
+                  <div class="whatsapp-message">
+                    <h3>Add Comment</h3>
+                    <form id="whatsappForm">
+                      <textarea id="message" placeholder="Write Message here..." required></textarea>
+                      <button type="submit" class="results-link-btn">Send Message</button>
+                    </form>
+                  </div>
+                </div>
+
+              </div>
+
+
+              <div class="card__shapes">
+                <span class="card__shape"></span>
+                <span class="card__shape"></span>
+                <span class="card__shape"></span>
+                <span class="card__shape"></span>
+                <span class="card__shape"></span>
+                <span class="card__shape"></span>
+                <span class="card__shape"></span>
+                <span class="card__shape"></span>
+              </div>
+
+            </article>
+
+          </div>
+        </div>
+      </section>
+      <h2 class="section-title">Entry Token</h2>
+      <section id="thank-you-note">
+        <div class="letter-card">
+
+          <p>
+            <center><b> 002@Thuli_$Deshan:T1-S:T</b></center>
+          </p>
+        </div>
+      </section>
+      <section class="thank-you-note">
+        <div class="letter-card">
+          <div class="exam-info">
+            <center>
+              <p><strong>EXAM INDEX NUMBER:</strong> 43712088</p>
+            </center>
+            <center><button class="results-link-btn"
+                onclick="window.open('https://www.doenets.lk/examresults', '_blank')">
+                <i class="fas fa-external-link-alt"></i> VIEW RESULTS
+              </button></center>
+          </div>
+        </div>
+      </section>
+
+
+
+      <!-- Download Section -->
+      <a href="ThankYou_card.pdf" download="Thank_You_Miss_Madhavi.pdf" class="download-btn" id="download-pdf">
+        <i class="fas fa-download"></i> Download as PDF
+      </a>
+      <!-- Download Section -->
+      <a href="index.html" class="download-btn" id="More">
+        Entry
+      </a>
   </div>
 
   <footer>
@@ -690,29 +755,30 @@
 
   <script>
     // Loading Animation
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                document.querySelector('.loader').classList.add('hidden');
-            }, 2000);
-        });
-        alert("You can access the website I was creating earlier and get the exam index number, and ordinary level exam results. Since the website contains private content, use the token 002@Thuli_$Deshan:T1-S:T (a code valid only for you) to enter. Click the entry button below to access the website And Play Background music please!");
-alert("▶️playing background music ,please volume down 🔉");
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        document.querySelector('.loader').classList.add('hidden');
+      }, 2000);
+    });
+    alert("You can access the website I was creating earlier and get the exam index number, and ordinary level exam results. Since the website contains private content, use the token 002@Thuli_$Deshan:T1-S:T (a code valid only for you) to enter. Click the entry button below to access the website And Play Background music please!");
 
-alert("⚠️🔗කරුණාකර මෙම url ලිපිනය තවත් අයෙකුට share නොකරන්න🚫⚠️");
+    alert("▶️playing background music ,please volume down 🔉");
+
+    alert("⚠️🔗කරුණාකර මෙම url ලිපිනය තවත් අයෙකුට share නොකරන්න🚫⚠️");
     // Scroll animations
     function checkVisibility() {
       const elements = document.querySelectorAll('.profile, .letter-card');
-      
+
       elements.forEach(element => {
         const elementTop = element.getBoundingClientRect().top;
         const windowHeight = window.innerHeight;
-        
+
         if (elementTop < windowHeight - 100) {
           element.classList.add('visible');
         }
       });
     }
-    
+
     window.addEventListener('scroll', checkVisibility);
     document.addEventListener('DOMContentLoaded', checkVisibility);
 
@@ -722,7 +788,7 @@ alert("⚠️🔗කරුණාකර මෙම url ලිපිනය තව�
     const speed = 50;
     const typedTextElement = document.getElementById('typed-text');
     const cursorElement = document.querySelector('.cursor');
-    
+
     function typeEffect() {
       if (i < message.length) {
         if (message.charAt(i) === '\n') {
@@ -736,18 +802,18 @@ alert("⚠️🔗කරුණාකර මෙම url ලිපිනය තව�
         cursorElement.style.display = 'none';
       }
     }
-    
+
     setTimeout(typeEffect, 1500);
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const bgMusic = document.getElementById('backgroundMusic');
       const musicControl = document.getElementById('musicControl');
       let musicPlaying = false;
-      
+
       // මුලින්ම muted ලෙස autoplay කිරීමට උත්සාහ කරන්න
       bgMusic.muted = true;
       bgMusic.volume = 0.5; // ශබ්දය මධ්යස්ථ මට්ටමකට සකසන්න
-      
+
       const playMusic = () => {
         bgMusic.play()
           .then(() => {
@@ -762,12 +828,12 @@ alert("⚠️🔗කරුණාකර මෙම url ලිපිනය තව�
             musicControl.style.backgroundColor = '#ff00ddf5';
           });
       };
-      
+
       // පිටුව ලෝඩ් වූ වහාම සංගීතය ආරම්භ කිරීමට උත්සාහ කරන්න
       playMusic();
-      
+
       // Music control button click event
-      musicControl.addEventListener('click', function() {
+      musicControl.addEventListener('click', function () {
         if (musicPlaying) {
           bgMusic.pause();
           musicControl.innerHTML = '<i class="fas fa-play"></i>';
@@ -776,28 +842,35 @@ alert("⚠️🔗කරුණාකර මෙම url ලිපිනය තව�
         }
         musicPlaying = !musicPlaying;
       });
-      
+
       // පිටුවේ කොතැනක හෝ ක්ලික් කළ විට සංගීතය සක්‍රිය කිරීමට උත්සාහ කරන්න
-      document.body.addEventListener('click', function() {
+      document.body.addEventListener('click', function () {
         if (bgMusic.paused && !musicPlaying) {
           playMusic();
         }
       });
     });
-    document.getElementById('whatsappForm').addEventListener('submit', function(e){
+    document.getElementById('whatsappForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
-      const phoneNumber = "94754551129";
-      const message = encodeURIComponent(document.getElementById('message').value);
-      const whatsappUrl ='https://wa.me/${phoneNumber}?text=${message}';
+      // ඔබගේ WhatsApp අංකය මෙහි යොදන්න (අංක පමණක්, හෝ country code සමග)
+      const phoneNumber = "94754551129"; // උදා: 94 රටේ කේතය, 771234567 අංකය
 
+      // පණිවුඩය ලබාගන්න
+      const message = encodeURIComponent(document.getElementById('message').value);
+
+      // WhatsApp link එක සාදන්න
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+
+      // නව ටැබ් එකකින් විවෘත කරන්න
       window.open(whatsappUrl, '_blank');
 
-      document.getElementById('message').value='';
-
+      // ආදානය හිස් කරන්න
+      document.getElementById('message').value = '';
     });
 
 
   </script>
 </body>
+
 </html>
