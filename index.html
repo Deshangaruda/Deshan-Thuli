@@ -306,7 +306,7 @@
 
 .exam-info p {
     margin-bottom: 10px;
-    color: #000;
+    color: #f8f3f3;
     text-align: center;
 }
 
@@ -511,6 +511,39 @@
             background: var(--primary);
             color: var(--dark);
         }
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 20px;
+            background-color: #02ff56;
+            color: #000000;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-heading);
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px #7bff00;
+        }
+
+        .btn:hover {
+            background-color: #f7f7f7;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 42, 166, 0.541);
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px #b700ff;
+            }
+
+            to {
+                box-shadow: 0 0 20px #b700ff;
+            }
+        }
+
 
         /* Contact Section */
         .contact-container {
@@ -1119,18 +1152,23 @@
         <div class="news-container">
             <div class="news-slider">
                 <div class="news-card">
-                    <span class="news-date">July 15, 2025</span>
-                    <h3>New Project Launch</h3>
-                    <p>We're excited to announce the launch of our new cybersecurity tool that helps businesses protect their digital assets more effectively.</p>
+                    <span class="news-date">MidNight,July 15, 2025</span>
+                    <h3>Thanks Note Page</h3>
+                    <p>I was exciting to announce the launch of My Thanks note page. That page design for Thanks to teachers.That web page included three content and two content are privacy procected.can access only password</p>
                     <a href="Main.html" class="btn">Visit</a>
                 </div>
                 <div class="news-card">
                     <span class="news-date">july 15, 2025</span>
                     <h3> Video </h3>
-                    <p>Watching My video</p>
-                    <a href="#" class="btn">Read More</a>
+                    <p>Watching My video(Not Available this time)</p>
+                    <a href="#" class="btn">Watch Now</a>
                 </div>
-                
+                <div class="news-card">
+                    <span class="news-date">juny 14, 2025</span>
+                    <h3>New Project Launch</h3>
+                    <p>I was exciting to announce the launch of My new Web page.</p>
+                    <a href="index_1.html" class="btn">Visit</a>
+                </div>
             </div>
             <div class="news-nav">
                 <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
