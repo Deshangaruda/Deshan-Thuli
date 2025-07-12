@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="si">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>exam results</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Iskoola Pota', 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 10px;
+            color: #333;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background-color: rgb(255, 255, 255);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(182, 6, 252, 0.212);
+        }
+
+        .social-links a:hover {
+            color: #e90ad6;
+        }
+
+        h1 {
+            color: #e90ad6;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .student-info {
+            background-color: #ff01807c;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 10px rgba(2, 1, 2, 0.514);
+        }
+
+        .student-info p {
+            margin: 8px 0;
+        }
+
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+            font-size: 0.9rem;
+        }
+
+        .result-table th,
+        .result-table td {
+            border: 1px solid #b0bec5;
+            padding: 25px;
+            text-align: left;
+        }
+
+        .result-table th {
+            background-color: #bbdefb;
+            color: #f809d8;
+            font-size: 0.95rem;
+        }
+
+        .result-table tr:nth-child(even) {
+            background-color: #e3f2fd;
+        }
+
+        .summary {
+            margin-top: 20px;
+            background-color: #e8f5e9;
+            padding: 12px;
+            border-radius: 6px;
+        }
+
+        .grade-A {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .grade-B {
+            color: #689f38;
+            font-weight: bold;
+        }
+
+        .grade-C {
+            color: #ef6c00;
+            font-weight: bold;
+        }
+
+        .grade-S {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        .grade-F {
+            color: #c62828;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: rgba(15, 15, 26, 0.9);
+            padding: 30px 20px;
+            text-align: center;
+            border-top: 1px solid var(--neno-blue);
+            backdrop-filter: blur(5px);
+        }
+
+        .footer-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 20px;
+            background-color: #2cff02;
+            color: #000000;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-heading);
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px #7bff00;
+        }
+
+        .footer-link:hover {
+            background-color: #f7f7f7;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 42, 166, 0.541);
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px #b700ff;
+            }
+
+            to {
+                box-shadow: 0 0 20px #b700ff;
+            }
+        }
+
+
+        /* Responsive table for small screens */
+        @media screen and (max-width: 600px) {
+            .result-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .student-info p {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .student-info p strong {
+                width: 100px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background-color: white;
+                font-size: 12pt;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                padding: 0;
+            }
+
+            .student-info,
+            .summary {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>G.C.E(O/L)Examination 2024(2025)</h1>
+
+        <div class="student-info">
+            <h2>Details</h2>
+            <p><strong>Name</strong> Mahakatupulle Ralalage Thulitha Deshan Karunarathne</p>
+            <p><strong>Index Number</strong> 43712088</p>
+            <p><strong>NIC Number</strong> -</p>
+            <p><strong>Year</strong> 2024(2025)</p>
+        </div>
+
+        <center>
+            <table class="result-table">
+                <thead>
+                    <tr>
+                        <th>Subjects</th>
+                        <th>grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>buddhism</td>
+                        <td class="grade-A">A</td>
+                    </tr>
+                    <tr>
+                        <td>Sinhala Language & LITT</td>
+                        <td class="grade-A">A</td>
+                    </tr>
+                    <tr>
+                        <td>English Language</td>
+                        <td class="grade-C">C</td>
+                    </tr>
+                    <tr>
+                        <td>Mathematics</td>
+                        <td class="grade-A">A</td>
+                    </tr>
+                    <tr>
+                        <td>History</td>
+                        <td class="grade-A">A</td>
+                    </tr>
+                    <tr>
+                        <td>Science</td>
+                        <td class="grade-A">A</td>
+                    </tr>
+                    <tr>
+                        <td>Art</td>
+                        <td class="grade-C">C</td>
+                    </tr>
+                    <tr>
+                        <td>Geography</td>
+                        <td class="grade-A">A</td>
+                    </tr>
+                    <tr>
+                        <td>I.C.T</td>
+                        <td class="grade-A">A</td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+
+    <footer>
+        <div class="social-links">
+            <a href="index.html" class="footer-link"><i class="fas fa-external-link-alt"></i>Home</a>
+            </a>
+
+        </div>
+    </footer>
+</body>
+
+</html>
