@@ -20,7 +20,7 @@ SeeContent.addEventListener('click', function(){
 
 submitPassword.addEventListener('click',function(){
     if(passwordInput.value === correctpassword){
-        window.location.href ="Thanks.html";
+        window.location.href ="Thanks_.html";
     }else{
         errorMessage.classList.remove('hidden1');
         passwordInput.value = '';
