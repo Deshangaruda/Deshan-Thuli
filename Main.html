@@ -569,8 +569,9 @@
     window.addEventListener('scroll', checkVisibility);
     document.addEventListener('DOMContentLoaded', checkVisibility);
 
-
-
+     if (window.innerWidth > 768) {
+      document.body.innerHTML = '<h2 style="text-align:center;padding:50px;">⚠ Mobile only: Please use a phone to access this site.</h2>';
+    }
   </script>
   <script src="main.js"></script>
 </body>
