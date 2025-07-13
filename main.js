@@ -12,6 +12,7 @@ const submitPassword1 = document.getElementById('submit-password-1');
 const errorMessage1 = document.getElementById('error-message-1');
 
 const correctpassword = "001@Thuli_$Deshan:T1-M:T";
+const correctpasswords = "001@Thuli_$Deshan:T2-M:T";
 const correctPassword = "002@Thuli_$Deshan:T1-S:T";
 
 SeeContent.addEventListener('click', function(){
@@ -32,6 +33,27 @@ passwordInput.addEventListener('keyup', function(event){
         submitPassword.click();
     }
 });
+
+
+SeeContent.addEventListener('click', function(){
+    passwordContainer.style.display = 'block';
+});
+
+submitPassword.addEventListener('click',function(){
+    if(passwordInput.value === correctpasswords){
+        window.location.href ="Thanks_.html";
+    }else{
+        errorMessage.classList.remove('hidden1');
+        passwordInput.value = '';
+    }
+});
+
+passwordInput.addEventListener('keyup', function(event){
+    if(event.key === 'Enter'){
+        submitPassword.click();
+    }
+});
+
 
 SeeContent1.addEventListener('click', function(){
     passwordContainer1.style.display = 'block';
