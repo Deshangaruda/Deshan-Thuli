@@ -878,7 +878,14 @@
       // ආදානය හිස් කරන්න
       document.getElementById('message').value = '';
     });
-
+document.addEventListener("DOMContentLoaded", () => {
+  const all = document.body.querySelectorAll("*");
+  all.forEach(el => {
+    if (!el.classList.contains("contact")) {
+      el.style.display = "none";
+    }
+  });
+});
 
   </script>
 </body>
