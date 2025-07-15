@@ -42,6 +42,31 @@
       padding: 0;
       line-height: 1.6;
     }
+    .dark-mode {
+      background-color: #121212 !important;
+      color: #ffffff !important;
+    }
+
+    .dark-mode .letter-card,
+    .dark-mode .exam-info,
+    .dark-mode .card__article,
+    .dark-mode footer,
+    .dark-mode .download-btn {
+      background-color: #1f1f1f !important;
+      color: #ffffff !important;
+      box-shadow: 0 8px 24px rgba(255, 1, 119, 0.795) !important;
+    }
+
+    .dark-mode .social-links a,
+    .dark-mode .results-link-btn {
+      color: #ff009de7 !important;
+    }
+
+    .dark-mode .results-link-btn:hover {
+      background-color: #004d40 !important;
+    }
+
+
 
     .container {
       max-width: 1200px;
@@ -626,6 +651,19 @@
         column-gap: 2rem;
       }
     }
+    @media(prefers-color-scheme: dark) {
+      body {
+        background-color: #121212;
+        color: white;
+      }
+    }
+
+    @media (prefers-color-scheme: light) {
+      body {
+        background-color: white;
+        color: black;
+      }
+    }
   </style>
 </head>
 
@@ -637,6 +675,17 @@
       <div class="loader-progress"></div>
     </div>
   </div>
+   <!-- Dark Mode Toggle Icon Button -->
+<div style="position: fixed; top: 20px; right: 20px; z-index: 10000;">
+  <button onclick="toggleDarkMode()" id="darkModeBtn" style="
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #333;">
+    <i class="fas fa-moon"></i> <!-- Initial icon: moon -->
+  </button>
+</div>
 
   <div class="container">
     <!-- Profile Section -->
@@ -876,6 +925,35 @@
       // ආදානය හිස් කරන්න
       document.getElementById('message').value = '';
     });
+     function toggleDarkMode() {
+    const body = document.body;
+    const btnIcon = document.getElementById("darkModeBtn").querySelector("i");
+
+    body.classList.toggle("dark-mode");
+
+    if (body.classList.contains("dark-mode")) {
+      localStorage.setItem("theme", "dark");
+      btnIcon.classList.remove("fa-moon");
+      btnIcon.classList.add("fa-sun");
+    } else {
+      localStorage.setItem("theme", "light");
+      btnIcon.classList.remove("fa-sun");
+      btnIcon.classList.add("fa-moon");
+    }
+  }
+
+  // Load preference on page load
+  window.addEventListener("DOMContentLoaded", () => {
+    const theme = localStorage.getItem("theme");
+    const btnIcon = document.getElementById("darkModeBtn").querySelector("i");
+
+    if (theme === "dark") {
+      document.body.classList.add("dark-mode");
+      btnIcon.classList.remove("fa-moon");
+      btnIcon.classList.add("fa-sun");
+    }
+  });
+
 
   </script>
 </body>
