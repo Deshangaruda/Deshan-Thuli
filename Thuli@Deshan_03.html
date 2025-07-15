@@ -6,12 +6,158 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thank You Teachers</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala&display=swap" rel="stylesheet">
-  <link rel="shortcut icon" href="image/Thuli@Deshan.ico" type="image/x-icon">
-    <link rel="icon" href="image/Thuli@Deshan.ico" sizes="32*32">
-    <link rel="icon" href="image/Thuli@Deshan.ico" sizes="48*48">
-    <link rel="icon" href="image/Thuli@Deshan.ico" sizes="96*96">
-    <link rel="icon" href="image/Thuli@Deshan.ico" sizes="144*144">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script type="module">
+    import { Application, Controller } from "https://cdn.jsdelivr.net/npm/@hotwired/stimulus@3.2.2/+esm";
+    import confetti from "https://cdn.skypack.dev/canvas-confetti";
+
+    const application = Application.start();
+
+    class GiftBoxController extends Controller {
+      static targets = ["emoji", "claimBtn", "message", "popup"];
+
+      connect() {
+        // Show popup after loading
+        setTimeout(() => {
+          this.popupTarget.style.display = "flex";
+        }, 2500); // Show after 2s
+      }
+
+      claim() {
+        this.emojiTarget.classList.remove("joggle");
+        void this.emojiTarget.offsetWidth;
+        this.emojiTarget.classList.add("gift-box__emoji--claimed");
+
+        this.claimBtnTarget.hidden = true;
+
+        setTimeout(() => {
+          this.messageTarget.classList.remove("gift-box__message--hidden");
+          this.emojiTarget.hidden = true;
+
+          confetti({
+            particleCount: 150,
+            spread: 100,
+            origin: { y: 0.3 },
+          });
+        }, 500);
+      }
+
+      close() {
+        this.popupTarget.style.display = "none";
+      }
+    }
+
+    application.register("gift-box", GiftBoxController);
+  </script>
+
+  <style>
+
+    /* Popup card */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .popup-card {
+      background: rgba(255, 255, 255, 0.377);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      max-width: 70%;
+      width: 300px;
+      position: relative;
+    }
+
+    .gift-box__emoji {
+      font-size: 6rem;
+      margin-bottom: 1rem;
+    }
+
+    .gift-box__btn {
+      font-size: 1.3rem;
+      padding: 10px 20px;
+      border: none;
+      background-color: #ff00d4;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    .gift-box__emoji--claimed {
+      transition: transform 500ms ease;
+      transform: scale(1.5) rotate(12deg);
+    }
+
+    .gift-box__message {
+      margin-top: 2rem;
+      font-size: 1.3rem;
+      transition: all 500ms ease;
+      color: #ff00bf;
+    }
+
+    .gift-box__message--hidden {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    @keyframes joggle {
+
+      0%,
+      33%,
+      100% {
+        transform: rotate(0deg);
+      }
+
+      3.33% {
+        transform: rotate(-10deg);
+      }
+
+      6.67% {
+        transform: rotate(12deg);
+      }
+
+      10% {
+        transform: rotate(-10deg);
+      }
+
+      13.33% {
+        transform: rotate(9deg);
+      }
+
+      16.67% {
+        transform: rotate(0deg);
+      }
+    }
+
+    .joggle {
+      animation: joggle 4.5s ease-in-out infinite;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #888;
+    }
+
+    .close-btn:hover {
+      color: #000;
+    }
+  </style>
   <style>
     :root {
       --primary-color: #ff00bf;
@@ -50,6 +196,8 @@
     .dark-mode .letter-card,
     .dark-mode .exam-info,
     .dark-mode .card__article,
+    .dark-mode .popup,
+    .dark-mode .popup-card,
     .dark-mode footer,
     .dark-mode .download-btn {
       background-color: #1f1f1f !important;
@@ -65,7 +213,6 @@
     .dark-mode .results-link-btn:hover {
       background-color: #004d40 !important;
     }
-
 
 
     .container {
@@ -675,7 +822,7 @@
       <div class="loader-progress"></div>
     </div>
   </div>
-   <!-- Dark Mode Toggle Icon Button -->
+  <!-- Dark Mode Toggle Icon Button -->
 <div style="position: fixed; top: 20px; right: 20px; z-index: 10000;">
   <button onclick="toggleDarkMode()" id="darkModeBtn" style="
     background: none;
@@ -686,6 +833,20 @@
     <i class="fas fa-moon"></i> <!-- Initial icon: moon -->
   </button>
 </div>
+<!-- 🎁 Popup starts hidden -->
+  <div class="popup" data-controller="gift-box" data-gift-box-target="popup">
+    <div class="popup-card">
+      <button class="close-btn" data-action="gift-box#close">&times;</button>
+      <div class="gift-box__emoji joggle" data-gift-box-target="emoji">🎁</div>
+      <div>
+        <button class="gift-box__btn" data-action="gift-box#claim" data-gift-box-target="claimBtn">Claim</button>
+      </div>
+      <div class="gift-box__message gift-box__message--hidden" data-gift-box-target="message">
+        🎉 Gift Available Soon 🎉
+      </div>
+    </div>
+  </div>
+
 
   <div class="container">
     <!-- Profile Section -->
@@ -795,7 +956,7 @@
 
 
     <!-- Download Section -->
-    <a href="pdf/Thank_You_card_2.pdf" download="Thank_You_Teachers.pdf" class="download-btn" id="download-pdf">
+    <a href="ThankYou_card.pdf" download="Thank_You_Miss_Madhavi.pdf" class="download-btn" id="download-pdf">
       <i class="fas fa-download"></i> Download as PDF
     </a>
     <!-- Download Section -->
@@ -814,9 +975,9 @@
     window.addEventListener('load', function () {
       setTimeout(function () {
         document.querySelector('.loader').classList.add('hidden');
-      }, 2000);
+      }, 2400);
     });
-    
+    alert("You can access the website I was creating earlier and get the exam index number, and ordinary level exam results. Since the website contains private content, use the token THULAI001_M (a code valid only for you) to enter. Click the entry button below to access the website And Play Background music please!");
     alert("▶️playing background music ,please volume down 🔉");
 
     alert("⚠️🔗කරුණාකර මෙම url ලිපිනය තවත් අයෙකුට share නොකරන්න🚫⚠️");
@@ -838,8 +999,7 @@
     document.addEventListener('DOMContentLoaded', checkVisibility);
 
     // Typing effect
-    const message = "ආදරණීය ගුරු මැණියනි/ගුරු පියාණනි,\n\n\nමාගේ ජීවිතයේ වැදගත් අවස්ථාවක් වන සාමාන්‍ය පෙළ විභාගය සමත් කර ගැනීම සදහා ඔබලා විසින් කළ කැපවීම සැබවින්ම ඉමහත්ය.\n\nපාසල් වේලාවට අමතරව බොහෝ දුරට තම පෞද්ගලික කාලයත් වැය කරමින්, අමතර පන්තිවලදී උගන්වමින්, ප්‍රශ්න පත්‍ර ලබා දෙමින් එවායේ  ප්‍රශ්න වලට නිවැරදිව පිළිතුරු  ලියන අයුරු කියා  දීමින් සහ වැරදි හදා ගැනීමට අවවාද දීමින් බෙහෙවින්  උදව් කළා.අමතර ප්‍රශ්න පත්‍ර ලියා ගෙනෙවිත් දුන් විට ඒවායේ අඩු පාඩු ,මට අපහසු කරැණු සොයා ඒවා හදා ගැනීමට මට බොහො උපකාර කලා.   එවන් කැපවීමක් මඟින් විභාගය සඳහා හොඳින් සූදානම් විය හැකි වුණා. \n\nමට මගේ ඉලක්කය සම්පූර්ණයෙන්ම අත්  කර ගැනීමට නොහැකි වුවත් ,  තරමක්   සතුටු විය හැකි ප්‍රතිඵලයක් ලැබී තිබේ. එය ලැබීමට වචනයකින් වුවද මට උපකාර කළ ගුරුවරුන් සියලු දෙනාට   මගේ හද පිරි ස්තුතිය පුද කරමි.\n\n ඔබලාගේ ආදරය, මිත්‍රශීලීබව, සහයෝගය මට මේ සාර්ථකත්වය ලබාගැනීමට මහත් සහාය වුණා.\n\nමගේ ප්‍රතිඵලය ලැබුණේ  ගුරුවරුන්ගේ කැපවීම හා උදව් නිසා බව මම ආඩම්බරයේන් පැවසීමට කැමතියි🥰 \n\nමීට,\n Deshan@Thuli                          ({😔මෙහි කිසිදු වරදක් ඇත්නම් මා එයට සමාව අයදිමි😔}📝)\n\n\n\n – Deshan @ Thuli";
-    let i = 0;
+    const message = "ආදරණීය ගුරු මැණියනි/ගුරු පියාණනි,\n\n\nමාගේ ජීවිතයේ වැදගත් අවස්ථාවක් වන සාමාන්‍ය පෙළ විභාගය සමත් කර ගැනීම සදහා ඔබලා විසින් කළ කැපවීම සැබවින්ම ඉමහත්ය.\n\nපාසල් වේලාවට අමතරව බොහෝ දුරට තම පෞද්ගලික කාලයත් වැය කරමින්, අමතර පන්තිවලදී උගන්වමින්, අපගේ පැරණි හා නව ප්‍රශ්නවලට පිළිතුරු දීමින් සහ වැරදි හදා ගැනීමට අවවාද දීමින් අපට උදව් කළා. එවන් කැපවීමක් මඟින් අපිට විභාගය සඳහා හොඳින් සූදානම් විය හැකි වුණා. \n\nමට මගේ ඉලක්කය සම්පූර්ණයෙන්ම අත්  කර ගැනීමට නොහැකි වුවත් ,  තරමක්   සතුටු විය හැකි ප්‍රතිඵලයක් ලැබී තිබේ. එය ලැබීමට වචනයකින් වුවද මට උපකාර කළ ගුරුවරුන් සියලු දෙනාට   මගේ හද පිරි ස්තුතිය පුද කරමි.\n\n ඔබලාගේ ආදරය, මිත්‍රශීලීබව, සහයෝගය මට මේ සාර්ථකත්වය ලබාගැනීමට මහත් සහාය වුණා.\n\nමගේ ප්‍රතිඵලය ලැබුණු ගුරුවරුන්ගේ කැපවීම හා උදව් නිසා බව මම ආඩම්බරයේන් පැවසීමට කැමතියි🥰 \n\nමීට,\n Deshan@Thuli                          ({😔මෙහි කිසිදු වරදක් ඇත්නම් මා එයට සමාව අයදිමි😔}Reply Please 📝)\n\n\n\n – Deshan @ Thuli";    let i = 0;
     const speed = 50;
     const typedTextElement = document.getElementById('typed-text');
     const cursorElement = document.querySelector('.cursor');
@@ -909,15 +1069,26 @@
     document.getElementById('whatsappForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
-    
+      const phoneNumber = "94754551129";
+      const message = encodeURIComponent(document.getElementById('message').value);
+      const whatsappUrl = 'https://wa.me/${phoneNumber}?text=${message}';
+
+      window.open(whatsappUrl, '_blank');
+
+      document.getElementById('message').value = '';
+
+    });
+    document.getElementById('whatsappForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
       // ඔබගේ WhatsApp අංකය මෙහි යොදන්න (අංක පමණක්, හෝ country code සමග)
-            const phoneNumber = "94754551129"; // උදා: 94 රටේ කේතය, 771234567 අංකය
+      const phoneNumber = "94754551129"; // උදා: 94 රටේ කේතය, 771234567 අංකය
 
       // පණිවුඩය ලබාගන්න
       const message = encodeURIComponent(document.getElementById('message').value);
 
       // WhatsApp link එක සාදන්න
-      const whatsappUrl = `https://wa.me/${phoneNumber}?text=Thank Note Reply :- ${message}`;
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
       // නව ටැබ් එකකින් විවෘත කරන්න
       window.open(whatsappUrl, '_blank');
@@ -925,7 +1096,7 @@
       // ආදානය හිස් කරන්න
       document.getElementById('message').value = '';
     });
-     function toggleDarkMode() {
+      function toggleDarkMode() {
     const body = document.body;
     const btnIcon = document.getElementById("darkModeBtn").querySelector("i");
 
@@ -953,7 +1124,6 @@
       btnIcon.classList.add("fa-sun");
     }
   });
-
 
   </script>
 </body>

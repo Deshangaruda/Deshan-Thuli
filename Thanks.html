@@ -13,6 +13,159 @@
   <link rel="icon" href="image/Thuli@Deshan.ico" sizes="96*96">
   <link rel="icon" href="image/Thuli@Deshan.ico" sizes="144*144">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <script type="module">
+    import { Application, Controller } from "https://cdn.jsdelivr.net/npm/@hotwired/stimulus@3.2.2/+esm";
+    import confetti from "https://cdn.skypack.dev/canvas-confetti";
+
+    const application = Application.start();
+
+    class GiftBoxController extends Controller {
+      static targets = ["emoji", "claimBtn", "message", "popup"];
+
+      connect() {
+        // Show popup after loading
+        setTimeout(() => {
+          this.popupTarget.style.display = "flex";
+        }, 2500); // Show after 2s
+      }
+
+      claim() {
+        this.emojiTarget.classList.remove("joggle");
+        void this.emojiTarget.offsetWidth;
+        this.emojiTarget.classList.add("gift-box__emoji--claimed");
+
+        this.claimBtnTarget.hidden = true;
+
+        setTimeout(() => {
+          this.messageTarget.classList.remove("gift-box__message--hidden");
+          this.emojiTarget.hidden = true;
+
+          confetti({
+            particleCount: 150,
+            spread: 100,
+            origin: { y: 0.3 },
+          });
+        }, 500);
+      }
+
+      close() {
+        this.popupTarget.style.display = "none";
+      }
+    }
+
+    application.register("gift-box", GiftBoxController);
+  </script>
+
+  <style>
+
+    /* Popup card */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .popup-card {
+      background: rgba(255, 255, 255, 0.377);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      max-width: 70%;
+      width: 300px;
+      position: relative;
+    }
+
+    .gift-box__emoji {
+      font-size: 6rem;
+      margin-bottom: 1rem;
+    }
+
+    .gift-box__btn {
+      font-size: 1.3rem;
+      padding: 10px 20px;
+      border: none;
+      background-color: #ff00d4;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    .gift-box__emoji--claimed {
+      transition: transform 500ms ease;
+      transform: scale(1.5) rotate(12deg);
+    }
+
+    .gift-box__message {
+      margin-top: 2rem;
+      font-size: 1.3rem;
+      transition: all 500ms ease;
+      color: #ff00ff;
+    }
+
+    .gift-box__message--hidden {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    @keyframes joggle {
+
+      0%,
+      33%,
+      100% {
+        transform: rotate(0deg);
+      }
+
+      3.33% {
+        transform: rotate(-10deg);
+      }
+
+      6.67% {
+        transform: rotate(12deg);
+      }
+
+      10% {
+        transform: rotate(-10deg);
+      }
+
+      13.33% {
+        transform: rotate(9deg);
+      }
+
+      16.67% {
+        transform: rotate(0deg);
+      }
+    }
+
+    .joggle {
+      animation: joggle 4.5s ease-in-out infinite;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #888;
+    }
+
+    .close-btn:hover {
+      color: #000;
+    }
+  </style>
+  
   <style>
     :root {
       --primary-color: #ff00d4;
@@ -51,10 +204,12 @@
     .dark-mode .letter-card,
     .dark-mode .exam-info,
     .dark-mode .card__article,
+    .dark-mode .popup,
+    .dark-mode .popup-card,
     .dark-mode footer,
     .dark-mode .download-btn {
       background-color: #1f1f1f !important;
-      color: #ffffff !important;
+      color: #00ff00 !important;
       box-shadow: 0 8px 24px rgba(255, 1, 119, 0.795) !important;
     }
 
@@ -652,9 +807,7 @@
       .card__container {
         grid-template-columns: repeat(3, 328px);
         column-gap: 2rem;
-      }
-    }
-     @media(prefers-color-scheme: dark) {
+      } @media(prefers-color-scheme: dark) {
       body {
         background-color: #121212;
         color: white;
@@ -667,6 +820,8 @@
         color: black;
       }
     }
+    }
+
   </style>
 </head>
 
@@ -688,6 +843,20 @@
     color: #333;">
       <i class="fas fa-moon"></i> <!-- Initial icon: moon -->
     </button>
+  </div>
+
+  <!-- 🎁 Popup starts hidden -->
+  <div class="popup" data-controller="gift-box" data-gift-box-target="popup">
+    <div class="popup-card">
+      <button class="close-btn" data-action="gift-box#close">&times;</button>
+      <div class="gift-box__emoji joggle" data-gift-box-target="emoji">🎁</div>
+      <div>
+        <button class="gift-box__btn" data-action="gift-box#claim" data-gift-box-target="claimBtn">Claim</button>
+      </div>
+      <div class="gift-box__message gift-box__message--hidden" data-gift-box-target="message">
+        🎉 Gift Available Soon 🎉
+      </div>
+    </div>
   </div>
 
   <div class="container">
@@ -781,7 +950,7 @@
             <center><b> 001@Thuli_$Deshan:T1-M:T</b></center>
           </p>
           <center><button class="download-btn">
-                <i class="fas fa-external-link-alt"  onclick="window.open('Thanks.html', '_blank')"></i> To view the contents before editing
+                <i class="fas fa-external-link-alt"  onclick="window.open('Thanks-old.html', '_blank')"></i> To view the contents before editing
               </button></center>
           
         </div>
@@ -796,7 +965,7 @@
                 onclick="window.open('https://www.doenets.lk/examresults', '_blank')">
                 <i class="fas fa-external-link-alt"></i> VIEW RESULTS(doenets)
               </button></center><br>
-               <center><button class="results-link-btn" onclick="window.open('exam.html', '_blank')">
+               <center><button class="results-link-btn">
                 <i class="fas fa-external-link-alt"></i> VIEW RESULTS PAGE
               </button></center>
               
@@ -826,7 +995,7 @@
     window.addEventListener('load', function () {
       setTimeout(function () {
         document.querySelector('.loader').classList.add('hidden');
-      }, 2000);
+      }, 2400);
     });
     alert("You can access the website I was creating earlier and get the exam index number, and ordinary level exam results. Since the website contains private content, use the token 001@Thuli_$Deshan:T1-M:T (a code valid only for you) to enter. Click the entry button below to access the website And Play Background music please!");
     alert("▶️playing background music ,please volume down 🔉");

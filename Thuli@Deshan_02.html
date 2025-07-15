@@ -4,15 +4,160 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thank You Maths Teacher</title>
+  <title>Thank You Miss Senuzhi</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="shortcut icon" href="image/Thuli@Deshan.ico" type="image/x-icon">
-    <link rel="icon" href="image/Thuli@Deshan.ico" sizes="32*32">
-    <link rel="icon" href="image/Thuli@Deshan.ico" sizes="48*48">
-    <link rel="icon" href="image/Thuli@Deshan.ico" sizes="96*96">
-    <link rel="icon" href="image/Thuli@Deshan.ico" sizes="144*144">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   <script type="module">
+    import { Application, Controller } from "https://cdn.jsdelivr.net/npm/@hotwired/stimulus@3.2.2/+esm";
+    import confetti from "https://cdn.skypack.dev/canvas-confetti";
+
+    const application = Application.start();
+
+    class GiftBoxController extends Controller {
+      static targets = ["emoji", "claimBtn", "message", "popup"];
+
+      connect() {
+        // Show popup after loading
+        setTimeout(() => {
+          this.popupTarget.style.display = "flex";
+        }, 2500); // Show after 2s
+      }
+
+      claim() {
+        this.emojiTarget.classList.remove("joggle");
+        void this.emojiTarget.offsetWidth;
+        this.emojiTarget.classList.add("gift-box__emoji--claimed");
+
+        this.claimBtnTarget.hidden = true;
+
+        setTimeout(() => {
+          this.messageTarget.classList.remove("gift-box__message--hidden");
+          this.emojiTarget.hidden = true;
+
+          confetti({
+            particleCount: 150,
+            spread: 100,
+            origin: { y: 0.3 },
+          });
+        }, 500);
+      }
+
+      close() {
+        this.popupTarget.style.display = "none";
+      }
+    }
+
+    application.register("gift-box", GiftBoxController);
+  </script>
+
+  <style>
+
+    /* Popup card */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .popup-card {
+      background: rgba(255, 255, 255, 0.377);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(255, 0, 234, 0.979);
+      text-align: center;
+      max-width: 70%;
+      width: 300px;
+      position: relative;
+    }
+
+    .gift-box__emoji {
+      font-size: 6rem;
+      margin-bottom: 1rem;
+    }
+
+    .gift-box__btn {
+      font-size: 1.3rem;
+      padding: 10px 20px;
+      border: none;
+      background-color: #ff00d4;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    .gift-box__emoji--claimed {
+      transition: transform 500ms ease;
+      transform: scale(1.5) rotate(12deg);
+    }
+
+    .gift-box__message {
+      margin-top: 2rem;
+      font-size: 1.3rem;
+      transition: all 500ms ease;
+      color: #ea00ff;
+    }
+
+    .gift-box__message--hidden {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    @keyframes joggle {
+
+      0%,
+      33%,
+      100% {
+        transform: rotate(0deg);
+      }
+
+      3.33% {
+        transform: rotate(-10deg);
+      }
+
+      6.67% {
+        transform: rotate(12deg);
+      }
+
+      10% {
+        transform: rotate(-10deg);
+      }
+
+      13.33% {
+        transform: rotate(9deg);
+      }
+
+      16.67% {
+        transform: rotate(0deg);
+      }
+    }
+
+    .joggle {
+      animation: joggle 4.5s ease-in-out infinite;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #888;
+    }
+
+    .close-btn:hover {
+      color: #000;
+    }
+  </style>
   <style>
     :root {
       --primary-color: #ff0095;
@@ -42,6 +187,7 @@
       padding: 0;
       line-height: 1.6;
     }
+
     .dark-mode {
       background-color: #121212 !important;
       color: #ffffff !important;
@@ -50,10 +196,12 @@
     .dark-mode .letter-card,
     .dark-mode .exam-info,
     .dark-mode .card__article,
+    .dark-mode .popup,
+    .dark-mode .popup-card,
     .dark-mode footer,
     .dark-mode .download-btn {
       background-color: #1f1f1f !important;
-      color: #ffffff !important;
+      color: #ff00aa !important;
       box-shadow: 0 8px 24px rgba(255, 1, 119, 0.795) !important;
     }
 
@@ -65,7 +213,6 @@
     .dark-mode .results-link-btn:hover {
       background-color: #004d40 !important;
     }
-
 
 
     .container {
@@ -398,8 +545,7 @@
 
     .card__article {
       position: relative;
-      background-image: url(./image/Thuli.jpg);
-      background-size: cover;
+      background-color: var(--container-color);
       padding: 2.5rem;
       border-radius: 2rem;
       text-align: center;
@@ -414,7 +560,7 @@
     }
 
     .card__title {
-      color: #f7f7f77c;
+      color: var(--title-color);
       font-size: var(--biggest-font-size);
       line-height: 75%;
       margin-bottom: 1rem;
@@ -650,7 +796,8 @@
         column-gap: 2rem;
       }
     }
-     @media(prefers-color-scheme: dark) {
+
+    @media(prefers-color-scheme: dark) {
       body {
         background-color: #121212;
         color: white;
@@ -674,19 +821,30 @@
       <div class="loader-progress"></div>
     </div>
   </div>
-
-   <!-- Dark Mode Toggle Icon Button -->
-<div style="position: fixed; top: 20px; right: 20px; z-index: 10000;">
-  <button onclick="toggleDarkMode()" id="darkModeBtn" style="
+  <!-- Dark Mode Toggle Icon Button -->
+  <div style="position: fixed; top: 20px; right: 20px; z-index: 10000;">
+    <button onclick="toggleDarkMode()" id="darkModeBtn" style="
     background: none;
     border: none;
     cursor: pointer;
     font-size: 24px;
-    color: #333;">
-    <i class="fas fa-moon"></i> <!-- Initial icon: moon -->
-  </button>
-</div>
-
+    color: #ff006aaf;">
+      <i class="fas fa-moon"></i> <!-- Initial icon: moon -->
+    </button>
+  </div>
+  <!-- 🎁 Popup starts hidden -->
+  <div class="popup" data-controller="gift-box" data-gift-box-target="popup">
+    <div class="popup-card">
+      <button class="close-btn" data-action="gift-box#close">&times;</button>
+      <div class="gift-box__emoji joggle" data-gift-box-target="emoji">🎁</div>
+      <div>
+        <button class="gift-box__btn" data-action="gift-box#claim" data-gift-box-target="claimBtn">Claim</button>
+      </div>
+      <div class="gift-box__message gift-box__message--hidden" data-gift-box-target="message">
+        🎉 Gift Available Soon 🎉
+      </div>
+    </div>
+  </div>
 
   <div class="container">
     <!-- Profile Section -->
@@ -797,7 +955,7 @@
 
 
       <!-- Download Section -->
-      <a href="pdf/Thank_You_card_1.pdf" download="Thank_You_Miss_Senuzhi.pdf" class="download-btn" id="download-pdf">
+      <a href="pdf/Thank_You_card_1.pdf" download="Thank_You_Miss_Madhavi.pdf" class="download-btn" id="download-pdf">
         <i class="fas fa-download"></i> Download as PDF
       </a>
       <!-- Download Section -->
@@ -816,7 +974,7 @@
     window.addEventListener('load', function () {
       setTimeout(function () {
         document.querySelector('.loader').classList.add('hidden');
-      }, 2000);
+      }, 2400);
     });
     alert("You can access the website I was creating earlier and get the exam index number, and ordinary level exam results. Since the website contains private content, use the token 002@Thuli_$Deshan:T1-S:T (a code valid only for you) to enter. Click the entry button below to access the website And Play Background music please!");
 
@@ -841,9 +999,8 @@
     document.addEventListener('DOMContentLoaded', checkVisibility);
 
     // Typing effect
-        const message = "ආදරණීය ගුරු මෑණියණි❣️,\n\n 9  වන ශ්‍රේණිය වන විට මට අපහසු විශයක් වී තිබුණු ගණිතය විෂය මම කැමති පහසු විශයක් බවට පත් වූයේ ගණිතය විශය ඉගැන්වීම සදහා නව ගුරුවරයෙකු ලෙස ගුරුතුමිය පත්ව ආ පසුවයි.👩🏻‍🏫 \n\nගණිතය විෂයෙහි මග හැරී තිබූ ගණිත සංකල්ප මට ඉගෙනිමට ඔබ කල උපකාර ඉමහත්‍ ය.❣️ ඔබගේ උපකාර නිසා 10 ශ්‍රේණියේදී නැවතත් මට ගණීතය විෂයට සතුටු විය හැකි නමුත් තවත් ලකුණු ලබා ගැනීමට ආශාව වැඩි කරමින් මට මෙය පුලුවන් යන හැගීම ඇති කරවන ලකුනක් මට ලැබී තුබුණා.📝🥳\n\n මට නොතේරෙන ගණිත ගැටලු පැහැදිලි කරමින් ,ගැටලු විසදීමේ අඩුපාඩු පෙන්වා දෙමින් මට ගණිතය විෂය ඉගෙනීමට ගුරුතුමිය බොහෝ උපකාර කළා.😊🩷 මගේ ඉගෙනීමට ඇති අශාවත් නොදන්න දේ දැන ගනීමේ කමැත්තත් නිසා මං ගුරුතුමියට බොහො කරදර කලා යැයි මට සිතෙනවා.😖😓🤧 \n\nමොකද මට ගැටලුවක් ඇති සැම අවස්තාවකදීම එය ගුරුතුමියගෙන් විමසූවිට ගුරුතුමිය වැඩක යෙදි සිටියත් ඒ සැම අවස්ථාවකදීම මට උපකාර කලා.🩷🩷 මට ඒ උපකාර මෙන්ම ගුරුතුමිය මට පැවසු වදන්ද ගුරුතුමියගේ නිරහංකාර බවත්😇,මිත්‍රශීලි බවත්🥹 මට සදා මතකයේ රැදෙනු ඇත.🤗 \n\nO/L විභාහයට සති කිහිපයක් තිබියදී ගුරුතුමිය මට ගණිත ප්‍රශ්න පත්‍ර ලබා දී මට බොහෝ උපකාර කලා.🥹👩🏻‍🏫 මම ඒවාට පිලිතුරු ලියා දුන් විටත් ඒවායේ වැරදි අඩුපාඩු පෙන්වා දෙමින් ගුරුතුමිය පාසලේදීත්,නිවසේ සිටියදීත් මං ඇසූ ප්‍රශ්න වලට පිළිතුරු දෙමින් මට බොහො උපකාර කලා.❣️❣️❣️ \n\nගුරුතුමියගේ උපකාරය  කැපවීමෙ ප්‍රතිඵලය ලෙස මට අද O/L exam  Mathematics result එකට A සාමාර්ථයක් ලැබී තිබෙනවා .මං හිතනවා .මට ගුරුතුමියට දිය හැකි හොදම තිළිණ මෙය බව .ආදරණීය ගුරු මෑණියනි ඔබ තුමිය මට කල උපකාර වලට මම හදවතින්ම ස්තූතිය පුද කරමි.\n\n  මම විශ්වාස කරන,  ආදරය ගෞරවය  දක්වන ආදරණීය ගුරු මෑනියනි (Miss. Senuzhi) මම මෙසේ ඔබට ගෞරව දක්වමි. \n\nමෙයට ,\n\nමීට,\n Deshan@Thuli                                    ({😔මෙහි කිසිදු වරදක් ඇත්නම් මා එයට සමාව අයදිමි😔}Reply Please 📝)\n\n\n\n – Deshan @ Thuli ";
-    let i = 0;
-    const speed = 50;
+    const message = "ආදරණීය ගුරු මෑණියණි❣️,\n\n 9  වන ශ්‍රේණිය වන විට මට අපහසු විශයක් වී තිබුණු ගණිතය විෂය මම කැමති පහසු විශයක් බවට පත් වූයේ ගණිතය විශය ඉගැන්වීම සදහා නව ගුරුවරයෙකු ලෙස ගුරුතුමිය පත්ව ආ පසුවයි.👩🏻‍🏫 \n\nගණිතය විෂයෙහි මග හැරී තිබූ ගණිත සංකල්ප මට ඉගෙනිමට ඔබ කල උපකාර ඉමහත්‍ ය.❣️ ඔබගේ උපකාර නිසා 10 ශ්‍රේණියේදී නැවතත් මට ගණීතය විෂයට සතුටු විය හැකි නමුත් තවත් ලකුණු ලබා ගැනීමට ආශාව වැඩි කරමින් මට මෙය පුලුවන් යන හැගීම ඇති කරවන ලකුනක් මට ලැබී තුබුණා.📝🥳\n\n මට නොතේරෙන ගණිත ගැටලු පැහැදිලි කරමින් ,ගැටලු විසදීමේ අඩුපාඩු පෙන්වා දෙමින් මට ගණිතය විෂය ඉගෙනීමට ගුරුතුමිය බොහෝ උපකාර කළා.😊🩷 මගේ ඉගෙනීමට ඇති අශාවත් නොදන්න දේ දැන ගනීමේ කමැත්තත් නිසා මං ගුරුතුමියට බොහො කරදර කලා යැයි මට සිතෙනවා.😖😓🤧 \n\nමොකද මට ගැටලුවක් ඇති සැම අවස්තාවකදීම එය ගුරුතුමියගෙන් විමසූවිට ගුරුතුමිය වැඩක යෙදි සිටියත් ඒ සැම අවස්ථාවකදීම මට උපකාර කලා.🩷🩷 මට ඒ උපකාර මෙන්ම ගුරුතුමිය මට පැවසු වදන්ද ගුරුතුමියගේ නිරහංකාර බවත්😇,මිත්‍රශීලි බවත්🥹 මට සදා මතකයේ රැදෙනු ඇත.🤗 \n\nO/L විභාහයට සති කිහිපයක් තිබියදී ගුරුතුමිය මට ගණිත ප්‍රශ්න පත්‍ර ලබා දී මට බොහෝ උපකාර කලා.🥹👩🏻‍🏫 මම ඒවාට පිලිතුරු ලියා දුන් විටත් ඒවායේ වැරදි අඩුපාඩු පෙන්වා දෙමින් ගුරුතුමිය පාසලේදීත්,නිවසේ සිටියදීත් මං ඇසූ ප්‍රශ්න වලට පිළිතුරු දෙමින් මට බොහො උපකාර කලා.❣️❣️❣️ \n\nගුරුතුමියගේ උපකාරය  කැපවීමෙ ප්‍රතිඵලය ලෙස මට අද O/L exam  Mathematics result එකට A සාමාර්ථයක් ලැබී තිබෙනවා .මං හිතනවා .මට ගුරුතුමියට දිය හැකි හොදම තිළිණ මෙය බව .ආදරණීය ගුරු මෑණියනි ඔබ තුමිය මට කල උපකාර වලට මම හදවතින්ම ස්තූතිය පුද කරමි.\n\n  මම විශ්වාස කරන,  ආදරය ගෞරවය  දක්වන ආදරණීය ගුරු මෑනියනි (Miss. Senuzhi) මම මෙසේ ඔබට ගෞරව දක්වමි. \n\nමෙයට ,\n\nමීට,\n Deshan@Thuli                                    ({😔මෙහි කිසිදු වරදක් ඇත්නම් මා එයට සමාව අයදිමි😔}Reply Please 📝)\n\n\n\n – Deshan @ Thuli "; let i = 0;
+    const speed = 65;
     const typedTextElement = document.getElementById('typed-text');
     const cursorElement = document.querySelector('.cursor');
 
@@ -918,7 +1075,7 @@
       const message = encodeURIComponent(document.getElementById('message').value);
 
       // WhatsApp link එක සාදන්න
-      const whatsappUrl = `https://wa.me/${phoneNumber}?text=Thank Note reply :- ${message}`;
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
       // නව ටැබ් එකකින් විවෘත කරන්න
       window.open(whatsappUrl, '_blank');
@@ -927,35 +1084,34 @@
       document.getElementById('message').value = '';
     });
 
-          function toggleDarkMode() {
-    const body = document.body;
-    const btnIcon = document.getElementById("darkModeBtn").querySelector("i");
+    function toggleDarkMode() {
+      const body = document.body;
+      const btnIcon = document.getElementById("darkModeBtn").querySelector("i");
 
-    body.classList.toggle("dark-mode");
+      body.classList.toggle("dark-mode");
 
-    if (body.classList.contains("dark-mode")) {
-      localStorage.setItem("theme", "dark");
-      btnIcon.classList.remove("fa-moon");
-      btnIcon.classList.add("fa-sun");
-    } else {
-      localStorage.setItem("theme", "light");
-      btnIcon.classList.remove("fa-sun");
-      btnIcon.classList.add("fa-moon");
+      if (body.classList.contains("dark-mode")) {
+        localStorage.setItem("theme", "dark");
+        btnIcon.classList.remove("fa-moon");
+        btnIcon.classList.add("fa-sun");
+      } else {
+        localStorage.setItem("theme", "light");
+        btnIcon.classList.remove("fa-sun");
+        btnIcon.classList.add("fa-moon");
+      }
     }
-  }
 
-  // Load preference on page load
-  window.addEventListener("DOMContentLoaded", () => {
-    const theme = localStorage.getItem("theme");
-    const btnIcon = document.getElementById("darkModeBtn").querySelector("i");
+    // Load preference on page load
+    window.addEventListener("DOMContentLoaded", () => {
+      const theme = localStorage.getItem("theme");
+      const btnIcon = document.getElementById("darkModeBtn").querySelector("i");
 
-    if (theme === "dark") {
-      document.body.classList.add("dark-mode");
-      btnIcon.classList.remove("fa-moon");
-      btnIcon.classList.add("fa-sun");
-    }
-  });
-
+      if (theme === "dark") {
+        document.body.classList.add("dark-mode");
+        btnIcon.classList.remove("fa-moon");
+        btnIcon.classList.add("fa-sun");
+      }
+    });
 
 
   </script>
