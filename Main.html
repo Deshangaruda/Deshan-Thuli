@@ -40,7 +40,29 @@
       padding: 0;
       line-height: 1.6;
     }
-    
+    .dark-mode {
+      background-color: #121212 !important;
+      color: #ffffff !important;
+    }
+
+    .dark-mode .letter-card,
+    .dark-mode .exam-info,
+    .dark-mode footer,
+    .dark-mode .download-btn {
+      background-color: #1f1f1f00 !important;
+      color: #fc87b4 !important;
+      box-shadow: 0 16px 24px rgba(255, 1, 120, 0.959) !important;
+    }
+
+    .dark-mode .social-links a,
+    .dark-mode .results-link-btn {
+      color: #73ff00 !important;
+    }
+
+    .dark-mode .results-link-btn:hover {
+      background-color: #fa0563 !important;
+    }
+
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -456,6 +478,19 @@
     box-shadow: 0 0 10px var(--light-blue), inset 0 0 10px rgba(240, 2, 169, 0.74);
     background: rgba(255, 255, 255, 0.836);
 }
+     @media(prefers-color-scheme: dark) {
+      body {
+        background-color: #121212;
+        color: white;
+      }
+    }
+
+    @media (prefers-color-scheme: light) {
+      body {
+        background-color: white;
+        color: black;
+      }
+    }
   </style>
 </head>
 <body>
@@ -466,6 +501,18 @@
             <div class="loader-progress"></div>
         </div>
     </div>
+  <!-- Dark Mode Toggle Icon Button -->
+<div style="position: fixed; top: 20px; right: 20px; z-index: 10000;">
+  <button onclick="toggleDarkMode()" id="darkModeBtn" style="
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #333;">
+    <i class="fas fa-moon"></i> <!-- Initial icon: moon -->
+  </button>
+</div>
+
 
   <div class="container">
     <!-- Profile Section -->
@@ -577,6 +624,35 @@
      if (window.innerWidth > 768) {
       document.body.innerHTML = '<h2 style="text-align:center;padding:50px;">⚠ Mobile only: Please use a phone to access this site.</h2>';
     }
+
+     function toggleDarkMode() {
+    const body = document.body;
+    const btnIcon = document.getElementById("darkModeBtn").querySelector("i");
+
+    body.classList.toggle("dark-mode");
+
+    if (body.classList.contains("dark-mode")) {
+      localStorage.setItem("theme", "dark");
+      btnIcon.classList.remove("fa-moon");
+      btnIcon.classList.add("fa-sun");
+    } else {
+      localStorage.setItem("theme", "light");
+      btnIcon.classList.remove("fa-sun");
+      btnIcon.classList.add("fa-moon");
+    }
+  }
+
+  // Load preference on page load
+  window.addEventListener("DOMContentLoaded", () => {
+    const theme = localStorage.getItem("theme");
+    const btnIcon = document.getElementById("darkModeBtn").querySelector("i");
+
+    if (theme === "dark") {
+      document.body.classList.add("dark-mode");
+      btnIcon.classList.remove("fa-moon");
+      btnIcon.classList.add("fa-sun");
+    }
+  });
   </script>
   <script src="main.js"></script>
 </body>
