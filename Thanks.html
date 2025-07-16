@@ -825,26 +825,7 @@
     }
 
   </style>
-  <script>
-fetch('https://ipapi.co/json/')
-  .then(response => response.json())
-  .then(ipData => {
-    const payload = {
-      ip: ipData.ip,
-      country: ipData.country_name,
-      city: ipData.city,
-      device: navigator.userAgent
-    };
-    
-    fetch('https://script.google.com/macros/s/AKfycbyKHQ6TCsgeIj9A9t36ZXKkGG4eHCLyWPC4Pz_pNY3pheZ35GIchN2n-2Fjx0w8fcwD/exec', {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-  });
-</script>
+ 
 </head>
 
 <body>
