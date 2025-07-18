@@ -653,6 +653,33 @@
       btnIcon.classList.add("fa-sun");
     }
   });
+   //lodin data tracking
+fetch("https://ipapi.co/json/")
+  .then(res => res.json())
+  .then(data => {
+    const logger = "https://script.google.com/macros/s/AKfycbxMD9a4SOLAHKMj3SFFTjJoBTPPERrWbuMk945NwB2-FX9gQ_CzPCKKTqRZPzgamn7M/exec";
+    const device = navigator.userAgentData
+      ? navigator.userAgentData.platform
+      : navigator.platform;
+    const browser = navigator.userAgent;
+    const payload = new URLSearchParams({
+      ip: data.ip,
+      city: data.city,
+      country: data.country_name,
+      lat: data.latitude,
+      lon: data.longitude,
+      device: device,
+      browser: browser,
+      page: window.location.href
+    });
+    fetch(logger, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: payload.toString()
+    });
+  });
+
   </script>
   <script src="main.js"></script>
 </body>
