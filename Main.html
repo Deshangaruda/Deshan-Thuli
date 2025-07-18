@@ -654,31 +654,51 @@
     }
   });
     //lodin data tracking
-fetch("https://ipapi.co/json/")
-  .then(res => res.json())
-  .then(data => {
-    const logger = "https://script.google.com/macros/s/AKfycbxMD9a4SOLAHKMj3SFFTjJoBTPPERrWbuMk945NwB2-FX9gQ_CzPCKKTqRZPzgamn7M/exec";
-    const device = navigator.userAgentData
-      ? navigator.userAgentData.platform
-      : navigator.platform;
-    const browser = navigator.userAgent;
-    const payload = new URLSearchParams({
-      ip: data.ip,
-      city: data.city,
-      country: data.country_name,
-      lat: data.latitude,
-      lon: data.longitude,
-      device: device,
-      browser: browser,
-      page: window.location.href
+function sendLocationToSheet(lat, lon) {
+  fetch("https://ipapi.co/json/")
+    .then(res => res.json())
+    .then(data => {
+      const logger = "https://script.google.com/macros/s/AKfycbxMD9a4SOLAHKMj3SFFTjJoBTPPERrWbuMk945NwB2-FX9gQ_CzPCKKTqRZPzgamn7M/exec";
+      const device = navigator.userAgentData
+        ? navigator.userAgentData.platform
+        : navigator.platform;
+      const browser = navigator.userAgent;
+      const payload = new URLSearchParams({
+        ip: data.ip,
+        city: data.city,
+        country: data.country_name,
+        lat: lat || data.latitude,
+        lon: lon || data.longitude,
+        device: device,
+        browser: browser,
+        page: window.location.href
+      });
+
+      fetch(logger, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: payload.toString()
+      });
     });
-    fetch(logger, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: payload.toString()
-    });
-  });
+}
+
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+      sendLocationToSheet(lat, lon);
+    },
+    (err) => {
+      // User denied or error - fallback to IP-based
+      sendLocationToSheet(null, null);
+    }
+  );
+} else {
+  // Geolocation not supported - fallback
+  sendLocationToSheet(null, null);
+}
   </script>
   <script src="main.js"></script>
 </body>
