@@ -1152,22 +1152,7 @@ fetch("https://ipapi.co/json/")
     });
   });
   </script>
-  <script>
-fetch("https://api.ipify.org?format=json")
-  .then(res => res.json())
-  .then(data => {
-    fetch("https://script.google.com/macros/s/AKfycbx7iwFTEbyj4bY4aKERjUA1y7iGZILIVIndrz0DkOtxKKCflrvDmujzZZFhx5QTo4HZLQ/exec", {
-      method: "POST",
-      body: JSON.stringify({
-        ip: data.ip,
-        timestamp: new Date().toLocaleString()
-      }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-  });
-</script>
+ 
 </body>
 
 </html>
