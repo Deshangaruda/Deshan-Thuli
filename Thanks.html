@@ -823,6 +823,22 @@
         color: black;
       }
     }
+    /*image*/
+    .letter-card img {
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      box-shadow: 10px 16px 24px rgb(255, 0, 242);
+
+    }
+
+    #slideImage {
+      width: 100%;
+      height: 100%;
+      transition: opacity 1s ease-in-out;
+      opacity: 1;
+    }
 
   </style>
  
@@ -882,20 +898,27 @@
     <h2 class="section-title">Thank You Note to English Teacher</h2>
 
     <section id="thank-you-note">
+       <div class="letter-card">
+        <img id="slideImage" src="thuli/school.jpg" width="400" height="250">
+      </div>
       <div class="letter-card" id="typed-text">
         <div class="cursor"></div>
+    </section>
 
       </div>
-      <!-- නව audio එලිමෙන්ට් එකතු කිරීම -->
-      <audio id="backgroundMusic" loop>
-        <source src="music/Guru githaya.mp3" type="audio/mpeg">
-      </audio>
+       <!-- නව audio එලිමෙන්ට් එකතු කිරීම -->
+    <audio id="backgroundMusic" loop>
+      <source src="music/Guru githaya.mp3" type="audio/mpeg">
+      <source src="music/Sadawan-Ruwin-Sara.mp3" type="audio/mpeg">
+    </audio>
 
-      <!-- Music control button -->
-      <div class="music-control" id="musicControl">
-        <i class="fas fa-music"></i>
-      </div>
-
+    <!-- Music control button -->
+    <div class="music-control" id="musicControl" style="cursor:pointer;">
+      <i class="fas fa-play"></i>
+    </div>
+    <div class="music-control" id="nextTrack" style="cursor:pointer;">
+      <i class="fas fa-forward"></i>
+    </div>
 
 
 
@@ -1043,51 +1066,7 @@
 
     setTimeout(typeEffect, 1500);
 
-    document.addEventListener('DOMContentLoaded', function () {
-      const bgMusic = document.getElementById('backgroundMusic');
-      const musicControl = document.getElementById('musicControl');
-      let musicPlaying = false;
-
-      // මුලින්ම muted ලෙස autoplay කිරීමට උත්සාහ කරන්න
-      bgMusic.muted = true;
-      bgMusic.volume = 0.5; // ශබ්දය මධ්යස්ථ මට්ටමකට සකසන්න
-
-      const playMusic = () => {
-        bgMusic.play()
-          .then(() => {
-            musicPlaying = true;
-            bgMusic.muted = false;
-            musicControl.innerHTML = '<i class="fas fa-pause"></i>';
-          })
-          .catch(error => {
-            console.log('Auto-play was prevented:', error);
-            // User interaction අවශ්ය විට මෙම පණිවුඩය පෙන්වන්න
-            musicControl.innerHTML = '<i class="fas fa-play"></i>';
-            musicControl.style.backgroundColor = '#ff00ddf5';
-          });
-      };
-
-      // පිටුව ලෝඩ් වූ වහාම සංගීතය ආරම්භ කිරීමට උත්සාහ කරන්න
-      playMusic();
-
-      // Music control button click event
-      musicControl.addEventListener('click', function () {
-        if (musicPlaying) {
-          bgMusic.pause();
-          musicControl.innerHTML = '<i class="fas fa-play"></i>';
-        } else {
-          playMusic();
-        }
-        musicPlaying = !musicPlaying;
-      });
-
-      // පිටුවේ කොතැනක හෝ ක්ලික් කළ විට සංගීතය සක්‍රිය කිරීමට උත්සාහ කරන්න
-      document.body.addEventListener('click', function () {
-        if (bgMusic.paused && !musicPlaying) {
-          playMusic();
-        }
-      });
-    });
+  
     document.getElementById('whatsappForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -1160,7 +1139,23 @@ fetch("https://ipapi.co/json/")
       body: payload.toString()
     });
   });
+    //image galary
+       const images = ["thuli/thanks.jpg", "thuli/school.jpg","thuli/thuli.jpg"];
+    let current = 0;
+    const slide = document.getElementById("slideImage")
+
+    setInterval(() => {
+      slide.style.opacity = 0;
+      setTimeout(() => {
+        current = (current + 1) %
+          images.length;
+        slide.src = images[current];
+        slide.style.opacity = 1;
+      }, 1000);
+
+    }, 4000);
   </script>
+   <script src="music.js"></script>
  
 </body>
 
