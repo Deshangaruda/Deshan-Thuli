@@ -836,7 +836,7 @@
     #slideImage {
       width: 100%;
       height: 100%;
-      transition: opacity 1s ease-in-out;
+      transition: opacity 3s ease-in-out;
       opacity: 1;
     }
 
@@ -1151,9 +1151,9 @@ fetch("https://ipapi.co/json/")
           images.length;
         slide.src = images[current];
         slide.style.opacity = 1;
-      }, 500);
+      }, 1000);
 
-    }, 5000);
+    }, 3000);
   </script>
    <script src="music.js"></script>
  
