@@ -442,6 +442,28 @@ function sendWhatsAppNotification() {
         console.log(`Notification would be sent via: ${whatsappUrl}`);
     }
 }
+
+
+  let siteClosed = true; // 🔴 Set to false when website is active
+
+  if (siteClosed) {
+    document.write(`
+      <style>
+        body {
+          margin: 0;
+          padding: 0;
+          background-color: #000;
+          color: #fff;
+          font-family: sans-serif;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
+      </style>
+      <div>🚫 This website is closed.</div>
+    `);
+  }
     </script>
 </body>
 </html>
