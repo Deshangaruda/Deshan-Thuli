@@ -13,6 +13,23 @@
     <link rel="icon" href="image/Thuli@Deshan.ico" sizes="48*48">
     <link rel="icon" href="image/Thuli@Deshan.ico" sizes="96*96">
     <link rel="icon" href="image/Thuli@Deshan.ico" sizes="144*144">
+  <style>
+    body {
+      margin: 0;
+      background-color: #111;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 100px 20px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #ff4f4f;
+    }
+    p {
+      font-size: 1.2rem;
+    }
+  </style>
     <style>
     :root {
     --back-color: #0a0a12;
@@ -1637,6 +1654,9 @@ footer {
             <div class="loader-spinner"></div>
         </div>
     </div>
+<h1>🚫 Website Closed</h1>
+  <p>This website is temporarily unavailable on all devices.</p>
+
 
     <!-- Header Section -->
     <header>
@@ -1848,26 +1868,13 @@ footer {
     <script src="index_1.js"></script>
 <script>
 
-  let siteClosed = true; // 🔴 Set to false when website is active
-
-  if (siteClosed) {
-    document.write(`
-      <style>
-        body {
-          margin: 0;
-          padding: 0;
-          background-color: #000;
-          color: #fff;
-          font-family: sans-serif;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-        }
-      </style>
-      <div>🚫 This website is closed.</div>
-    `);
-  }
+      // Optional: Clear page content and show block message
+    document.body.innerHTML = `
+      <h1>🚫 Website Closed</h1>
+      <p>This website is temporarily unavailable on all devices.</p>
+    `;
+      </style
+     
 </script>
 </body>
 </html>
