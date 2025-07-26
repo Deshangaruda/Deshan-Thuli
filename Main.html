@@ -672,6 +672,15 @@ fetch("https://ipapi.co/json/")
 
 
 // temporary block on this web site 
+//content block
+document.addEventListener("DOMContentLoaded", () => {
+const all = document.body.querySelectorAll("*");
+all.forEach(el => {
+if (!el.classList.contains("contact")) {
+el.style.display = "none";
+}
+});
+});
 
   </script>
 
